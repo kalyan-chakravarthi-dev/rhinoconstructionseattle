@@ -1,5 +1,7 @@
+import { Link } from "react-router-dom";
 import { CheckCircle, MapPin, Clock, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { COMPANY_INFO } from "@/lib/constants";
 
 const cities = [
   { name: "Seattle", primary: true, time: "Primary Location" },
@@ -29,7 +31,7 @@ const ServiceAreas = () => {
             Serving Seattle & Surrounding Areas
           </h2>
           <p className="text-muted-foreground text-lg lg:text-xl">
-            Professional home repairs within 40 miles of Seattle
+            Professional home repairs within {COMPANY_INFO.serviceRadius}
           </p>
         </div>
 
@@ -53,14 +55,14 @@ const ServiceAreas = () => {
               />
               
               {/* Service Radius Overlay */}
-              <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+              <div className="absolute inset-0 pointer-events-none flex items-center justify-center" aria-hidden="true">
                 <div className="w-64 h-64 lg:w-80 lg:h-80 rounded-full border-4 border-secondary/40 bg-secondary/10 animate-pulse" />
               </div>
 
               {/* Legend Badge */}
               <div className="absolute bottom-4 left-4 bg-card/95 backdrop-blur-sm rounded-lg px-4 py-2 shadow-lg border border-border">
                 <div className="flex items-center gap-2 text-sm">
-                  <div className="w-3 h-3 rounded-full bg-secondary" />
+                  <div className="w-3 h-3 rounded-full bg-secondary" aria-hidden="true" />
                   <span className="font-medium text-foreground">40-mile service radius</span>
                 </div>
               </div>
@@ -71,7 +73,7 @@ const ServiceAreas = () => {
           <div className="bg-card rounded-2xl p-6 lg:p-8 shadow-lg border border-border">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                <MapPin className="w-5 h-5 text-primary" />
+                <MapPin className="w-5 h-5 text-primary" aria-hidden="true" />
               </div>
               <div>
                 <h3 className="font-semibold text-foreground text-lg">Cities We Serve</h3>
@@ -92,8 +94,8 @@ const ServiceAreas = () => {
                 >
                   <div className="flex items-center gap-3">
                     <CheckCircle className={`w-5 h-5 flex-shrink-0 ${
-                      city.primary ? "text-secondary" : "text-green-500"
-                    }`} />
+                      city.primary ? "text-secondary" : "text-success"
+                    }`} aria-hidden="true" />
                     <span className={`font-medium ${
                       city.primary ? "text-secondary" : "text-foreground"
                     }`}>
@@ -106,7 +108,7 @@ const ServiceAreas = () => {
                     )}
                   </div>
                   <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                    <Clock className="w-3.5 h-3.5" />
+                    <Clock className="w-3.5 h-3.5" aria-hidden="true" />
                     <span>{city.time}</span>
                   </div>
                 </div>
@@ -122,7 +124,7 @@ const ServiceAreas = () => {
             <div className="bg-muted/50 rounded-xl p-4 border border-border">
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <MessageCircle className="w-5 h-5 text-primary" />
+                  <MessageCircle className="w-5 h-5 text-primary" aria-hidden="true" />
                 </div>
                 <div className="flex-1">
                   <p className="text-foreground font-medium mb-1">
@@ -132,7 +134,7 @@ const ServiceAreas = () => {
                     Contact us - we may still serve your area!
                   </p>
                   <Button variant="default" size="sm" asChild>
-                    <a href="/contact">Check Availability</a>
+                    <Link to="/contact">Check Availability</Link>
                   </Button>
                 </div>
               </div>

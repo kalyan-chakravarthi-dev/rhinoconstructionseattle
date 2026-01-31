@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { ChefHat, Bath, Home, Zap, Wrench, Hammer, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -60,18 +61,18 @@ const Services = () => {
         {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12">
           {services.map((service, index) => (
-            <a
+            <Link
               key={service.title}
-              href={service.href}
+              to={service.href}
               className="group relative bg-card rounded-2xl p-6 lg:p-8 border border-border shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Gradient accent on hover */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-secondary via-rhino-orange to-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-secondary via-rhino-orange to-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true" />
               
               {/* Icon */}
               <div className="w-14 h-14 lg:w-16 lg:h-16 rounded-xl bg-secondary/10 flex items-center justify-center mb-5 group-hover:bg-secondary/20 transition-colors duration-300">
-                <service.icon className="w-7 h-7 lg:w-8 lg:h-8 text-secondary" />
+                <service.icon className="w-7 h-7 lg:w-8 lg:h-8 text-secondary" aria-hidden="true" />
               </div>
 
               {/* Content */}
@@ -85,19 +86,19 @@ const Services = () => {
               {/* Learn More Link */}
               <div className="flex items-center gap-2 text-secondary font-medium">
                 <span>Learn More</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" aria-hidden="true" />
               </div>
-            </a>
+            </Link>
           ))}
         </div>
 
         {/* Bottom CTA */}
         <div className="text-center">
           <Button variant="default" size="lg" asChild>
-            <a href="/services" className="inline-flex items-center gap-2">
+            <Link to="/services" className="inline-flex items-center gap-2">
               View All Services
-              <ArrowRight className="w-4 h-4" />
-            </a>
+              <ArrowRight className="w-4 h-4" aria-hidden="true" />
+            </Link>
           </Button>
         </div>
       </div>
