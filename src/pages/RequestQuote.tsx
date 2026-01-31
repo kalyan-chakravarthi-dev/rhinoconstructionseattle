@@ -771,6 +771,9 @@ const RequestQuote = () => {
 
     localStorage.setItem(`quote_${newQuoteId}`, JSON.stringify(quoteRequest));
     
+    // Store for confirmation page
+    localStorage.setItem("lastSubmittedQuote", JSON.stringify(quoteRequest));
+    
     // Clear draft data
     localStorage.removeItem("quoteStep1");
     localStorage.removeItem("quoteStep2");
@@ -778,7 +781,9 @@ const RequestQuote = () => {
     localStorage.removeItem("quoteStep4");
 
     setIsSubmitting(false);
-    setShowSuccessModal(true);
+    
+    // Navigate to confirmation page instead of showing modal
+    navigate(`/request-quote/confirmation?id=${newQuoteId}`);
   };
 
   const handleStartOver = () => {
