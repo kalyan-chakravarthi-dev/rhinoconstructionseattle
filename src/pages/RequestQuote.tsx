@@ -7,6 +7,12 @@ import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
@@ -34,8 +40,33 @@ import {
   Camera,
   ImageIcon,
   Lightbulb,
+  Phone,
+  Mail,
+  MessageSquare,
+  CalendarIcon,
+  Shield,
+  Eye,
+  EyeOff,
+  User,
 } from "lucide-react";
+import { format } from "date-fns";
 import imageCompression from "browser-image-compression";
+
+const contactTimeOptions = [
+  { id: "weekday-morning", label: "Weekday mornings (8am-12pm)" },
+  { id: "weekday-afternoon", label: "Weekday afternoons (12pm-5pm)" },
+  { id: "weekday-evening", label: "Weekday evenings (5pm-8pm)" },
+  { id: "weekend-morning", label: "Weekend mornings" },
+  { id: "weekend-afternoon", label: "Weekend afternoons" },
+  { id: "anytime", label: "Anytime" },
+];
+
+const contactMethodOptions = [
+  { id: "phone", label: "Phone Call", icon: Phone },
+  { id: "text", label: "Text Message", icon: MessageSquare },
+  { id: "email", label: "Email", icon: Mail },
+  { id: "any", label: "Any method is fine", icon: Check },
+];
 
 const steps = [
   { id: 1, name: "Service Type" },
@@ -191,6 +222,27 @@ const RequestQuote = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [step3Errors, setStep3Errors] = useState<Record<string, string>>({});
 
+  // Step 4 state
+  const [contactInfo, setContactInfo] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+  });
+  const [preferredContactMethod, setPreferredContactMethod] = useState("any");
+  const [contactTimes, setContactTimes] = useState<string[]>([]);
+  const [preferredDate, setPreferredDate] = useState<Date | undefined>();
+  const [createAccount, setCreateAccount] = useState(false);
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [acceptTerms, setAcceptTerms] = useState(false);
+  const [marketingOptIn, setMarketingOptIn] = useState(false);
+  const [step4Errors, setStep4Errors] = useState<Record<string, string>>({});
+
+  // Check if user is logged in (simulated)
+  const isLoggedIn = localStorage.getItem("rhinoUser") !== null;
+
   // Load saved data from localStorage on mount
   useEffect(() => {
     const savedStep1 = localStorage.getItem("quoteStep1");
@@ -216,6 +268,27 @@ const RequestQuote = () => {
       setProjectDescription(data.projectDescription || "");
       setSpecialRequirements(data.specialRequirements || "");
       // Note: Images can't be restored from localStorage (would need IndexedDB)
+    }
+
+    const savedStep4 = localStorage.getItem("quoteStep4");
+    if (savedStep4) {
+      const data = JSON.parse(savedStep4);
+      setContactInfo(data.contactInfo || { firstName: "", lastName: "", email: "", phone: "" });
+      setPreferredContactMethod(data.preferredContactMethod || "any");
+      setContactTimes(data.contactTimes || []);
+      setMarketingOptIn(data.marketingOptIn || false);
+    }
+
+    // If logged in, pre-fill contact info
+    const userData = localStorage.getItem("rhinoUser");
+    if (userData) {
+      const user = JSON.parse(userData);
+      setContactInfo({
+        firstName: user.firstName || "",
+        lastName: user.lastName || "",
+        email: user.email || "",
+        phone: user.phone || "",
+      });
     }
   }, []);
 
@@ -470,10 +543,108 @@ const RequestQuote = () => {
           imageCount: uploadedImages.length,
         })
       );
-      console.log("Proceeding to step 4");
-      // setCurrentStep(4); // Will be implemented
+      setCurrentStep(4);
     }
   };
+
+  // Phone number formatting
+  const formatPhoneNumber = (value: string): string => {
+    const numbers = value.replace(/\D/g, "");
+    if (numbers.length <= 3) return numbers;
+    if (numbers.length <= 6) return `(${numbers.slice(0, 3)}) ${numbers.slice(3)}`;
+    return `(${numbers.slice(0, 3)}) ${numbers.slice(3, 6)}-${numbers.slice(6, 10)}`;
+  };
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatPhoneNumber(e.target.value);
+    setContactInfo({ ...contactInfo, phone: formatted });
+  };
+
+  const handleContactTimeToggle = (timeId: string) => {
+    setContactTimes((prev) =>
+      prev.includes(timeId)
+        ? prev.filter((t) => t !== timeId)
+        : [...prev, timeId]
+    );
+  };
+
+  const validateStep4 = () => {
+    const errors: Record<string, string> = {};
+    
+    if (!contactInfo.firstName.trim()) {
+      errors.firstName = "First name is required";
+    }
+    if (!contactInfo.lastName.trim()) {
+      errors.lastName = "Last name is required";
+    }
+    if (!contactInfo.email.trim()) {
+      errors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactInfo.email)) {
+      errors.email = "Please enter a valid email address";
+    }
+    if (!contactInfo.phone.trim()) {
+      errors.phone = "Phone number is required";
+    } else if (contactInfo.phone.replace(/\D/g, "").length !== 10) {
+      errors.phone = "Please enter a valid 10-digit phone number";
+    }
+    if (contactTimes.length === 0) {
+      errors.contactTimes = "Please select at least one preferred contact time";
+    }
+
+    if (createAccount) {
+      if (!password) {
+        errors.password = "Password is required";
+      } else if (password.length < 8) {
+        errors.password = "Password must be at least 8 characters";
+      } else if (!/\d/.test(password) || !/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+        errors.password = "Password must include a number and special character";
+      }
+      if (password !== confirmPassword) {
+        errors.confirmPassword = "Passwords do not match";
+      }
+      if (!acceptTerms) {
+        errors.terms = "You must accept the terms and conditions";
+      }
+    }
+
+    setStep4Errors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleStep4Continue = () => {
+    if (validateStep4()) {
+      localStorage.setItem(
+        "quoteStep4",
+        JSON.stringify({
+          contactInfo,
+          preferredContactMethod,
+          contactTimes,
+          preferredDate: preferredDate?.toISOString(),
+          marketingOptIn,
+          createAccount,
+        })
+      );
+      console.log("Proceeding to step 5");
+      // setCurrentStep(5); // Will be implemented
+    }
+  };
+
+  // Password strength calculation
+  const getPasswordStrength = () => {
+    if (!password) return { score: 0, label: "", color: "" };
+    let score = 0;
+    if (password.length >= 8) score++;
+    if (/[a-z]/.test(password) && /[A-Z]/.test(password)) score++;
+    if (/\d/.test(password)) score++;
+    if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) score++;
+
+    if (score <= 1) return { score: 25, label: "Weak", color: "bg-destructive" };
+    if (score === 2) return { score: 50, label: "Fair", color: "bg-orange-500" };
+    if (score === 3) return { score: 75, label: "Good", color: "bg-yellow-500" };
+    return { score: 100, label: "Strong", color: "bg-green-500" };
+  };
+
+  const passwordStrength = getPasswordStrength();
 
   const currentScopeOptions = selectedService
     ? scopeOptionsByService[selectedService] || scopeOptionsByService.other
@@ -1259,6 +1430,427 @@ const RequestQuote = () => {
                     size="lg"
                   >
                     Continue
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* Step 4: Contact & Schedule */}
+        {currentStep === 4 && (
+          <>
+            {/* Header */}
+            <div className="text-center mb-8 md:mb-12">
+              <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
+                How can we reach you?
+              </h1>
+              <p className="text-lg text-muted-foreground">
+                We'll contact you to discuss your project and schedule an estimate
+              </p>
+            </div>
+
+            <div className="max-w-3xl mx-auto space-y-8">
+              {/* Logged-in User Notice */}
+              {isLoggedIn && (
+                <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <User className="w-5 h-5 text-primary" />
+                    <span className="text-sm text-foreground">
+                      Using information from your account
+                    </span>
+                  </div>
+                  <Button variant="ghost" size="sm">
+                    Edit
+                  </Button>
+                </div>
+              )}
+
+              {/* Contact Information */}
+              <div className="space-y-6">
+                <h2 className="text-xl font-semibold text-foreground">
+                  Contact Information
+                </h2>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="firstName">
+                      First Name <span className="text-destructive">*</span>
+                    </Label>
+                    <Input
+                      id="firstName"
+                      placeholder="John"
+                      value={contactInfo.firstName}
+                      onChange={(e) =>
+                        setContactInfo({ ...contactInfo, firstName: e.target.value })
+                      }
+                      className={cn(step4Errors.firstName && "border-destructive")}
+                    />
+                    {step4Errors.firstName && (
+                      <p className="text-sm text-destructive">{step4Errors.firstName}</p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="lastName">
+                      Last Name <span className="text-destructive">*</span>
+                    </Label>
+                    <Input
+                      id="lastName"
+                      placeholder="Doe"
+                      value={contactInfo.lastName}
+                      onChange={(e) =>
+                        setContactInfo({ ...contactInfo, lastName: e.target.value })
+                      }
+                      className={cn(step4Errors.lastName && "border-destructive")}
+                    />
+                    {step4Errors.lastName && (
+                      <p className="text-sm text-destructive">{step4Errors.lastName}</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="email">
+                    Email Address <span className="text-destructive">*</span>
+                  </Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="john@example.com"
+                    value={contactInfo.email}
+                    onChange={(e) =>
+                      setContactInfo({ ...contactInfo, email: e.target.value })
+                    }
+                    className={cn(step4Errors.email && "border-destructive")}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    You'll receive quote confirmation here
+                  </p>
+                  {step4Errors.email && (
+                    <p className="text-sm text-destructive">{step4Errors.email}</p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="phone">
+                    Phone Number <span className="text-destructive">*</span>
+                  </Label>
+                  <Input
+                    id="phone"
+                    type="tel"
+                    placeholder="(555) 123-4567"
+                    value={contactInfo.phone}
+                    onChange={handlePhoneChange}
+                    className={cn(step4Errors.phone && "border-destructive")}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    We'll call to discuss your project
+                  </p>
+                  {step4Errors.phone && (
+                    <p className="text-sm text-destructive">{step4Errors.phone}</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Preferred Contact Method */}
+              <div className="space-y-4">
+                <Label className="text-base font-semibold">
+                  Preferred Contact Method
+                </Label>
+
+                <RadioGroup
+                  value={preferredContactMethod}
+                  onValueChange={setPreferredContactMethod}
+                  className="grid grid-cols-2 md:grid-cols-4 gap-3"
+                >
+                  {contactMethodOptions.map((option) => {
+                    const Icon = option.icon;
+                    return (
+                      <div key={option.id}>
+                        <RadioGroupItem
+                          value={option.id}
+                          id={`contact-${option.id}`}
+                          className="peer sr-only"
+                        />
+                        <Label
+                          htmlFor={`contact-${option.id}`}
+                          className={cn(
+                            "flex flex-col items-center justify-center p-4 rounded-lg border-2 cursor-pointer transition-all text-center",
+                            "hover:border-primary/50 hover:bg-muted/50",
+                            "peer-focus-visible:ring-2 peer-focus-visible:ring-primary peer-focus-visible:ring-offset-2",
+                            preferredContactMethod === option.id
+                              ? "border-primary bg-primary/5"
+                              : "border-border bg-background"
+                          )}
+                        >
+                          <Icon className="w-5 h-5 mb-2 text-muted-foreground" />
+                          <span className="font-medium text-foreground text-sm">
+                            {option.label}
+                          </span>
+                        </Label>
+                      </div>
+                    );
+                  })}
+                </RadioGroup>
+              </div>
+
+              {/* Best Time to Contact */}
+              <div className="space-y-4">
+                <div>
+                  <Label className="text-base font-semibold">
+                    Best time to contact you <span className="text-destructive">*</span>
+                  </Label>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Select all that apply
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                  {contactTimeOptions.map((option) => (
+                    <button
+                      key={option.id}
+                      type="button"
+                      onClick={() => handleContactTimeToggle(option.id)}
+                      className={cn(
+                        "p-3 rounded-lg border-2 text-left transition-all",
+                        "hover:border-primary/50",
+                        "focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
+                        contactTimes.includes(option.id)
+                          ? "border-primary bg-primary/5"
+                          : "border-border bg-background"
+                      )}
+                    >
+                      <div className="flex items-center gap-2">
+                        <Checkbox
+                          checked={contactTimes.includes(option.id)}
+                          className="pointer-events-none"
+                        />
+                        <span className="text-sm font-medium text-foreground">
+                          {option.label}
+                        </span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+
+                {step4Errors.contactTimes && (
+                  <p className="text-sm text-destructive">{step4Errors.contactTimes}</p>
+                )}
+              </div>
+
+              {/* Preferred Appointment Date */}
+              <div className="space-y-4">
+                <div>
+                  <Label className="text-base font-semibold">
+                    Preferred appointment date (optional)
+                  </Label>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Do you have a preferred date for site visit? We'll confirm availability.
+                  </p>
+                </div>
+
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-full md:w-[300px] justify-start text-left font-normal",
+                        !preferredDate && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {preferredDate ? format(preferredDate, "PPP") : "Select a date"}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={preferredDate}
+                      onSelect={setPreferredDate}
+                      disabled={(date) => date < new Date()}
+                      initialFocus
+                      className="pointer-events-auto"
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
+
+              {/* Account Creation (for non-logged-in users) */}
+              {!isLoggedIn && (
+                <div className="space-y-4 pt-6 border-t">
+                  <div className="flex items-start gap-3">
+                    <Checkbox
+                      id="createAccount"
+                      checked={createAccount}
+                      onCheckedChange={(checked) => setCreateAccount(checked === true)}
+                    />
+                    <div>
+                      <Label htmlFor="createAccount" className="text-base font-semibold cursor-pointer">
+                        Create an account to track this quote
+                      </Label>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Track your quotes, save project info, and manage appointments
+                      </p>
+                    </div>
+                  </div>
+
+                  {createAccount && (
+                    <div className="space-y-4 pl-7 animate-in slide-in-from-top-2">
+                      <div className="space-y-2">
+                        <Label htmlFor="password">
+                          Password <span className="text-destructive">*</span>
+                        </Label>
+                        <div className="relative">
+                          <Input
+                            id="password"
+                            type={showPassword ? "text" : "password"}
+                            placeholder="Create a password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className={cn(
+                              "pr-10",
+                              step4Errors.password && "border-destructive"
+                            )}
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                          >
+                            {showPassword ? (
+                              <EyeOff className="w-4 h-4" />
+                            ) : (
+                              <Eye className="w-4 h-4" />
+                            )}
+                          </button>
+                        </div>
+
+                        {/* Password Strength */}
+                        {password && (
+                          <div className="space-y-1">
+                            <div className="flex items-center gap-2">
+                              <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
+                                <div
+                                  className={cn("h-full transition-all", passwordStrength.color)}
+                                  style={{ width: `${passwordStrength.score}%` }}
+                                />
+                              </div>
+                              <span className="text-xs text-muted-foreground w-16">
+                                {passwordStrength.label}
+                              </span>
+                            </div>
+                            <p className="text-xs text-muted-foreground">
+                              Min 8 characters, include a number and special character
+                            </p>
+                          </div>
+                        )}
+
+                        {step4Errors.password && (
+                          <p className="text-sm text-destructive">{step4Errors.password}</p>
+                        )}
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="confirmPassword">
+                          Confirm Password <span className="text-destructive">*</span>
+                        </Label>
+                        <Input
+                          id="confirmPassword"
+                          type={showPassword ? "text" : "password"}
+                          placeholder="Confirm your password"
+                          value={confirmPassword}
+                          onChange={(e) => setConfirmPassword(e.target.value)}
+                          className={cn(step4Errors.confirmPassword && "border-destructive")}
+                        />
+                        {step4Errors.confirmPassword && (
+                          <p className="text-sm text-destructive">{step4Errors.confirmPassword}</p>
+                        )}
+                      </div>
+
+                      <div className="flex items-start gap-3">
+                        <Checkbox
+                          id="acceptTerms"
+                          checked={acceptTerms}
+                          onCheckedChange={(checked) => setAcceptTerms(checked === true)}
+                        />
+                        <Label htmlFor="acceptTerms" className="text-sm cursor-pointer">
+                          I agree to the{" "}
+                          <Link to="/terms" className="text-primary hover:underline">
+                            Terms & Conditions
+                          </Link>{" "}
+                          and{" "}
+                          <Link to="/privacy" className="text-primary hover:underline">
+                            Privacy Policy
+                          </Link>
+                        </Label>
+                      </div>
+                      {step4Errors.terms && (
+                        <p className="text-sm text-destructive pl-7">{step4Errors.terms}</p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Marketing Preferences */}
+              <div className="space-y-4 pt-6 border-t">
+                <div className="flex items-start gap-3">
+                  <Checkbox
+                    id="marketingOptIn"
+                    checked={marketingOptIn}
+                    onCheckedChange={(checked) => setMarketingOptIn(checked === true)}
+                  />
+                  <div>
+                    <Label htmlFor="marketingOptIn" className="cursor-pointer">
+                      I'd like to receive occasional tips and special offers
+                    </Label>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      We respect your privacy. Unsubscribe anytime.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Privacy Note */}
+              <div className="flex items-start gap-2 p-4 bg-muted/50 rounded-lg">
+                <Shield className="w-4 h-4 text-muted-foreground mt-0.5 shrink-0" />
+                <p className="text-xs text-muted-foreground">
+                  Your information is secure and will only be used to process your quote request.{" "}
+                  <Link to="/privacy" className="text-primary hover:underline">
+                    View our Privacy Policy
+                  </Link>
+                </p>
+              </div>
+
+              {/* Actions */}
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t">
+                <Button
+                  variant="ghost"
+                  onClick={handleSaveDraft}
+                  className="w-full sm:w-auto order-3 sm:order-1"
+                >
+                  <Save className="w-4 h-4 mr-2" />
+                  Save as Draft
+                </Button>
+
+                <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto order-1 sm:order-2">
+                  <Button
+                    variant="outline"
+                    onClick={() => setCurrentStep(3)}
+                    className="w-full sm:w-auto"
+                  >
+                    <ArrowLeft className="w-4 h-4 mr-2" />
+                    Back
+                  </Button>
+
+                  <Button
+                    onClick={handleStep4Continue}
+                    className="w-full sm:w-auto"
+                    size="lg"
+                  >
+                    Continue to Review
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </div>
