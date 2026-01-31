@@ -65,6 +65,14 @@ export const ROUTES = {
   DASHBOARD: '/dashboard',
   SIGN_IN: '/sign-in',
   SIGN_UP: '/sign-up',
+  // Individual service pages
+  SERVICE_KITCHEN: '/services/kitchen-remodeling',
+  SERVICE_BATHROOM: '/services/bathroom-renovation',
+  SERVICE_ROOFING: '/services/roofing-services',
+  SERVICE_ELECTRICAL: '/services/electrical-work',
+  SERVICE_PLUMBING: '/services/plumbing-services',
+  SERVICE_GENERAL: '/services/general-repairs',
+  SERVICE_FLOORING: '/services/flooring',
 } as const;
 
 // Type exports for TypeScript
