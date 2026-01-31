@@ -11,6 +11,7 @@ import Dashboard from "./pages/Dashboard";
 import RequestQuote from "./pages/RequestQuote";
 import QuoteConfirmation from "./pages/QuoteConfirmation";
 import BeforeAfterGalleryPage from "./pages/BeforeAfterGalleryPage";
+import ServicesPage from "./pages/ServicesPage";
 import ServicePage from "./pages/ServicePage";
 import NotFound from "./pages/NotFound";
 
@@ -31,7 +32,9 @@ const App = () => (
             <Route path="/request-quote" element={<RequestQuote />} />
             <Route path="/request-quote/confirmation" element={<QuoteConfirmation />} />
             <Route path="/gallery" element={<BeforeAfterGalleryPage />} />
-            {/* Service Pages - Dynamic routing */}
+            {/* Services Hub Page */}
+            <Route path="/services" element={<ServicesPage />} />
+            {/* Individual Service Pages - Dynamic routing */}
             <Route path="/services/:slug" element={<ServicePage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
