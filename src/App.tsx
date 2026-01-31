@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard";
+import DashboardQuotes from "./pages/DashboardQuotes";
 import RequestQuote from "./pages/RequestQuote";
 import QuoteConfirmation from "./pages/QuoteConfirmation";
 import BeforeAfterGalleryPage from "./pages/BeforeAfterGalleryPage";
@@ -32,6 +33,7 @@ const App = () => (
             <Route path="/sign-in" element={<SignIn />} />
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard/quotes" element={<DashboardQuotes />} />
             <Route path="/request-quote" element={<RequestQuote />} />
             <Route path="/request-quote/confirmation" element={<QuoteConfirmation />} />
             <Route path="/gallery" element={<BeforeAfterGalleryPage />} />
