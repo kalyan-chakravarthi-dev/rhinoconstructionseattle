@@ -55,6 +55,11 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Status colors per development_rules.md
+        success: "hsl(var(--success))",
+        error: "hsl(var(--error))",
+        warning: "hsl(var(--warning))",
+        // Brand colors
         rhino: {
           blue: "hsl(var(--rhino-blue))",
           "blue-dark": "hsl(var(--rhino-blue-dark))",

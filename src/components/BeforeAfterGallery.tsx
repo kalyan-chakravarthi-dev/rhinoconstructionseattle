@@ -1,6 +1,8 @@
 import { useState, useRef, useCallback } from "react";
+import { Link } from "react-router-dom";
 import { ArrowRight, GripVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ROUTES } from "@/lib/constants";
 
 // Import images
 import kitchenBefore from "@/assets/kitchen-before.jpg";
@@ -186,10 +188,10 @@ const BeforeAfterGallery = () => {
         {/* Bottom CTA */}
         <div className="text-center">
           <Button variant="default" size="lg" asChild>
-            <a href="/before-after" className="inline-flex items-center gap-2">
+            <Link to={ROUTES.GALLERY} className="inline-flex items-center gap-2">
               View Full Gallery
-              <ArrowRight className="w-4 h-4" />
-            </a>
+              <ArrowRight className="w-4 h-4" aria-hidden="true" />
+            </Link>
           </Button>
         </div>
       </div>

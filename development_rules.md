@@ -23,34 +23,37 @@
 ## 🎯 PROJECT STANDARDS
 
 ### Tech Stack (REQUIRED)
-- **Framework**: Next.js 14+ with App Router
+- **Framework**: Vite + React 18
 - **Language**: TypeScript (strict mode)
 - **Styling**: Tailwind CSS 3+
 - **UI Components**: Shadcn UI
 - **Icons**: Lucide React
 - **Forms**: React Hook Form + Zod validation
+- **Routing**: React Router DOM v6
 - **State Management**: React Context API / Zustand (for global state)
-- **Image Handling**: Next.js Image component
+- **Image Handling**: Standard `<img>` tags with lazy loading
 
 ### File Structure (MUST FOLLOW)
 ```
-/app
-  /(routes)
-    /page.tsx
-    /layout.tsx
-/components
-  /ui (Shadcn components)
-  /shared (reusable components)
-  /sections (page sections)
-/lib
-  /utils.ts
-  /validations.ts
-  /constants.ts
+/src
+  /assets (images, fonts)
+  /components
+    /ui (Shadcn components)
+    /shared (reusable components)
+    /sections (page sections)
+  /hooks (custom React hooks)
+  /lib
+    /utils.ts
+    /validations.ts
+    /constants.ts
+  /pages (route components)
+  /test (test files)
+  index.css
+  App.tsx
+  main.tsx
 /public
   /images
   /icons
-/styles
-  /globals.css
 ```
 
 ### Naming Conventions (STRICT)

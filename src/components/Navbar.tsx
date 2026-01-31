@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Phone, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { COMPANY_INFO, ROUTES } from "@/lib/constants";
 
 const navItems = [
-  { href: "/", label: "Home" },
+  { href: ROUTES.HOME, label: "Home" },
   { href: "/services", label: "Services" },
-  { href: "/before-after", label: "Before & After" },
+  { href: ROUTES.GALLERY, label: "Before & After" },
   { href: "/about", label: "About Us" },
   { href: "/contact", label: "Contact" },
 ];
@@ -47,11 +48,11 @@ const Navbar = () => {
       {/* Emergency Banner */}
       <div className="bg-gradient-to-r from-secondary via-rhino-orange-dark to-secondary text-secondary-foreground py-2 px-4 text-center relative z-50">
         <div className="container mx-auto flex items-center justify-center gap-2 text-sm font-medium">
-          <AlertTriangle className="w-4 h-4 animate-pulse" />
+          <AlertTriangle className="w-4 h-4 animate-pulse" aria-hidden="true" />
           <span>24/7 Emergency Services Available</span>
           <span className="hidden sm:inline">—</span>
           <a 
-            href="tel:+12065557446" 
+            href={`tel:${COMPANY_INFO.phoneRaw}`}
             className="hidden sm:inline underline underline-offset-2 hover:no-underline font-semibold"
           >
             Call Now
@@ -69,7 +70,7 @@ const Navbar = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}
-            <a href="/" className="flex items-center gap-3 flex-shrink-0">
+            <Link to={ROUTES.HOME} className="flex items-center gap-3 flex-shrink-0">
               <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
                 <span className="text-primary-foreground font-black text-xl">R</span>
               </div>
@@ -77,14 +78,14 @@ const Navbar = () => {
                 <span className="font-bold text-lg lg:text-xl text-foreground tracking-tight">RHINO</span>
                 <span className="font-medium text-lg lg:text-xl text-muted-foreground ml-1">CONSTRUCTION</span>
               </div>
-            </a>
+            </Link>
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center gap-1">
               {navItems.map((item) => (
-                <a
+                <Link
                   key={item.href}
-                  href={item.href}
+                  to={item.href}
                   className={cn(
                     "relative px-4 py-2 font-medium text-sm transition-colors rounded-md",
                     "hover:text-secondary hover:bg-muted/50",
@@ -98,7 +99,7 @@ const Navbar = () => {
                   {isActive(item.href) && (
                     <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-secondary rounded-full" />
                   )}
-                </a>
+                </Link>
               ))}
             </div>
 
@@ -106,21 +107,21 @@ const Navbar = () => {
             <div className="hidden lg:flex items-center gap-3">
               {/* Phone */}
               <a
-                href="tel:+12065557446"
+                href={`tel:${COMPANY_INFO.phoneRaw}`}
                 className="flex items-center gap-2 text-foreground hover:text-secondary transition-colors px-3 py-2 rounded-md hover:bg-muted/50"
               >
-                <Phone className="w-4 h-4" />
-                <span className="font-medium text-sm">(206) 555-RHINO</span>
+                <Phone className="w-4 h-4" aria-hidden="true" />
+                <span className="font-medium text-sm">{COMPANY_INFO.phone}</span>
               </a>
 
               {/* Sign In */}
-              <Button variant="outline" size="default">
-                Sign In
+              <Button variant="outline" size="default" asChild>
+                <Link to={ROUTES.SIGN_IN}>Sign In</Link>
               </Button>
 
               {/* Request Quote */}
-              <Button variant="hero" size="default">
-                Request Quote
+              <Button variant="hero" size="default" asChild>
+                <Link to={ROUTES.REQUEST_QUOTE}>Request Quote</Link>
               </Button>
             </div>
 
@@ -173,11 +174,11 @@ const Navbar = () => {
           {/* Drawer Content */}
           <div className="flex-1 overflow-y-auto py-4">
             {/* Navigation Links */}
-            <nav className="px-4 space-y-1">
+            <nav className="px-4 space-y-1" aria-label="Mobile navigation">
               {navItems.map((item) => (
-                <a
+                <Link
                   key={item.href}
-                  href={item.href}
+                  to={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className={cn(
                     "flex items-center px-4 py-3 rounded-lg font-medium transition-colors",
@@ -187,7 +188,7 @@ const Navbar = () => {
                   )}
                 >
                   {item.label}
-                </a>
+                </Link>
               ))}
             </nav>
 
@@ -200,17 +201,21 @@ const Navbar = () => {
                 variant="outline" 
                 size="lg" 
                 className="w-full"
-                onClick={() => setIsMobileMenuOpen(false)}
+                asChild
               >
-                Sign In
+                <Link to={ROUTES.SIGN_IN} onClick={() => setIsMobileMenuOpen(false)}>
+                  Sign In
+                </Link>
               </Button>
               <Button 
                 variant="hero" 
                 size="lg" 
                 className="w-full"
-                onClick={() => setIsMobileMenuOpen(false)}
+                asChild
               >
-                Request Quote
+                <Link to={ROUTES.REQUEST_QUOTE} onClick={() => setIsMobileMenuOpen(false)}>
+                  Request Quote
+                </Link>
               </Button>
             </div>
           </div>
@@ -218,11 +223,11 @@ const Navbar = () => {
           {/* Drawer Footer - Call to Action */}
           <div className="p-4 border-t border-border bg-muted/30">
             <a
-              href="tel:+12065557446"
+              href={`tel:${COMPANY_INFO.phoneRaw}`}
               className="flex items-center justify-center gap-3 bg-primary text-primary-foreground py-4 px-6 rounded-lg font-semibold text-lg hover:bg-rhino-blue-dark transition-colors"
             >
-              <Phone className="w-5 h-5" />
-              Call (206) 555-RHINO
+              <Phone className="w-5 h-5" aria-hidden="true" />
+              Call {COMPANY_INFO.phone}
             </a>
             <p className="text-center text-muted-foreground text-sm mt-3">
               Available 24/7 for emergencies
