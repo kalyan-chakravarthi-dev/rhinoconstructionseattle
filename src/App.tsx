@@ -13,6 +13,7 @@ import QuoteConfirmation from "./pages/QuoteConfirmation";
 import BeforeAfterGalleryPage from "./pages/BeforeAfterGalleryPage";
 import ServicesPage from "./pages/ServicesPage";
 import ServicePage from "./pages/ServicePage";
+import AboutPage from "./pages/AboutPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,6 +37,8 @@ const App = () => (
             <Route path="/services" element={<ServicesPage />} />
             {/* Individual Service Pages - Dynamic routing */}
             <Route path="/services/:slug" element={<ServicePage />} />
+            {/* About Page */}
+            <Route path="/about" element={<AboutPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
