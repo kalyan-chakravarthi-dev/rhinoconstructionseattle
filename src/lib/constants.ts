@@ -60,9 +60,11 @@ export const ROUTES = {
   BEFORE_AFTER: '/before-after',
   ABOUT: '/about',
   CONTACT: '/contact',
+  FAQ: '/faq',
   REQUEST_QUOTE: '/request-quote',
   QUOTE_CONFIRMATION: '/request-quote/confirmation',
   DASHBOARD: '/dashboard',
+  DASHBOARD_QUOTES: '/dashboard/quotes',
   SIGN_IN: '/sign-in',
   SIGN_UP: '/sign-up',
   // Individual service pages
