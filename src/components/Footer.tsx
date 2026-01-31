@@ -1,87 +1,165 @@
-import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, AlertCircle, Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
+
+const quickLinks = [
+  { label: "Home", href: "/" },
+  { label: "Services", href: "/services" },
+  { label: "Before & After", href: "/before-after" },
+  { label: "About Us", href: "/about" },
+  { label: "Blog", href: "/blog" },
+  { label: "Contact", href: "/contact" },
+  { label: "Privacy Policy", href: "/privacy" },
+  { label: "Terms of Service", href: "/terms" },
+];
+
+const services = [
+  { label: "Kitchen Remodeling", href: "/services/kitchen-remodeling" },
+  { label: "Bathroom Renovation", href: "/services/bathroom-renovation" },
+  { label: "Roofing Services", href: "/services/roofing" },
+  { label: "Electrical Work", href: "/services/electrical" },
+  { label: "Plumbing", href: "/services/plumbing" },
+  { label: "General Repairs", href: "/services/general-repairs" },
+  { label: "Emergency Services", href: "/services/emergency" },
+];
+
+const socialLinks = [
+  { icon: Facebook, href: "#", label: "Facebook" },
+  { icon: Instagram, href: "#", label: "Instagram" },
+  { icon: Linkedin, href: "#", label: "LinkedIn" },
+  { icon: Twitter, href: "#", label: "Twitter" },
+];
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer id="contact" className="bg-foreground text-background">
-      <div className="container mx-auto px-4 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-          {/* Company Info */}
-          <div className="lg:col-span-1">
-            <div className="flex items-center gap-3 mb-6">
+    <footer className="bg-[#1e293b] text-[#e2e8f0]">
+      {/* Main Footer */}
+      <div className="container mx-auto px-4 lg:px-8 py-12 lg:py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+          {/* Column 1 - Company Info */}
+          <div className="sm:col-span-2 lg:col-span-1">
+            {/* Logo */}
+            <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center">
                 <span className="text-secondary-foreground font-black text-xl">R</span>
               </div>
               <div>
-                <span className="font-bold text-xl text-background">Rhino</span>
-                <span className="font-medium text-xl text-background/80 ml-1">Construction</span>
+                <span className="font-bold text-lg text-[#f8fafc]">RHINO</span>
+                <span className="font-medium text-lg text-[#94a3b8] ml-1">CONSTRUCTION</span>
               </div>
             </div>
-            <p className="text-background/70 mb-4">
-              Building trust, one project at a time. Seattle's trusted partner for quality construction and home repair services.
+
+            {/* Tagline */}
+            <p className="text-secondary font-medium mb-3">
+              Building Trust, One Project at a Time
             </p>
-            <p className="text-sm text-background/50">
-              Licensed • Bonded • Insured
+
+            {/* Description */}
+            <p className="text-[#94a3b8] text-sm leading-relaxed mb-6">
+              Seattle's premier home repair and construction company. We deliver quality craftsmanship and exceptional service on every project, big or small.
             </p>
-          </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="font-semibold text-lg mb-4">Quick Links</h4>
-            <ul className="space-y-3">
-              {["Services", "About Us", "Projects", "Testimonials", "Contact"].map((link) => (
-                <li key={link}>
-                  <a href="#" className="text-background/70 hover:text-secondary transition-colors">
-                    {link}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Services */}
-          <div>
-            <h4 className="font-semibold text-lg mb-4">Services</h4>
-            <ul className="space-y-3">
-              {["Home Renovations", "New Construction", "Structural Repairs", "Interior Finishing", "Commercial Projects"].map((service) => (
-                <li key={service}>
-                  <a href="#services" className="text-background/70 hover:text-secondary transition-colors">
-                    {service}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contact Info */}
-          <div>
-            <h4 className="font-semibold text-lg mb-4">Contact Us</h4>
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" />
-                <span className="text-background/70">
-                  1234 Construction Way<br />
-                  Seattle, WA 98101
-                </span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-secondary flex-shrink-0" />
-                <a href="tel:+12065551234" className="text-background/70 hover:text-secondary transition-colors">
-                  (206) 555-1234
+            {/* Social Icons */}
+            <div className="flex items-center gap-3">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  aria-label={social.label}
+                  className="w-10 h-10 rounded-lg bg-[#334155] hover:bg-secondary flex items-center justify-center transition-colors duration-200"
+                >
+                  <social.icon className="w-5 h-5" />
                 </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Column 2 - Quick Links */}
+          <div>
+            <h4 className="text-[#f8fafc] font-semibold text-lg mb-5">Quick Links</h4>
+            <ul className="space-y-3">
+              {quickLinks.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="text-[#94a3b8] hover:text-secondary transition-colors duration-200 text-sm"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 3 - Services */}
+          <div>
+            <h4 className="text-[#f8fafc] font-semibold text-lg mb-5">Our Services</h4>
+            <ul className="space-y-3">
+              {services.map((service) => (
+                <li key={service.label}>
+                  <a
+                    href={service.href}
+                    className="text-[#94a3b8] hover:text-secondary transition-colors duration-200 text-sm"
+                  >
+                    {service.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 4 - Contact Info */}
+          <div>
+            <h4 className="text-[#f8fafc] font-semibold text-lg mb-5">Get In Touch</h4>
+            <ul className="space-y-4">
+              {/* Phone */}
+              <li className="flex items-start gap-3">
+                <Phone className="w-5 h-5 text-secondary flex-shrink-0 mt-0.5" />
+                <div>
+                  <a
+                    href="tel:+12065557446"
+                    className="text-[#f8fafc] hover:text-secondary transition-colors font-medium"
+                  >
+                    (206) 555-RHINO
+                  </a>
+                </div>
               </li>
-              <li className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-secondary flex-shrink-0" />
-                <a href="mailto:info@rhinoconstruction.com" className="text-background/70 hover:text-secondary transition-colors">
+
+              {/* Email */}
+              <li className="flex items-start gap-3">
+                <Mail className="w-5 h-5 text-secondary flex-shrink-0 mt-0.5" />
+                <a
+                  href="mailto:info@rhinoconstruction.com"
+                  className="text-[#94a3b8] hover:text-secondary transition-colors text-sm break-all"
+                >
                   info@rhinoconstruction.com
                 </a>
               </li>
+
+              {/* Address */}
               <li className="flex items-start gap-3">
-                <Clock className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" />
-                <span className="text-background/70">
-                  Mon - Fri: 7:00 AM - 6:00 PM<br />
-                  Sat: 8:00 AM - 4:00 PM
+                <MapPin className="w-5 h-5 text-secondary flex-shrink-0 mt-0.5" />
+                <span className="text-[#94a3b8] text-sm">
+                  123 Main St<br />
+                  Seattle, WA 98101
+                </span>
+              </li>
+
+              {/* Hours */}
+              <li className="flex items-start gap-3">
+                <Clock className="w-5 h-5 text-secondary flex-shrink-0 mt-0.5" />
+                <span className="text-[#94a3b8] text-sm">
+                  Mon-Fri: 7am - 6pm<br />
+                  Sat: 8am - 4pm
+                </span>
+              </li>
+
+              {/* Emergency */}
+              <li className="flex items-start gap-3">
+                <AlertCircle className="w-5 h-5 text-secondary flex-shrink-0 mt-0.5" />
+                <span className="text-[#94a3b8] text-sm">
+                  <span className="text-secondary font-medium">Emergency:</span><br />
+                  24/7 Available
                 </span>
               </li>
             </ul>
@@ -89,14 +167,51 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Bottom Bar */}
-      <div className="border-t border-background/10">
+      {/* Bottom Section */}
+      <div className="border-t border-[#334155]">
         <div className="container mx-auto px-4 lg:px-8 py-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-background/50">
-            <p>© {currentYear} Rhino Construction. All rights reserved.</p>
-            <div className="flex items-center gap-6">
-              <a href="#" className="hover:text-secondary transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-secondary transition-colors">Terms of Service</a>
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
+            {/* Copyright & License */}
+            <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-sm text-[#64748b] text-center sm:text-left">
+              <span>© {currentYear} Rhino Construction. All rights reserved.</span>
+              <span className="hidden sm:inline">|</span>
+              <span>Licensed, Bonded & Insured | License #123456</span>
+            </div>
+
+            {/* Payment Methods */}
+            <div className="flex items-center gap-3">
+              <span className="text-xs text-[#64748b] mr-2">We Accept:</span>
+              {/* Visa */}
+              <div className="w-10 h-6 bg-[#f8fafc] rounded flex items-center justify-center">
+                <svg viewBox="0 0 48 48" className="w-8 h-4">
+                  <path fill="#1565C0" d="M45 35c0 2.2-1.8 4-4 4H7c-2.2 0-4-1.8-4-4V13c0-2.2 1.8-4 4-4h34c2.2 0 4 1.8 4 4v22z"/>
+                  <path fill="#FFF" d="M15.2 29l1.7-10.5h2.7L17.9 29h-2.7zm13.5-10.5l-2.6 7.2-.3-1.5-.9-4.6c-.2-.6-.6-.9-1.2-1h-4.2l-.1.3c1 .3 2 .7 2.6 1.1l2.2 8.5h2.8l4.3-10h-2.6zm4.5 10.5h2.5l-2.2-10.5h-2.2c-.5 0-1 .3-1.2.8l-4 9.7h2.8l.6-1.6h3.4l.3 1.6zm-2.9-3.8l1.4-3.9.8 3.9h-2.2zM22.8 20.2l.4-2.3c-.8-.3-1.6-.5-2.5-.5-1.4 0-2.8.6-2.8 2.1 0 1.4 1.8 1.8 2.7 2.3.6.3.6.5.6.7 0 .4-.5.6-1 .6-.7 0-1.7-.3-2.4-.5l-.4 2.3c.6.2 1.6.5 2.7.5 2 0 3.2-.9 3.2-2.3 0-1.7-2.7-2-2.7-2.7 0-.3.3-.5.9-.5.5 0 1.1.1 1.3.3z"/>
+                </svg>
+              </div>
+              {/* Mastercard */}
+              <div className="w-10 h-6 bg-[#f8fafc] rounded flex items-center justify-center">
+                <svg viewBox="0 0 48 48" className="w-8 h-4">
+                  <path fill="#3F51B5" d="M45 35c0 2.2-1.8 4-4 4H7c-2.2 0-4-1.8-4-4V13c0-2.2 1.8-4 4-4h34c2.2 0 4 1.8 4 4v22z"/>
+                  <circle fill="#FFC107" cx="30" cy="24" r="10"/>
+                  <circle fill="#FF3D00" cx="18" cy="24" r="10"/>
+                  <path fill="#FF9800" d="M24 17.2c-2.3 1.7-3.8 4.5-3.8 7.5s1.5 5.8 3.8 7.5c2.3-1.7 3.8-4.5 3.8-7.5s-1.5-5.8-3.8-7.5z"/>
+                </svg>
+              </div>
+              {/* Amex */}
+              <div className="w-10 h-6 bg-[#f8fafc] rounded flex items-center justify-center">
+                <svg viewBox="0 0 48 48" className="w-8 h-4">
+                  <path fill="#1976D2" d="M45 35c0 2.2-1.8 4-4 4H7c-2.2 0-4-1.8-4-4V13c0-2.2 1.8-4 4-4h34c2.2 0 4 1.8 4 4v22z"/>
+                  <path fill="#FFF" d="M22 20l-2 8h-2l2-8h2zm8 0v1.3l-.2-.3c-.2-.5-.7-1-1.6-1h-2l-2 8h2l1-4h.6c.4 0 .6.1.7.3l.2.3.8 3.4h2l-1-4c-.1-.4-.3-.7-.5-.9.5-.3.9-.7 1.2-1.4l.8-1.7h-2zm-12-1l-3 10h7l.4-1.5h-4.5l.5-2h4l.4-1.5h-4l.5-2h4.5l.4-1.5h-6.2l-.5 1.5-1 3z"/>
+                </svg>
+              </div>
+              {/* Discover */}
+              <div className="w-10 h-6 bg-[#f8fafc] rounded flex items-center justify-center">
+                <svg viewBox="0 0 48 48" className="w-8 h-4">
+                  <path fill="#E65100" d="M45 35c0 2.2-1.8 4-4 4H7c-2.2 0-4-1.8-4-4V13c0-2.2 1.8-4 4-4h34c2.2 0 4 1.8 4 4v22z"/>
+                  <circle fill="#FFF" cx="30" cy="24" r="8"/>
+                  <path fill="#E65100" d="M30 18c-3.3 0-6 2.7-6 6s2.7 6 6 6 6-2.7 6-6-2.7-6-6-6z"/>
+                </svg>
+              </div>
             </div>
           </div>
         </div>
