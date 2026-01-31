@@ -15,8 +15,8 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/80 to-primary/40" />
       </div>
 
-      {/* Content */}
-      <div className="container mx-auto px-4 lg:px-8 relative z-10 pt-24 lg:pt-32">
+      {/* Content - adjusted padding for new nav */}
+      <div className="container mx-auto px-4 lg:px-8 relative z-10 pt-16 lg:pt-24">
         <div className="max-w-3xl">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-secondary/20 backdrop-blur-sm border border-secondary/30 rounded-full px-4 py-2 mb-6 animate-fade-up">

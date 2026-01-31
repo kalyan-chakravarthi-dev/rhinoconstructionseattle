@@ -1,114 +1,236 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLocation } from "react-router-dom";
+import { cn } from "@/lib/utils";
+
+const navItems = [
+  { href: "/", label: "Home" },
+  { href: "/services", label: "Services" },
+  { href: "/before-after", label: "Before & After" },
+  { href: "/about", label: "About Us" },
+  { href: "/contact", label: "Contact" },
+];
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 10);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = [
-    { href: "#services", label: "Services" },
-    { href: "#about", label: "About" },
-    { href: "#projects", label: "Projects" },
-    { href: "#contact", label: "Contact" },
-  ];
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
+
+  const isActive = (href: string) => {
+    if (href === "/") return location.pathname === "/";
+    return location.pathname.startsWith(href);
+  };
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-card/95 backdrop-blur-md shadow-md py-3"
-          : "bg-transparent py-5"
-      }`}
-    >
-      <div className="container mx-auto px-4 lg:px-8">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <a href="#" className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center">
-              <span className="text-secondary-foreground font-black text-xl">R</span>
-            </div>
-            <div className={`transition-colors duration-300 ${isScrolled ? "text-foreground" : "text-primary-foreground"}`}>
-              <span className="font-bold text-xl tracking-tight">Rhino</span>
-              <span className="font-medium text-xl ml-1">Construction</span>
-            </div>
-          </a>
-
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className={`font-medium transition-colors duration-200 hover:text-secondary ${
-                  isScrolled ? "text-foreground" : "text-primary-foreground"
-                }`}
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
-
-          {/* CTA Button */}
-          <div className="hidden lg:flex items-center gap-4">
-            <a
-              href="tel:+12065551234"
-              className={`flex items-center gap-2 font-medium transition-colors ${
-                isScrolled ? "text-foreground" : "text-primary-foreground"
-              }`}
-            >
-              <Phone className="w-4 h-4" />
-              (206) 555-1234
-            </a>
-            <Button variant="hero" size="lg">
-              Get Free Quote
-            </Button>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className={`lg:hidden p-2 ${isScrolled ? "text-foreground" : "text-primary-foreground"}`}
+    <>
+      {/* Emergency Banner */}
+      <div className="bg-gradient-to-r from-secondary via-rhino-orange-dark to-secondary text-secondary-foreground py-2 px-4 text-center relative z-50">
+        <div className="container mx-auto flex items-center justify-center gap-2 text-sm font-medium">
+          <AlertTriangle className="w-4 h-4 animate-pulse" />
+          <span>24/7 Emergency Services Available</span>
+          <span className="hidden sm:inline">—</span>
+          <a 
+            href="tel:+12065557446" 
+            className="hidden sm:inline underline underline-offset-2 hover:no-underline font-semibold"
           >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+            Call Now
+          </a>
         </div>
+      </div>
 
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="lg:hidden mt-4 pb-4 animate-fade-in">
-            <div className="flex flex-col gap-4 bg-card rounded-lg p-4 shadow-lg">
-              {navLinks.map((link) => (
+      {/* Main Navigation */}
+      <nav
+        className={cn(
+          "sticky top-0 left-0 right-0 z-40 transition-all duration-300 bg-card",
+          isScrolled && "shadow-md"
+        )}
+      >
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="flex items-center justify-between h-16 lg:h-20">
+            {/* Logo */}
+            <a href="/" className="flex items-center gap-3 flex-shrink-0">
+              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                <span className="text-primary-foreground font-black text-xl">R</span>
+              </div>
+              <div className="hidden sm:block">
+                <span className="font-bold text-lg lg:text-xl text-foreground tracking-tight">RHINO</span>
+                <span className="font-medium text-lg lg:text-xl text-muted-foreground ml-1">CONSTRUCTION</span>
+              </div>
+            </a>
+
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center gap-1">
+              {navItems.map((item) => (
                 <a
-                  key={link.href}
-                  href={link.href}
-                  className="font-medium text-foreground hover:text-secondary transition-colors py-2"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "relative px-4 py-2 font-medium text-sm transition-colors rounded-md",
+                    "hover:text-secondary hover:bg-muted/50",
+                    isActive(item.href) 
+                      ? "text-secondary" 
+                      : "text-foreground"
+                  )}
                 >
-                  {link.label}
+                  {item.label}
+                  {/* Active Indicator */}
+                  {isActive(item.href) && (
+                    <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-secondary rounded-full" />
+                  )}
                 </a>
               ))}
-              <hr className="border-border" />
-              <a href="tel:+12065551234" className="flex items-center gap-2 font-medium text-foreground py-2">
+            </div>
+
+            {/* Desktop Right Side */}
+            <div className="hidden lg:flex items-center gap-3">
+              {/* Phone */}
+              <a
+                href="tel:+12065557446"
+                className="flex items-center gap-2 text-foreground hover:text-secondary transition-colors px-3 py-2 rounded-md hover:bg-muted/50"
+              >
                 <Phone className="w-4 h-4" />
-                (206) 555-1234
+                <span className="font-medium text-sm">(206) 555-RHINO</span>
               </a>
-              <Button variant="hero" size="lg" className="w-full">
-                Get Free Quote
+
+              {/* Sign In */}
+              <Button variant="outline" size="default">
+                Sign In
+              </Button>
+
+              {/* Request Quote */}
+              <Button variant="hero" size="default">
+                Request Quote
+              </Button>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="lg:hidden p-2 text-foreground hover:bg-muted rounded-md transition-colors"
+              aria-label="Open menu"
+            >
+              <Menu className="w-6 h-6" />
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      {/* Mobile Menu Overlay */}
+      <div
+        className={cn(
+          "fixed inset-0 bg-foreground/50 backdrop-blur-sm z-50 transition-opacity duration-300 lg:hidden",
+          isMobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        )}
+        onClick={() => setIsMobileMenuOpen(false)}
+      />
+
+      {/* Mobile Menu Drawer */}
+      <div
+        className={cn(
+          "fixed top-0 right-0 bottom-0 w-full max-w-sm bg-card shadow-2xl z-50 transition-transform duration-300 ease-out lg:hidden",
+          isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
+        )}
+      >
+        <div className="flex flex-col h-full">
+          {/* Drawer Header */}
+          <div className="flex items-center justify-between p-4 border-b border-border">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                <span className="text-primary-foreground font-black">R</span>
+              </div>
+              <span className="font-bold text-foreground">RHINO</span>
+            </div>
+            <button
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="p-2 text-foreground hover:bg-muted rounded-md transition-colors"
+              aria-label="Close menu"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+
+          {/* Drawer Content */}
+          <div className="flex-1 overflow-y-auto py-4">
+            {/* Navigation Links */}
+            <nav className="px-4 space-y-1">
+              {navItems.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={cn(
+                    "flex items-center px-4 py-3 rounded-lg font-medium transition-colors",
+                    isActive(item.href)
+                      ? "bg-secondary/10 text-secondary border-l-4 border-secondary"
+                      : "text-foreground hover:bg-muted"
+                  )}
+                >
+                  {item.label}
+                </a>
+              ))}
+            </nav>
+
+            {/* Divider */}
+            <div className="my-6 mx-4 border-t border-border" />
+
+            {/* Auth Links */}
+            <div className="px-4 space-y-3">
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="w-full"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Sign In
+              </Button>
+              <Button 
+                variant="hero" 
+                size="lg" 
+                className="w-full"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Request Quote
               </Button>
             </div>
           </div>
-        )}
+
+          {/* Drawer Footer - Call to Action */}
+          <div className="p-4 border-t border-border bg-muted/30">
+            <a
+              href="tel:+12065557446"
+              className="flex items-center justify-center gap-3 bg-primary text-primary-foreground py-4 px-6 rounded-lg font-semibold text-lg hover:bg-rhino-blue-dark transition-colors"
+            >
+              <Phone className="w-5 h-5" />
+              Call (206) 555-RHINO
+            </a>
+            <p className="text-center text-muted-foreground text-sm mt-3">
+              Available 24/7 for emergencies
+            </p>
+          </div>
+        </div>
       </div>
-    </nav>
+    </>
   );
 };
 
