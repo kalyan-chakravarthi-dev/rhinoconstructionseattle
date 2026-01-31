@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -28,7 +29,13 @@ import {
   ArrowRight,
   ArrowLeft,
   Save,
+  Upload,
+  X,
+  Camera,
+  ImageIcon,
+  Lightbulb,
 } from "lucide-react";
+import imageCompression from "browser-image-compression";
 
 const steps = [
   { id: 1, name: "Service Type" },
@@ -139,9 +146,26 @@ const timelineOptions = [
   { id: "planning", label: "Just planning" },
 ];
 
+interface UploadedImage {
+  id: string;
+  file: File;
+  preview: string;
+  name: string;
+  size: number;
+  progress: number;
+  status: "uploading" | "complete" | "error";
+  caption?: string;
+}
+
+const MAX_IMAGES = 10;
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/heic", "image/heif", "image/webp"];
+
 const RequestQuote = () => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
   
   // Step 1 state
   const [selectedService, setSelectedService] = useState<string | null>(null);
@@ -160,6 +184,13 @@ const RequestQuote = () => {
   const [timeline, setTimeline] = useState<string>("");
   const [step2Errors, setStep2Errors] = useState<Record<string, string>>({});
 
+  // Step 3 state
+  const [uploadedImages, setUploadedImages] = useState<UploadedImage[]>([]);
+  const [projectDescription, setProjectDescription] = useState("");
+  const [specialRequirements, setSpecialRequirements] = useState("");
+  const [isDragging, setIsDragging] = useState(false);
+  const [step3Errors, setStep3Errors] = useState<Record<string, string>>({});
+
   // Load saved data from localStorage on mount
   useEffect(() => {
     const savedStep1 = localStorage.getItem("quoteStep1");
@@ -177,6 +208,14 @@ const RequestQuote = () => {
       setPropertyType(data.propertyType || "");
       setAddress(data.address || { street: "", city: "Seattle", state: "WA", zip: "" });
       setTimeline(data.timeline || "");
+    }
+
+    const savedStep3 = localStorage.getItem("quoteStep3");
+    if (savedStep3) {
+      const data = JSON.parse(savedStep3);
+      setProjectDescription(data.projectDescription || "");
+      setSpecialRequirements(data.specialRequirements || "");
+      // Note: Images can't be restored from localStorage (would need IndexedDB)
     }
   }, []);
 
@@ -243,29 +282,204 @@ const RequestQuote = () => {
           timeline,
         })
       );
-      // Navigate to step 3 (to be implemented)
-      console.log("Proceeding to step 3");
+      setCurrentStep(3);
     }
   };
 
   const handleSaveDraft = () => {
-    localStorage.setItem(
-      "quoteStep2",
-      JSON.stringify({
-        scopes: selectedScopes,
-        projectSize,
-        propertyType,
-        address,
-        timeline,
-      })
-    );
-    // Show a toast or notification
+    if (currentStep === 2) {
+      localStorage.setItem(
+        "quoteStep2",
+        JSON.stringify({
+          scopes: selectedScopes,
+          projectSize,
+          propertyType,
+          address,
+          timeline,
+        })
+      );
+    } else if (currentStep === 3) {
+      localStorage.setItem(
+        "quoteStep3",
+        JSON.stringify({
+          projectDescription,
+          specialRequirements,
+          imageCount: uploadedImages.length,
+        })
+      );
+    }
     alert("Draft saved!");
+  };
+
+  // Image upload handlers
+  const compressImage = async (file: File): Promise<File> => {
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+    };
+    try {
+      return await imageCompression(file, options);
+    } catch (error) {
+      console.error("Image compression failed:", error);
+      return file;
+    }
+  };
+
+  const processFiles = useCallback(async (files: FileList | File[]) => {
+    const fileArray = Array.from(files);
+    const remainingSlots = MAX_IMAGES - uploadedImages.length;
+    
+    if (fileArray.length > remainingSlots) {
+      setStep3Errors({ images: `You can only upload ${remainingSlots} more image(s)` });
+      return;
+    }
+
+    for (const file of fileArray) {
+      // Validate file type
+      if (!ACCEPTED_TYPES.includes(file.type)) {
+        setStep3Errors({ images: `${file.name} is not a supported format` });
+        continue;
+      }
+
+      // Validate file size
+      if (file.size > MAX_FILE_SIZE) {
+        setStep3Errors({ images: `${file.name} exceeds 10MB limit` });
+        continue;
+      }
+
+      const id = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      const preview = URL.createObjectURL(file);
+      
+      // Add to state with uploading status
+      const newImage: UploadedImage = {
+        id,
+        file,
+        preview,
+        name: file.name,
+        size: file.size,
+        progress: 0,
+        status: "uploading",
+      };
+
+      setUploadedImages((prev) => [...prev, newImage]);
+
+      // Compress the image
+      try {
+        const compressedFile = await compressImage(file);
+        
+        // Simulate upload progress
+        for (let i = 0; i <= 100; i += 20) {
+          await new Promise((resolve) => setTimeout(resolve, 100));
+          setUploadedImages((prev) =>
+            prev.map((img) =>
+              img.id === id ? { ...img, progress: i } : img
+            )
+          );
+        }
+
+        // Mark as complete
+        setUploadedImages((prev) =>
+          prev.map((img) =>
+            img.id === id
+              ? { ...img, file: compressedFile, size: compressedFile.size, progress: 100, status: "complete" }
+              : img
+          )
+        );
+      } catch (error) {
+        setUploadedImages((prev) =>
+          prev.map((img) =>
+            img.id === id ? { ...img, status: "error" } : img
+          )
+        );
+      }
+    }
+
+    setStep3Errors({});
+  }, [uploadedImages.length]);
+
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      processFiles(event.target.files);
+    }
+    // Reset input
+    event.target.value = "";
+  };
+
+  const handleDragOver = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  }, []);
+
+  const handleDragLeave = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+  }, []);
+
+  const handleDrop = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    
+    if (e.dataTransfer.files) {
+      processFiles(e.dataTransfer.files);
+    }
+  }, [processFiles]);
+
+  const removeImage = (id: string) => {
+    setUploadedImages((prev) => {
+      const image = prev.find((img) => img.id === id);
+      if (image) {
+        URL.revokeObjectURL(image.preview);
+      }
+      return prev.filter((img) => img.id !== id);
+    });
+  };
+
+  const updateCaption = (id: string, caption: string) => {
+    setUploadedImages((prev) =>
+      prev.map((img) =>
+        img.id === id ? { ...img, caption } : img
+      )
+    );
+  };
+
+  const formatFileSize = (bytes: number): string => {
+    if (bytes < 1024) return bytes + " B";
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+    return (bytes / (1024 * 1024)).toFixed(1) + " MB";
+  };
+
+  const validateStep3 = () => {
+    const errors: Record<string, string> = {};
+    
+    if (projectDescription.trim().length < 50) {
+      errors.description = "Please provide at least 50 characters describing your project";
+    }
+
+    setStep3Errors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleStep3Continue = () => {
+    if (validateStep3()) {
+      localStorage.setItem(
+        "quoteStep3",
+        JSON.stringify({
+          projectDescription,
+          specialRequirements,
+          imageCount: uploadedImages.length,
+        })
+      );
+      console.log("Proceeding to step 4");
+      // setCurrentStep(4); // Will be implemented
+    }
   };
 
   const currentScopeOptions = selectedService
     ? scopeOptionsByService[selectedService] || scopeOptionsByService.other
     : [];
+
+  const isMobile = typeof window !== "undefined" && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
   return (
     <div className="min-h-screen bg-muted/30">
@@ -750,6 +964,297 @@ const RequestQuote = () => {
 
                   <Button
                     onClick={handleStep2Continue}
+                    className="w-full sm:w-auto"
+                    size="lg"
+                  >
+                    Continue
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* Step 3: Images & Description */}
+        {currentStep === 3 && (
+          <>
+            {/* Header */}
+            <div className="text-center mb-8 md:mb-12">
+              <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
+                Show us what you're working with
+              </h1>
+              <p className="text-lg text-muted-foreground">
+                Upload photos to help us provide an accurate estimate
+              </p>
+            </div>
+
+            <div className="max-w-4xl mx-auto">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                {/* Main Upload Area */}
+                <div className="lg:col-span-2 space-y-6">
+                  {/* Drag & Drop Zone */}
+                  <div
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onDrop={handleDrop}
+                    className={cn(
+                      "relative border-2 border-dashed rounded-xl p-8 text-center transition-all",
+                      isDragging
+                        ? "border-primary bg-primary/5"
+                        : "border-border hover:border-primary/50",
+                      uploadedImages.length >= MAX_IMAGES && "opacity-50 pointer-events-none"
+                    )}
+                  >
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      multiple
+                      accept=".jpg,.jpeg,.png,.heic,.heif,.webp"
+                      onChange={handleFileSelect}
+                      className="hidden"
+                    />
+                    <input
+                      ref={cameraInputRef}
+                      type="file"
+                      accept="image/*"
+                      capture="environment"
+                      onChange={handleFileSelect}
+                      className="hidden"
+                    />
+
+                    <div className="flex flex-col items-center gap-4">
+                      <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center">
+                        <Upload className="w-8 h-8 text-muted-foreground" />
+                      </div>
+
+                      <div>
+                        <p className="text-lg font-medium text-foreground">
+                          Drag & drop photos here
+                        </p>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          or click to browse
+                        </p>
+                      </div>
+
+                      <div className="flex flex-col sm:flex-row gap-3">
+                        <Button
+                          variant="outline"
+                          onClick={() => fileInputRef.current?.click()}
+                          disabled={uploadedImages.length >= MAX_IMAGES}
+                        >
+                          <ImageIcon className="w-4 h-4 mr-2" />
+                          Choose Files
+                        </Button>
+
+                        {isMobile && (
+                          <Button
+                            variant="outline"
+                            onClick={() => cameraInputRef.current?.click()}
+                            disabled={uploadedImages.length >= MAX_IMAGES}
+                          >
+                            <Camera className="w-4 h-4 mr-2" />
+                            Take Photo
+                          </Button>
+                        )}
+                      </div>
+
+                      <p className="text-xs text-muted-foreground">
+                        JPG, PNG, HEIC (Max 10MB per image) • Up to {MAX_IMAGES} images
+                      </p>
+                    </div>
+                  </div>
+
+                  {step3Errors.images && (
+                    <p className="text-sm text-destructive">{step3Errors.images}</p>
+                  )}
+
+                  {/* Image Preview Grid */}
+                  {uploadedImages.length > 0 && (
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <h3 className="font-semibold text-foreground">
+                          Uploaded Images ({uploadedImages.length}/{MAX_IMAGES})
+                        </h3>
+                      </div>
+
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                        {uploadedImages.map((image) => (
+                          <div
+                            key={image.id}
+                            className="relative group rounded-lg overflow-hidden border bg-background"
+                          >
+                            <div className="aspect-square relative">
+                              <img
+                                src={image.preview}
+                                alt={image.name}
+                                className="w-full h-full object-cover"
+                              />
+
+                              {/* Upload Progress Overlay */}
+                              {image.status === "uploading" && (
+                                <div className="absolute inset-0 bg-background/80 flex items-center justify-center">
+                                  <div className="text-center">
+                                    <Progress value={image.progress} className="w-16 h-2 mb-2" />
+                                    <p className="text-xs text-muted-foreground">{image.progress}%</p>
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* Error Overlay */}
+                              {image.status === "error" && (
+                                <div className="absolute inset-0 bg-destructive/20 flex items-center justify-center">
+                                  <p className="text-xs text-destructive font-medium">Failed</p>
+                                </div>
+                              )}
+
+                              {/* Remove Button */}
+                              <button
+                                onClick={() => removeImage(image.id)}
+                                className="absolute top-2 right-2 w-6 h-6 bg-background/90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-destructive hover:text-destructive-foreground"
+                              >
+                                <X className="w-4 h-4" />
+                              </button>
+                            </div>
+
+                            <div className="p-2">
+                              <p className="text-xs font-medium text-foreground truncate">
+                                {image.name}
+                              </p>
+                              <p className="text-xs text-muted-foreground">
+                                {formatFileSize(image.size)}
+                              </p>
+                              <Input
+                                placeholder="Add caption..."
+                                value={image.caption || ""}
+                                onChange={(e) => updateCaption(image.id, e.target.value)}
+                                className="mt-2 h-7 text-xs"
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Project Description */}
+                  <div className="space-y-4 pt-6">
+                    <div>
+                      <Label htmlFor="description" className="text-base font-semibold">
+                        Describe your project <span className="text-destructive">*</span>
+                      </Label>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Minimum 50 characters recommended
+                      </p>
+                    </div>
+
+                    <div className="relative">
+                      <Textarea
+                        id="description"
+                        placeholder="Tell us more about what you want to accomplish, any specific requirements, concerns, or questions you have..."
+                        value={projectDescription}
+                        onChange={(e) => setProjectDescription(e.target.value)}
+                        className={cn(
+                          "min-h-[150px] resize-y",
+                          step3Errors.description && "border-destructive"
+                        )}
+                      />
+                      <div className="absolute bottom-3 right-3 text-xs text-muted-foreground">
+                        {projectDescription.length} characters
+                      </div>
+                    </div>
+
+                    {step3Errors.description && (
+                      <p className="text-sm text-destructive">{step3Errors.description}</p>
+                    )}
+                  </div>
+
+                  {/* Special Requirements */}
+                  <div className="space-y-4">
+                    <div>
+                      <Label htmlFor="requirements" className="text-base font-semibold">
+                        Any special requirements or concerns?
+                      </Label>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Access restrictions, HOA requirements, special materials, etc.
+                      </p>
+                    </div>
+
+                    <Textarea
+                      id="requirements"
+                      placeholder="Optional: Let us know about any special considerations..."
+                      value={specialRequirements}
+                      onChange={(e) => setSpecialRequirements(e.target.value)}
+                      className="min-h-[100px] resize-y"
+                    />
+                  </div>
+                </div>
+
+                {/* Photo Tips Sidebar */}
+                <div className="lg:col-span-1">
+                  <div className="bg-muted/50 rounded-xl p-6 sticky top-4">
+                    <div className="flex items-center gap-2 mb-4">
+                      <Lightbulb className="w-5 h-5 text-primary" />
+                      <h3 className="font-semibold text-foreground">
+                        Photo Tips for Better Estimates
+                      </h3>
+                    </div>
+
+                    <ul className="space-y-3 text-sm text-muted-foreground">
+                      <li className="flex items-start gap-2">
+                        <span className="text-primary">📸</span>
+                        Take photos from multiple angles
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-primary">🏠</span>
+                        Show the entire area/room
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-primary">🔍</span>
+                        Include close-ups of problem areas
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-primary">⚠️</span>
+                        Capture any damage or wear
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-primary">📏</span>
+                        Include measurements if possible
+                      </li>
+                    </ul>
+
+                    <div className="mt-6 pt-4 border-t border-border">
+                      <p className="text-xs text-muted-foreground">
+                        <strong>Pro tip:</strong> The more photos you provide, the more accurate your estimate will be!
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Actions */}
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 mt-8 border-t">
+                <Button
+                  variant="ghost"
+                  onClick={handleSaveDraft}
+                  className="w-full sm:w-auto order-3 sm:order-1"
+                >
+                  <Save className="w-4 h-4 mr-2" />
+                  Save as Draft
+                </Button>
+
+                <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto order-1 sm:order-2">
+                  <Button
+                    variant="outline"
+                    onClick={() => setCurrentStep(2)}
+                    className="w-full sm:w-auto"
+                  >
+                    <ArrowLeft className="w-4 h-4 mr-2" />
+                    Back
+                  </Button>
+
+                  <Button
+                    onClick={handleStep3Continue}
                     className="w-full sm:w-auto"
                     size="lg"
                   >
