@@ -61,6 +61,11 @@ const SignIn = () => {
     });
     
     setIsLoading(false);
+    
+    // Redirect to dashboard
+    setTimeout(() => {
+      window.location.href = "/dashboard";
+    }, 1000);
   };
 
   const handleGoogleSignIn = () => {
