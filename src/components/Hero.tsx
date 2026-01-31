@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Phone, Shield, Award, Users, Star } from "lucide-react";
 import heroImage from "@/assets/hero-construction.jpg";
+import { COMPANY_INFO, ROUTES } from "@/lib/constants";
 
 const trustBadges = [
   { icon: Shield, label: "Licensed & Insured" },
@@ -10,9 +12,10 @@ const trustBadges = [
 ];
 
 const Hero = () => {
+  const navigate = useNavigate();
+
   const handleGetQuote = () => {
-    // Navigate to quote page or scroll to form
-    window.location.href = "/request-quote";
+    navigate(ROUTES.REQUEST_QUOTE);
   };
 
   return (
@@ -69,9 +72,9 @@ const Hero = () => {
               asChild
               className="w-full sm:w-auto min-h-[52px] text-lg px-8"
             >
-              <a href="tel:+12065557446" className="flex items-center gap-2">
-                <Phone className="w-5 h-5" />
-                Call Now: (206) 555-RHINO
+              <a href={`tel:${COMPANY_INFO.phoneRaw}`} className="flex items-center gap-2">
+                <Phone className="w-5 h-5" aria-hidden="true" />
+                Call Now: {COMPANY_INFO.phone}
               </a>
             </Button>
           </div>
@@ -87,7 +90,7 @@ const Hero = () => {
                 className="flex flex-col items-center gap-2 p-4 rounded-xl bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/20"
               >
                 <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-secondary/20 flex items-center justify-center">
-                  <badge.icon className="w-5 h-5 lg:w-6 lg:h-6 text-secondary" />
+                  <badge.icon className="w-5 h-5 lg:w-6 lg:h-6 text-secondary" aria-hidden="true" />
                 </div>
                 <span className="text-sm lg:text-base font-medium text-primary-foreground text-center">
                   {badge.label}
@@ -102,7 +105,7 @@ const Hero = () => {
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-10" />
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 animate-bounce hidden lg:block">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 animate-bounce hidden lg:block" aria-hidden="true">
         <div className="w-8 h-12 rounded-full border-2 border-primary-foreground/40 flex items-start justify-center pt-2">
           <div className="w-1.5 h-3 bg-primary-foreground/60 rounded-full" />
         </div>
