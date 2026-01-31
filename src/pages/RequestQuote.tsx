@@ -48,7 +48,31 @@ import {
   Eye,
   EyeOff,
   User,
+  ChevronDown,
+  ChevronUp,
+  Clock,
+  FileText,
+  MapPin,
+  Pencil,
+  Send,
+  CheckCircle2,
+  Lock,
+  Award,
+  RotateCcw,
 } from "lucide-react";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import imageCompression from "browser-image-compression";
 
@@ -239,6 +263,21 @@ const RequestQuote = () => {
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [marketingOptIn, setMarketingOptIn] = useState(false);
   const [step4Errors, setStep4Errors] = useState<Record<string, string>>({});
+
+  // Step 5 state
+  const [reviewTermsAccepted, setReviewTermsAccepted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [quoteRequestId, setQuoteRequestId] = useState("");
+  const [expandedSections, setExpandedSections] = useState({
+    service: true,
+    project: true,
+    media: true,
+    contact: true,
+  });
+  const [showFullDescription, setShowFullDescription] = useState(false);
+
+  const { toast } = useToast();
 
   // Check if user is logged in (simulated)
   const isLoggedIn = localStorage.getItem("rhinoUser") !== null;
@@ -624,8 +663,7 @@ const RequestQuote = () => {
           createAccount,
         })
       );
-      console.log("Proceeding to step 5");
-      // setCurrentStep(5); // Will be implemented
+      setCurrentStep(5);
     }
   };
 
@@ -645,6 +683,128 @@ const RequestQuote = () => {
   };
 
   const passwordStrength = getPasswordStrength();
+
+  // Step 5 helpers
+  const toggleSection = (section: keyof typeof expandedSections) => {
+    setExpandedSections((prev) => ({
+      ...prev,
+      [section]: !prev[section],
+    }));
+  };
+
+  const generateQuoteId = () => {
+    const year = new Date().getFullYear();
+    const random = Math.floor(Math.random() * 9000) + 1000;
+    return `RQT-${year}-${random}`;
+  };
+
+  const getServiceName = () => {
+    const service = services.find((s) => s.id === selectedService);
+    return service?.name || "Not selected";
+  };
+
+  const getUrgencyLabel = () => {
+    const urgency = urgencyOptions.find((u) => u.id === selectedUrgency);
+    return urgency ? `${urgency.label} (${urgency.description})` : "Not selected";
+  };
+
+  const getProjectSizeLabel = () => {
+    const size = projectSizeOptions.find((s) => s.id === projectSize);
+    return size ? `${size.label} (${size.description})` : "Not selected";
+  };
+
+  const getTimelineLabel = () => {
+    const tl = timelineOptions.find((t) => t.id === timeline);
+    return tl?.label || "Not selected";
+  };
+
+  const getContactMethodLabel = () => {
+    const method = contactMethodOptions.find((m) => m.id === preferredContactMethod);
+    return method?.label || "Not selected";
+  };
+
+  const getContactTimesLabels = () => {
+    return contactTimes.map((id) => {
+      const time = contactTimeOptions.find((t) => t.id === id);
+      return time?.label || id;
+    });
+  };
+
+  const handleSubmitQuote = async () => {
+    if (!reviewTermsAccepted) {
+      toast({
+        title: "Terms Required",
+        description: "Please accept the terms and conditions to submit.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    const newQuoteId = generateQuoteId();
+    setQuoteRequestId(newQuoteId);
+
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    // Store the complete quote request
+    const quoteRequest = {
+      id: newQuoteId,
+      submittedAt: new Date().toISOString(),
+      service: selectedService,
+      urgency: selectedUrgency,
+      scopes: selectedScopes,
+      projectSize,
+      propertyType,
+      address,
+      timeline,
+      projectDescription,
+      specialRequirements,
+      imageCount: uploadedImages.length,
+      contactInfo,
+      preferredContactMethod,
+      contactTimes,
+      preferredDate: preferredDate?.toISOString(),
+      marketingOptIn,
+      status: "pending",
+    };
+
+    localStorage.setItem(`quote_${newQuoteId}`, JSON.stringify(quoteRequest));
+    
+    // Clear draft data
+    localStorage.removeItem("quoteStep1");
+    localStorage.removeItem("quoteStep2");
+    localStorage.removeItem("quoteStep3");
+    localStorage.removeItem("quoteStep4");
+
+    setIsSubmitting(false);
+    setShowSuccessModal(true);
+  };
+
+  const handleStartOver = () => {
+    if (confirm("Are you sure you want to start over? All entered information will be lost.")) {
+      localStorage.removeItem("quoteStep1");
+      localStorage.removeItem("quoteStep2");
+      localStorage.removeItem("quoteStep3");
+      localStorage.removeItem("quoteStep4");
+      setCurrentStep(1);
+      setSelectedService(null);
+      setSelectedUrgency("normal");
+      setSelectedScopes([]);
+      setProjectSize("");
+      setPropertyType("");
+      setAddress({ street: "", city: "Seattle", state: "WA", zip: "" });
+      setTimeline("");
+      setUploadedImages([]);
+      setProjectDescription("");
+      setSpecialRequirements("");
+      setContactInfo({ firstName: "", lastName: "", email: "", phone: "" });
+      setPreferredContactMethod("any");
+      setContactTimes([]);
+      setPreferredDate(undefined);
+      setReviewTermsAccepted(false);
+    }
+  };
 
   const currentScopeOptions = selectedService
     ? scopeOptionsByService[selectedService] || scopeOptionsByService.other
@@ -1858,7 +2018,515 @@ const RequestQuote = () => {
             </div>
           </>
         )}
+
+        {/* Step 5: Review & Submit */}
+        {currentStep === 5 && (
+          <>
+            {/* Header */}
+            <div className="text-center mb-8 md:mb-12">
+              <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
+                Review Your Quote Request
+              </h1>
+              <p className="text-lg text-muted-foreground">
+                Please confirm your information is correct
+              </p>
+            </div>
+
+            <div className="max-w-3xl mx-auto space-y-6">
+              {/* Section 1: Service Details */}
+              <Collapsible
+                open={expandedSections.service}
+                onOpenChange={() => toggleSection("service")}
+              >
+                <div className="border rounded-lg bg-background overflow-hidden">
+                  <CollapsibleTrigger className="flex items-center justify-between w-full p-4 hover:bg-muted/50 transition-colors">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                        <Wrench className="w-5 h-5 text-primary" />
+                      </div>
+                      <div className="text-left">
+                        <h3 className="font-semibold text-foreground">Service Details</h3>
+                        <p className="text-sm text-muted-foreground">
+                          {getServiceName()}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setCurrentStep(1);
+                        }}
+                      >
+                        <Pencil className="w-4 h-4 mr-1" />
+                        Edit
+                      </Button>
+                      {expandedSections.service ? (
+                        <ChevronUp className="w-5 h-5 text-muted-foreground" />
+                      ) : (
+                        <ChevronDown className="w-5 h-5 text-muted-foreground" />
+                      )}
+                    </div>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <div className="px-4 pb-4 pt-2 border-t space-y-3">
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Service Type</span>
+                        <span className="font-medium text-foreground">{getServiceName()}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Urgency</span>
+                        <span className="font-medium text-foreground">{getUrgencyLabel()}</span>
+                      </div>
+                    </div>
+                  </CollapsibleContent>
+                </div>
+              </Collapsible>
+
+              {/* Section 2: Project Information */}
+              <Collapsible
+                open={expandedSections.project}
+                onOpenChange={() => toggleSection("project")}
+              >
+                <div className="border rounded-lg bg-background overflow-hidden">
+                  <CollapsibleTrigger className="flex items-center justify-between w-full p-4 hover:bg-muted/50 transition-colors">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                        <FileText className="w-5 h-5 text-primary" />
+                      </div>
+                      <div className="text-left">
+                        <h3 className="font-semibold text-foreground">Project Information</h3>
+                        <p className="text-sm text-muted-foreground">
+                          {selectedScopes.length} items • {getProjectSizeLabel()}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setCurrentStep(2);
+                        }}
+                      >
+                        <Pencil className="w-4 h-4 mr-1" />
+                        Edit
+                      </Button>
+                      {expandedSections.project ? (
+                        <ChevronUp className="w-5 h-5 text-muted-foreground" />
+                      ) : (
+                        <ChevronDown className="w-5 h-5 text-muted-foreground" />
+                      )}
+                    </div>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <div className="px-4 pb-4 pt-2 border-t space-y-3">
+                      <div>
+                        <span className="text-muted-foreground text-sm">Project Scope</span>
+                        <div className="flex flex-wrap gap-2 mt-1">
+                          {selectedScopes.map((scope) => (
+                            <span
+                              key={scope}
+                              className="px-2 py-1 bg-primary/10 text-primary text-sm rounded-full"
+                            >
+                              {scope}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Project Size</span>
+                        <span className="font-medium text-foreground">{getProjectSizeLabel()}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Property Type</span>
+                        <span className="font-medium text-foreground">{propertyType || "Not selected"}</span>
+                      </div>
+                      <div className="flex justify-between items-start">
+                        <span className="text-muted-foreground">Location</span>
+                        <span className="font-medium text-foreground text-right">
+                          {address.street}<br />
+                          {address.city}, {address.state} {address.zip}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Timeline</span>
+                        <span className="font-medium text-foreground">{getTimelineLabel()}</span>
+                      </div>
+                    </div>
+                  </CollapsibleContent>
+                </div>
+              </Collapsible>
+
+              {/* Section 3: Project Media & Description */}
+              <Collapsible
+                open={expandedSections.media}
+                onOpenChange={() => toggleSection("media")}
+              >
+                <div className="border rounded-lg bg-background overflow-hidden">
+                  <CollapsibleTrigger className="flex items-center justify-between w-full p-4 hover:bg-muted/50 transition-colors">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                        <ImageIcon className="w-5 h-5 text-primary" />
+                      </div>
+                      <div className="text-left">
+                        <h3 className="font-semibold text-foreground">Project Media & Description</h3>
+                        <p className="text-sm text-muted-foreground">
+                          {uploadedImages.length} photo(s) uploaded
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setCurrentStep(3);
+                        }}
+                      >
+                        <Pencil className="w-4 h-4 mr-1" />
+                        Edit
+                      </Button>
+                      {expandedSections.media ? (
+                        <ChevronUp className="w-5 h-5 text-muted-foreground" />
+                      ) : (
+                        <ChevronDown className="w-5 h-5 text-muted-foreground" />
+                      )}
+                    </div>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <div className="px-4 pb-4 pt-2 border-t space-y-4">
+                      {uploadedImages.length > 0 && (
+                        <div>
+                          <span className="text-muted-foreground text-sm">Photos</span>
+                          <div className="flex gap-2 mt-2 overflow-x-auto pb-2">
+                            {uploadedImages.map((image) => (
+                              <img
+                                key={image.id}
+                                src={image.preview}
+                                alt={image.name}
+                                className="w-20 h-20 object-cover rounded-lg shrink-0"
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      <div>
+                        <span className="text-muted-foreground text-sm">Project Description</span>
+                        <p className="text-foreground mt-1">
+                          {showFullDescription || projectDescription.length <= 150
+                            ? projectDescription
+                            : `${projectDescription.slice(0, 150)}...`}
+                          {projectDescription.length > 150 && (
+                            <button
+                              onClick={() => setShowFullDescription(!showFullDescription)}
+                              className="text-primary ml-1 hover:underline text-sm"
+                            >
+                              {showFullDescription ? "Show less" : "Read more"}
+                            </button>
+                          )}
+                        </p>
+                      </div>
+                      {specialRequirements && (
+                        <div>
+                          <span className="text-muted-foreground text-sm">Additional Notes</span>
+                          <p className="text-foreground mt-1">{specialRequirements}</p>
+                        </div>
+                      )}
+                    </div>
+                  </CollapsibleContent>
+                </div>
+              </Collapsible>
+
+              {/* Section 4: Contact Information */}
+              <Collapsible
+                open={expandedSections.contact}
+                onOpenChange={() => toggleSection("contact")}
+              >
+                <div className="border rounded-lg bg-background overflow-hidden">
+                  <CollapsibleTrigger className="flex items-center justify-between w-full p-4 hover:bg-muted/50 transition-colors">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                        <User className="w-5 h-5 text-primary" />
+                      </div>
+                      <div className="text-left">
+                        <h3 className="font-semibold text-foreground">Contact Information</h3>
+                        <p className="text-sm text-muted-foreground">
+                          {contactInfo.firstName} {contactInfo.lastName}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setCurrentStep(4);
+                        }}
+                      >
+                        <Pencil className="w-4 h-4 mr-1" />
+                        Edit
+                      </Button>
+                      {expandedSections.contact ? (
+                        <ChevronUp className="w-5 h-5 text-muted-foreground" />
+                      ) : (
+                        <ChevronDown className="w-5 h-5 text-muted-foreground" />
+                      )}
+                    </div>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <div className="px-4 pb-4 pt-2 border-t space-y-3">
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Name</span>
+                        <span className="font-medium text-foreground">
+                          {contactInfo.firstName} {contactInfo.lastName}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Email</span>
+                        <span className="font-medium text-foreground">{contactInfo.email}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Phone</span>
+                        <span className="font-medium text-foreground">{contactInfo.phone}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Preferred Contact</span>
+                        <span className="font-medium text-foreground">{getContactMethodLabel()}</span>
+                      </div>
+                      <div>
+                        <span className="text-muted-foreground text-sm">Best Time to Contact</span>
+                        <div className="flex flex-wrap gap-2 mt-1">
+                          {getContactTimesLabels().map((label) => (
+                            <span
+                              key={label}
+                              className="px-2 py-1 bg-muted text-muted-foreground text-sm rounded-full"
+                            >
+                              {label}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      {preferredDate && (
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Preferred Date</span>
+                          <span className="font-medium text-foreground">
+                            {format(preferredDate, "PPP")}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </CollapsibleContent>
+                </div>
+              </Collapsible>
+
+              {/* Quote Request Summary */}
+              <div className="bg-primary/5 border-2 border-primary/20 rounded-lg p-6">
+                <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
+                  <FileText className="w-5 h-5 text-primary" />
+                  Quote Request Summary
+                </h3>
+                <div className="space-y-3">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Request ID</span>
+                    <span className="font-mono font-medium text-foreground">
+                      {quoteRequestId || generateQuoteId()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Submission Date</span>
+                    <span className="font-medium text-foreground">
+                      {format(new Date(), "PPP 'at' p")}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground">Estimated Response</span>
+                    <span className="font-medium text-primary">Within 2-4 business hours</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* What Happens Next */}
+              <div className="bg-muted/50 rounded-lg p-6">
+                <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
+                  <Clock className="w-5 h-5 text-primary" />
+                  What Happens Next
+                </h3>
+                <div className="space-y-4">
+                  {[
+                    { step: 1, text: "We'll review your request", time: "Within 2-4 hours" },
+                    { step: 2, text: "A specialist will contact you", time: "Via your preferred method" },
+                    { step: 3, text: "Schedule a site visit", time: "If needed" },
+                    { step: 4, text: "Receive detailed quote", time: "Within 24-48 hours" },
+                  ].map((item) => (
+                    <div key={item.step} className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                        <span className="text-xs font-medium text-primary">{item.step}</span>
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground">{item.text}</p>
+                        <p className="text-sm text-muted-foreground">{item.time}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Trust Indicators */}
+              <div className="grid grid-cols-3 gap-4">
+                <div className="text-center p-4 bg-background border rounded-lg">
+                  <Lock className="w-6 h-6 text-primary mx-auto mb-2" />
+                  <p className="text-sm font-medium text-foreground">Secure</p>
+                  <p className="text-xs text-muted-foreground">Information protected</p>
+                </div>
+                <div className="text-center p-4 bg-background border rounded-lg">
+                  <Shield className="w-6 h-6 text-primary mx-auto mb-2" />
+                  <p className="text-sm font-medium text-foreground">No Obligation</p>
+                  <p className="text-xs text-muted-foreground">Free quote</p>
+                </div>
+                <div className="text-center p-4 bg-background border rounded-lg">
+                  <Award className="w-6 h-6 text-primary mx-auto mb-2" />
+                  <p className="text-sm font-medium text-foreground">Licensed</p>
+                  <p className="text-xs text-muted-foreground">Insured pros</p>
+                </div>
+              </div>
+
+              {/* Terms & Conditions */}
+              <div className="flex items-start gap-3 p-4 bg-background border rounded-lg">
+                <Checkbox
+                  id="reviewTerms"
+                  checked={reviewTermsAccepted}
+                  onCheckedChange={(checked) => setReviewTermsAccepted(checked === true)}
+                />
+                <Label htmlFor="reviewTerms" className="text-sm cursor-pointer leading-relaxed">
+                  I agree to the{" "}
+                  <Link to="/terms" className="text-primary hover:underline">
+                    Terms of Service
+                  </Link>{" "}
+                  and{" "}
+                  <Link to="/privacy" className="text-primary hover:underline">
+                    Privacy Policy
+                  </Link>
+                  . I understand that Rhino Construction will contact me regarding my quote request.
+                </Label>
+              </div>
+
+              {/* Actions */}
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t">
+                <div className="flex gap-2 w-full sm:w-auto order-2 sm:order-1">
+                  <Button
+                    variant="ghost"
+                    onClick={handleStartOver}
+                    className="text-muted-foreground"
+                  >
+                    <RotateCcw className="w-4 h-4 mr-2" />
+                    Start Over
+                  </Button>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto order-1 sm:order-2">
+                  <Button
+                    variant="outline"
+                    onClick={() => setCurrentStep(4)}
+                    className="w-full sm:w-auto"
+                  >
+                    <ArrowLeft className="w-4 h-4 mr-2" />
+                    Back
+                  </Button>
+
+                  <Button
+                    onClick={handleSubmitQuote}
+                    disabled={!reviewTermsAccepted || isSubmitting}
+                    className="w-full sm:w-auto"
+                    size="lg"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin mr-2" />
+                        Submitting...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4 mr-2" />
+                        Submit Quote Request
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
       </div>
+
+      {/* Success Modal */}
+      <Dialog open={showSuccessModal} onOpenChange={setShowSuccessModal}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader className="text-center">
+            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <CheckCircle2 className="w-8 h-8 text-primary" />
+            </div>
+            <DialogTitle className="text-2xl text-center">Quote Request Submitted!</DialogTitle>
+            <DialogDescription className="text-center">
+              Thank you for your request. We'll be in touch soon!
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4 py-4">
+            <div className="bg-muted/50 rounded-lg p-4 text-center">
+              <p className="text-sm text-muted-foreground">Your Quote Request ID</p>
+              <p className="text-2xl font-mono font-bold text-foreground">{quoteRequestId}</p>
+            </div>
+
+            <div className="flex items-start gap-3 p-3 bg-primary/5 rounded-lg">
+              <Mail className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+              <p className="text-sm text-muted-foreground">
+                A confirmation email has been sent to{" "}
+                <span className="font-medium text-foreground">{contactInfo.email}</span>
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <Button onClick={() => navigate("/dashboard")} className="w-full">
+              View Quote Status
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setShowSuccessModal(false);
+                setCurrentStep(1);
+                setSelectedService(null);
+                setSelectedUrgency("normal");
+                setSelectedScopes([]);
+                setProjectSize("");
+                setPropertyType("");
+                setAddress({ street: "", city: "Seattle", state: "WA", zip: "" });
+                setTimeline("");
+                setUploadedImages([]);
+                setProjectDescription("");
+                setSpecialRequirements("");
+                setContactInfo({ firstName: "", lastName: "", email: "", phone: "" });
+                setPreferredContactMethod("any");
+                setContactTimes([]);
+                setPreferredDate(undefined);
+                setReviewTermsAccepted(false);
+              }}
+              className="w-full"
+            >
+              Request Another Quote
+            </Button>
+            <Button variant="ghost" asChild className="w-full">
+              <Link to="/">Return to Homepage</Link>
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
