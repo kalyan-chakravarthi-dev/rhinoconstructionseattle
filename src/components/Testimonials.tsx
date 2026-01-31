@@ -3,7 +3,17 @@ import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import { cn } from "@/lib/utils";
 
-const testimonials = [
+interface Testimonial {
+  id: number;
+  rating: number;
+  quote: string;
+  name: string;
+  location: string;
+  project: string;
+  initials: string;
+}
+
+const testimonials: Testimonial[] = [
   {
     id: 1,
     rating: 5,
@@ -33,9 +43,13 @@ const testimonials = [
   },
 ];
 
-const StarRating = ({ rating }: { rating: number }) => {
+interface StarRatingProps {
+  rating: number;
+}
+
+const StarRating = ({ rating }: StarRatingProps) => {
   return (
-    <div className="flex items-center gap-0.5">
+    <div className="flex items-center gap-0.5" role="img" aria-label={`${rating} out of 5 stars`}>
       {[...Array(5)].map((_, i) => (
         <Star
           key={i}
@@ -43,6 +57,7 @@ const StarRating = ({ rating }: { rating: number }) => {
             "w-5 h-5",
             i < rating ? "fill-secondary text-secondary" : "fill-muted text-muted"
           )}
+          aria-hidden="true"
         />
       ))}
     </div>
@@ -86,14 +101,14 @@ const Testimonials = () => {
   }, [emblaApi, isPaused]);
 
   return (
-    <section className="py-20 lg:py-28 bg-gradient-to-b from-background to-muted/30">
+    <section className="py-20 lg:py-28 bg-gradient-to-b from-background to-muted/30" aria-labelledby="testimonials-heading">
       <div className="container mx-auto px-4 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 lg:mb-16">
           <span className="inline-block text-secondary font-semibold text-sm uppercase tracking-wider mb-3">
             Testimonials
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+          <h2 id="testimonials-heading" className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
             What Our Customers Say
           </h2>
           <p className="text-muted-foreground text-lg lg:text-xl">
@@ -111,7 +126,7 @@ const Testimonials = () => {
               <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
             </svg>
             <div className="flex items-center gap-2">
-              <div className="flex items-center gap-0.5">
+              <div className="flex items-center gap-0.5" aria-hidden="true">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-secondary text-secondary" />
                 ))}
@@ -127,18 +142,20 @@ const Testimonials = () => {
           className="relative"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
+          role="region"
+          aria-label="Customer testimonials carousel"
         >
           {/* Carousel */}
           <div className="overflow-hidden" ref={emblaRef}>
             <div className="flex gap-6 lg:gap-8">
               {testimonials.map((testimonial) => (
-                <div
+                <article
                   key={testimonial.id}
                   className="flex-shrink-0 w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-22px)]"
                 >
                   <div className="h-full bg-card rounded-2xl p-6 lg:p-8 shadow-md border border-border hover:shadow-lg transition-shadow duration-300">
                     {/* Quote Icon */}
-                    <div className="mb-4">
+                    <div className="mb-4" aria-hidden="true">
                       <Quote className="w-10 h-10 text-secondary/20" />
                     </div>
 
@@ -155,7 +172,7 @@ const Testimonials = () => {
                     {/* Customer Info */}
                     <div className="flex items-center gap-4">
                       {/* Avatar */}
-                      <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
+                      <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center flex-shrink-0" aria-hidden="true">
                         <span className="text-primary-foreground font-semibold">
                           {testimonial.initials}
                         </span>
@@ -173,7 +190,7 @@ const Testimonials = () => {
                       </span>
                     </div>
                   </div>
-                </div>
+                </article>
               ))}
             </div>
           </div>
@@ -184,19 +201,19 @@ const Testimonials = () => {
             className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-6 w-12 h-12 bg-card rounded-full shadow-lg border border-border flex items-center justify-center text-foreground hover:bg-muted transition-colors hidden md:flex"
             aria-label="Previous testimonial"
           >
-            <ChevronLeft className="w-6 h-6" />
+            <ChevronLeft className="w-6 h-6" aria-hidden="true" />
           </button>
           <button
             onClick={scrollNext}
             className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-6 w-12 h-12 bg-card rounded-full shadow-lg border border-border flex items-center justify-center text-foreground hover:bg-muted transition-colors hidden md:flex"
             aria-label="Next testimonial"
           >
-            <ChevronRight className="w-6 h-6" />
+            <ChevronRight className="w-6 h-6" aria-hidden="true" />
           </button>
         </div>
 
         {/* Navigation Dots */}
-        <div className="flex justify-center items-center gap-2 mt-8">
+        <div className="flex justify-center items-center gap-2 mt-8" role="tablist" aria-label="Testimonial slides">
           {testimonials.map((_, index) => (
             <button
               key={index}
@@ -207,6 +224,8 @@ const Testimonials = () => {
                   ? "bg-secondary w-8"
                   : "bg-border hover:bg-muted-foreground"
               )}
+              role="tab"
+              aria-selected={selectedIndex === index}
               aria-label={`Go to testimonial ${index + 1}`}
             />
           ))}
