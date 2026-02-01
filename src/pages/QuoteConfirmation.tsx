@@ -329,8 +329,8 @@ const QuoteConfirmation = () => {
             <div className="flex items-start gap-3 p-4 bg-secondary/10 rounded-lg">
               <Phone className="w-5 h-5 text-secondary shrink-0 mt-0.5" />
               <div>
-                <p className="font-medium text-foreground">Emergency Contact</p>
-                <p className="text-sm text-muted-foreground">Need urgent service?</p>
+                <p className="font-medium text-foreground">Questions?</p>
+                <p className="text-sm text-muted-foreground">We're here to help</p>
                 <a
                   href="tel:+12065557446"
                   className="text-sm font-medium text-secondary hover:underline"
