@@ -56,18 +56,18 @@ const Navbar = () => {
         )}
       >
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="flex items-center justify-between h-16 lg:h-20">
+          <div className="flex items-center justify-between h-20 lg:h-24">
             {/* Logo */}
-            <Link to={ROUTES.HOME} className="flex items-center gap-3 flex-shrink-0">
+            <Link to={ROUTES.HOME} className="flex items-center gap-3 flex-shrink-0 -ml-2">
               <img 
                 src={rhinoLogo} 
                 alt="Rhino Construction" 
-                className="h-16 sm:h-20 lg:h-24 w-auto"
+                className="h-20 sm:h-24 lg:h-28 w-auto"
                 style={{ filter: 'brightness(0) saturate(100%) invert(17%) sepia(45%) saturate(1200%) hue-rotate(185deg) brightness(95%) contrast(95%)' }}
               />
               <div className="hidden sm:block">
-                <span className="font-bold text-lg lg:text-xl text-primary tracking-tight">RHINO</span>
-                <span className="font-medium text-lg lg:text-xl text-muted-foreground ml-1">CONSTRUCTION</span>
+                <span className="font-bold text-xl lg:text-2xl text-primary tracking-tight">RHINO</span>
+                <span className="font-medium text-xl lg:text-2xl text-muted-foreground ml-1">CONSTRUCTION</span>
               </div>
             </Link>
 
