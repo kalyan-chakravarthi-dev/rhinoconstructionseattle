@@ -9,6 +9,14 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard";
 import DashboardQuotes from "./pages/DashboardQuotes";
+import DashboardSettings from "./pages/DashboardSettings";
+import { 
+  SettingsProfile, 
+  SettingsSecurity, 
+  SettingsNotifications, 
+  SettingsAddresses, 
+  SettingsPayments 
+} from "./pages/settings";
 import RequestQuote from "./pages/RequestQuote";
 import QuoteConfirmation from "./pages/QuoteConfirmation";
 import BeforeAfterGalleryPage from "./pages/BeforeAfterGalleryPage";
@@ -34,6 +42,13 @@ const App = () => (
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/dashboard/quotes" element={<DashboardQuotes />} />
+            {/* Settings Routes */}
+            <Route path="/dashboard/settings" element={<DashboardSettings />} />
+            <Route path="/dashboard/settings/profile" element={<SettingsProfile />} />
+            <Route path="/dashboard/settings/security" element={<SettingsSecurity />} />
+            <Route path="/dashboard/settings/notifications" element={<SettingsNotifications />} />
+            <Route path="/dashboard/settings/addresses" element={<SettingsAddresses />} />
+            <Route path="/dashboard/settings/payments" element={<SettingsPayments />} />
             <Route path="/request-quote" element={<RequestQuote />} />
             <Route path="/request-quote/confirmation" element={<QuoteConfirmation />} />
             <Route path="/gallery" element={<BeforeAfterGalleryPage />} />
