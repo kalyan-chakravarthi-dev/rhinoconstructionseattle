@@ -27,8 +27,8 @@ const Hero = () => {
           alt="Professional construction site in Seattle"
           className="w-full h-full object-cover object-top md:object-center"
         />
-        {/* Dark gradient overlay for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-foreground/80 via-foreground/70 to-foreground/90" />
+        {/* Subtle gradient overlay for text readability while keeping image visible */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/45 to-black/60" />
       </div>
 
       {/* Content Container */}
@@ -36,7 +36,7 @@ const Hero = () => {
         <div className="max-w-4xl mx-auto text-center">
           {/* Main Headline */}
           <h1 
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-primary-foreground leading-tight mb-6 animate-fade-up"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-primary-foreground leading-tight mb-6 animate-fade-up drop-shadow-[0_3px_12px_rgba(0,0,0,0.55)]"
           >
             Seattle's Trusted
             <br />
@@ -45,7 +45,7 @@ const Hero = () => {
 
           {/* Subheadline */}
           <p 
-            className="text-base sm:text-lg md:text-xl lg:text-2xl text-primary-foreground/85 mb-10 max-w-2xl mx-auto leading-relaxed animate-fade-up"
+            className="text-base sm:text-lg md:text-xl lg:text-2xl text-primary-foreground/85 mb-10 max-w-2xl mx-auto leading-relaxed animate-fade-up drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]"
             style={{ animationDelay: "0.1s" }}
           >
             Professional repairs and renovations within 40 miles of Seattle.
