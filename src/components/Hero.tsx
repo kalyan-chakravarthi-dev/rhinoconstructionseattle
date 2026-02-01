@@ -26,7 +26,7 @@ const Hero = () => {
         <img
           src={heroImage}
           alt="Professional Rhino Repair Services truck in Seattle neighborhood"
-          className="w-full h-full object-cover object-[center_20%] md:object-center"
+          className="w-full h-full object-contain object-top bg-foreground md:object-cover md:object-center"
         />
         {/* Dark gradient overlay - darker on mobile for better text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-foreground/85 via-foreground/80 to-foreground/90 md:from-foreground/75 md:via-foreground/65 md:to-foreground/85" />
