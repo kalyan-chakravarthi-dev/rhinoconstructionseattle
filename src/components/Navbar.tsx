@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { COMPANY_INFO, ROUTES } from "@/lib/constants";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
-
+import rhinoLogo from "@/assets/rhino-logo.png";
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -58,14 +58,12 @@ const Navbar = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}
-            <Link to={ROUTES.HOME} className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-black text-lg sm:text-xl">R</span>
-              </div>
-              <div>
-                <span className="font-bold text-sm sm:text-lg lg:text-xl text-foreground tracking-tight">RHINO</span>
-                <span className="font-medium text-sm sm:text-lg lg:text-xl text-muted-foreground ml-1">CONSTRUCTION</span>
-              </div>
+            <Link to={ROUTES.HOME} className="flex items-center flex-shrink-0">
+              <img 
+                src={rhinoLogo} 
+                alt="Rhino Construction" 
+                className="h-12 sm:h-14 lg:h-16 w-auto"
+              />
             </Link>
 
             {/* Desktop Navigation */}
@@ -150,12 +148,11 @@ const Navbar = () => {
         <div className="flex flex-col h-full">
           {/* Drawer Header */}
           <div className="flex items-center justify-between p-4 border-b border-border">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-black">R</span>
-              </div>
-              <span className="font-bold text-foreground">RHINO</span>
-            </div>
+            <img 
+              src={rhinoLogo} 
+              alt="Rhino Construction" 
+              className="h-10 w-auto"
+            />
             <button
               onClick={() => setIsMobileMenuOpen(false)}
               className="p-2 text-foreground hover:bg-muted rounded-md transition-colors"
