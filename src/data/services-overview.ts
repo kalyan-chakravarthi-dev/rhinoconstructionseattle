@@ -10,7 +10,6 @@ import {
   Hammer, 
   Paintbrush, 
   Grid3X3, 
-  AlertTriangle,
   LucideIcon
 } from 'lucide-react';
 
@@ -22,7 +21,7 @@ export interface ServiceOverviewCard {
   description: string;
   startingPrice: string;
   features: string[];
-  isEmergency?: boolean;
+  
   bestFor: string;
   timeline: string;
   priceRange: string;
@@ -164,24 +163,6 @@ export const SERVICES_OVERVIEW: ServiceOverviewCard[] = [
     bestFor: 'New floors & refinishing',
     timeline: '1-5 days',
     priceRange: '$3 - $20/sq ft',
-  },
-  {
-    id: 'emergency',
-    slug: 'emergency',
-    name: 'Emergency Services',
-    icon: AlertTriangle,
-    description: '24/7 emergency repairs when you need them most',
-    startingPrice: 'Available 24/7',
-    features: [
-      'Immediate Response',
-      'Leak Repairs',
-      'Electrical Emergencies',
-      'Storm Damage',
-    ],
-    isEmergency: true,
-    bestFor: 'Urgent home emergencies',
-    timeline: '1-2 hours response',
-    priceRange: 'Call for quote',
   },
 ];
 
