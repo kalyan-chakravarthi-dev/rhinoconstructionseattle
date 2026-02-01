@@ -37,12 +37,22 @@
   },
   "footer": {
     "tagline": "Building Trust, One Project at a Time",
+    "description": "Seattle's premier home repair and construction company. We deliver quality craftsmanship and exceptional service on every project, big or small.",
     "quickLinks": "Quick Links",
     "ourServices": "Our Services",
-    "contact": "Contact",
+    "getInTouch": "Get In Touch",
     "rights": "All rights reserved.",
+    "licensedBonded": "Licensed, Bonded & Insured",
+    "license": "License",
+    "weAccept": "We Accept:",
+    "blog": "Blog",
     "privacy": "Privacy Policy",
-    "terms": "Terms of Service"
+    "terms": "Terms of Service",
+    "emergency": "Emergency Services",
+    "hours": {
+      "weekdays": "Mon-Fri: 7am - 6pm",
+      "saturday": "Sat: 8am - 4pm"
+    }
   },
   "language": {
     "en": "English",

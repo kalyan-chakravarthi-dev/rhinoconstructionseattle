@@ -1,27 +1,7 @@
 import { Link } from "react-router-dom";
-import { MapPin, Phone, Mail, Clock, AlertCircle, Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { MapPin, Phone, Mail, Clock, Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import { COMPANY_INFO, ROUTES } from "@/lib/constants";
-
-const quickLinks = [
-  { label: "Home", href: ROUTES.HOME },
-  { label: "Services", href: "/services" },
-  { label: "Before & After", href: ROUTES.GALLERY },
-  { label: "About Us", href: "/about" },
-  { label: "Blog", href: "/blog" },
-  { label: "Contact", href: "/contact" },
-  { label: "Privacy Policy", href: "/privacy" },
-  { label: "Terms of Service", href: "/terms" },
-];
-
-const services = [
-  { label: "Kitchen Remodeling", href: "/services/kitchen-remodeling" },
-  { label: "Bathroom Renovation", href: "/services/bathroom-renovation" },
-  { label: "Roofing Services", href: "/services/roofing" },
-  { label: "Electrical Work", href: "/services/electrical" },
-  { label: "Plumbing", href: "/services/plumbing" },
-  { label: "General Repairs", href: "/services/general-repairs" },
-  { label: "Emergency Services", href: "/services/emergency" },
-];
 
 const socialLinks = [
   { icon: Facebook, href: "#", label: "Facebook" },
@@ -32,6 +12,28 @@ const socialLinks = [
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { t } = useTranslation();
+
+  const quickLinks = [
+    { label: t('nav.home'), href: ROUTES.HOME },
+    { label: t('nav.services'), href: "/services" },
+    { label: t('nav.beforeAfter'), href: ROUTES.GALLERY },
+    { label: t('nav.about'), href: "/about" },
+    { label: t('footer.blog'), href: "/blog" },
+    { label: t('nav.contact'), href: "/contact" },
+    { label: t('footer.privacy'), href: "/privacy" },
+    { label: t('footer.terms'), href: "/terms" },
+  ];
+
+  const services = [
+    { label: "Kitchen Remodeling", href: "/services/kitchen-remodeling" },
+    { label: "Bathroom Renovation", href: "/services/bathroom-renovation" },
+    { label: "Roofing Services", href: "/services/roofing" },
+    { label: "Electrical Work", href: "/services/electrical" },
+    { label: "Plumbing", href: "/services/plumbing" },
+    { label: "General Repairs", href: "/services/general-repairs" },
+    { label: t('footer.emergency'), href: "/services/emergency" },
+  ];
 
   return (
     <footer className="bg-foreground text-muted">
@@ -53,12 +55,12 @@ const Footer = () => {
 
             {/* Tagline */}
             <p className="text-secondary font-medium mb-3">
-              {COMPANY_INFO.tagline}
+              {t('footer.tagline')}
             </p>
 
             {/* Description */}
             <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-              Seattle's premier home repair and construction company. We deliver quality craftsmanship and exceptional service on every project, big or small.
+              {t('footer.description')}
             </p>
 
             {/* Social Icons */}
@@ -78,7 +80,7 @@ const Footer = () => {
 
           {/* Column 2 - Quick Links */}
           <div>
-            <h4 className="text-background font-semibold text-lg mb-5">Quick Links</h4>
+            <h4 className="text-background font-semibold text-lg mb-5">{t('footer.quickLinks')}</h4>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.label}>
@@ -95,7 +97,7 @@ const Footer = () => {
 
           {/* Column 3 - Services */}
           <div>
-            <h4 className="text-background font-semibold text-lg mb-5">Our Services</h4>
+            <h4 className="text-background font-semibold text-lg mb-5">{t('footer.ourServices')}</h4>
             <ul className="space-y-3">
               {services.map((service) => (
                 <li key={service.label}>
@@ -112,7 +114,7 @@ const Footer = () => {
 
           {/* Column 4 - Contact Info */}
           <div>
-            <h4 className="text-background font-semibold text-lg mb-5">Get In Touch</h4>
+            <h4 className="text-background font-semibold text-lg mb-5">{t('footer.getInTouch')}</h4>
             <ul className="space-y-4">
               {/* Phone */}
               <li className="flex items-start gap-3">
@@ -151,8 +153,8 @@ const Footer = () => {
               <li className="flex items-start gap-3">
                 <Clock className="w-5 h-5 text-secondary flex-shrink-0 mt-0.5" aria-hidden="true" />
                 <span className="text-muted-foreground text-sm">
-                  Mon-Fri: 7am - 6pm<br />
-                  Sat: 8am - 4pm
+                  {t('footer.hours.weekdays')}<br />
+                  {t('footer.hours.saturday')}
                 </span>
               </li>
 
@@ -167,14 +169,14 @@ const Footer = () => {
           <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
             {/* Copyright & License */}
             <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-sm text-muted-foreground text-center sm:text-left">
-              <span>© {currentYear} {COMPANY_INFO.name}. All rights reserved.</span>
+              <span>© {currentYear} {COMPANY_INFO.name}. {t('footer.rights')}</span>
               <span className="hidden sm:inline">|</span>
-              <span>Licensed, Bonded & Insured | License {COMPANY_INFO.license}</span>
+              <span>{t('footer.licensedBonded')} | {t('footer.license')} {COMPANY_INFO.license}</span>
             </div>
 
             {/* Payment Methods */}
             <div className="flex items-center gap-3">
-              <span className="text-xs text-muted-foreground mr-2">We Accept:</span>
+              <span className="text-xs text-muted-foreground mr-2">{t('footer.weAccept')}</span>
               {/* Visa */}
               <div className="w-10 h-6 bg-background rounded flex items-center justify-center">
                 <svg viewBox="0 0 48 48" className="w-8 h-4" aria-label="Visa">
