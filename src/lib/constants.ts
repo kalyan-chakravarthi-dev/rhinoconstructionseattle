@@ -4,8 +4,8 @@
 export const COMPANY_INFO = {
   name: 'Rhino Construction',
   tagline: 'Building Trust, One Project at a Time',
-  phone: '(206) 555-RHINO',
-  phoneRaw: '+12065557446',
+  phone: '(425) 325-9988',
+  phoneRaw: '+14253259988',
   emergency: '(206) 555-HELP',
   email: 'info@rhinoconstruction.com',
   address: {
