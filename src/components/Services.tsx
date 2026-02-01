@@ -6,38 +6,32 @@ import { Button } from "@/components/ui/button";
 const services = [
   {
     icon: ChefHat,
-    title: "Kitchen Remodeling",
-    description: "Transform your kitchen with modern designs and quality craftsmanship",
+    id: "kitchen",
     href: "/services/kitchen-remodeling",
   },
   {
     icon: Bath,
-    title: "Bathroom Renovation",
-    description: "Create your dream bathroom with expert installation and design",
+    id: "bathroom",
     href: "/services/bathroom-renovation",
   },
   {
     icon: Home,
-    title: "Roofing Services",
-    description: "Roof repairs, replacements, and maintenance to protect your home",
+    id: "roofing",
     href: "/services/roofing",
   },
   {
     icon: Zap,
-    title: "Electrical Work",
-    description: "Safe, code-compliant electrical installations and repairs",
+    id: "electrical",
     href: "/services/electrical",
   },
   {
     icon: Wrench,
-    title: "Plumbing Services",
-    description: "From leaks to full installations, we handle all plumbing needs",
+    id: "plumbing",
     href: "/services/plumbing",
   },
   {
     icon: Hammer,
-    title: "General Repairs",
-    description: "Handyman services for all your home maintenance needs",
+    id: "repairs",
     href: "/services/general-repairs",
   },
 ];
@@ -51,7 +45,7 @@ const Services = () => {
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-14 lg:mb-16">
           <span className="inline-block text-secondary font-semibold text-sm uppercase tracking-wider mb-3">
-            What We Do
+            {t('services.sectionLabel', 'What We Do')}
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
             {t('services.title')}
@@ -65,7 +59,7 @@ const Services = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12">
           {services.map((service, index) => (
             <Link
-              key={service.title}
+              key={service.id}
               to={service.href}
               className="group relative bg-card rounded-2xl p-6 lg:p-8 border border-border shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden"
               style={{ animationDelay: `${index * 0.1}s` }}
@@ -80,10 +74,10 @@ const Services = () => {
 
               {/* Content */}
               <h3 className="text-xl lg:text-2xl font-semibold text-foreground mb-3 group-hover:text-secondary transition-colors duration-300">
-                {service.title}
+                {t(`services.serviceList.${service.id}.title`)}
               </h3>
               <p className="text-muted-foreground leading-relaxed mb-5">
-                {service.description}
+                {t(`services.serviceList.${service.id}.description`)}
               </p>
 
               {/* Learn More Link */}

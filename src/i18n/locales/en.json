@@ -25,9 +25,36 @@
   "services": {
     "title": "Our Services",
     "subtitle": "Professional home repair and renovation services for every need",
+    "sectionLabel": "What We Do",
     "viewAll": "View All Services",
     "learnMore": "Learn More",
-    "getQuote": "Get a Quote"
+    "getQuote": "Get a Quote",
+    "serviceList": {
+      "kitchen": {
+        "title": "Kitchen Remodeling",
+        "description": "Transform your kitchen with modern designs and quality craftsmanship"
+      },
+      "bathroom": {
+        "title": "Bathroom Renovation",
+        "description": "Create your dream bathroom with expert installation and design"
+      },
+      "roofing": {
+        "title": "Roofing Services",
+        "description": "Roof repairs, replacements, and maintenance to protect your home"
+      },
+      "electrical": {
+        "title": "Electrical Work",
+        "description": "Safe, code-compliant electrical installations and repairs"
+      },
+      "plumbing": {
+        "title": "Plumbing Services",
+        "description": "From leaks to full installations, we handle all plumbing needs"
+      },
+      "repairs": {
+        "title": "General Repairs",
+        "description": "Handyman services for all your home maintenance needs"
+      }
+    }
   },
   "cta": {
     "title": "Ready to Start Your Project?",
@@ -307,6 +334,7 @@
     },
     "step1": {
       "title": "What type of service do you need?",
+      "subtitle": "Select the type of work you're looking for",
       "urgencyLabel": "How urgent is your project?",
       "services": {
         "kitchen": "Kitchen Remodeling",

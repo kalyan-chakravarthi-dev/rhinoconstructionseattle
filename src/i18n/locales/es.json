@@ -25,9 +25,36 @@
   "services": {
     "title": "Nuestros Servicios",
     "subtitle": "Servicios profesionales de reparación y renovación del hogar",
+    "sectionLabel": "Lo Que Hacemos",
     "viewAll": "Ver Todos los Servicios",
     "learnMore": "Más Información",
-    "getQuote": "Obtener Cotización"
+    "getQuote": "Obtener Cotización",
+    "serviceList": {
+      "kitchen": {
+        "title": "Remodelación de Cocina",
+        "description": "Transforme su cocina con diseños modernos y artesanía de calidad"
+      },
+      "bathroom": {
+        "title": "Renovación de Baño",
+        "description": "Cree el baño de sus sueños con instalación y diseño experto"
+      },
+      "roofing": {
+        "title": "Servicios de Techo",
+        "description": "Reparaciones, reemplazos y mantenimiento de techos para proteger su hogar"
+      },
+      "electrical": {
+        "title": "Trabajo Eléctrico",
+        "description": "Instalaciones y reparaciones eléctricas seguras y conforme a código"
+      },
+      "plumbing": {
+        "title": "Servicios de Plomería",
+        "description": "Desde fugas hasta instalaciones completas, manejamos todas sus necesidades de plomería"
+      },
+      "repairs": {
+        "title": "Reparaciones Generales",
+        "description": "Servicios de mantenimiento para todas sus necesidades del hogar"
+      }
+    }
   },
   "cta": {
     "title": "¿Listo para Comenzar su Proyecto?",
@@ -307,6 +334,7 @@
     },
     "step1": {
       "title": "¿Qué tipo de servicio necesita?",
+      "subtitle": "Seleccione el tipo de trabajo que busca",
       "urgencyLabel": "¿Qué tan urgente es su proyecto?",
       "services": {
         "kitchen": "Remodelación de Cocina",

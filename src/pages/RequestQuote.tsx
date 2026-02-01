@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
@@ -93,75 +94,75 @@ const contactMethodOptions = [
 ];
 
 const steps = [
-  { id: 1, name: "Service Type" },
-  { id: 2, name: "Project Details" },
-  { id: 3, name: "Images & Description" },
-  { id: 4, name: "Contact & Schedule" },
-  { id: 5, name: "Review & Submit" },
+  { id: 1, nameKey: "quote.steps.serviceType" },
+  { id: 2, nameKey: "quote.steps.projectDetails" },
+  { id: 3, nameKey: "quote.steps.imagesDescription" },
+  { id: 4, nameKey: "quote.steps.contactSchedule" },
+  { id: 5, nameKey: "quote.steps.reviewSubmit" },
 ];
 
 const services = [
   {
     id: "kitchen",
-    name: "Kitchen Remodeling",
-    description: "Complete kitchen renovations and upgrades",
+    nameKey: "quote.step1.services.kitchen",
+    descKey: "quote.step1.services.kitchenDesc",
     icon: ChefHat,
   },
   {
     id: "bathroom",
-    name: "Bathroom Renovation",
-    description: "Bathroom design and installation",
+    nameKey: "quote.step1.services.bathroom",
+    descKey: "quote.step1.services.bathroomDesc",
     icon: Bath,
   },
   {
     id: "roofing",
-    name: "Roofing Services",
-    description: "Repairs, replacement, and maintenance",
+    nameKey: "quote.step1.services.roofing",
+    descKey: "quote.step1.services.roofingDesc",
     icon: Home,
   },
   {
     id: "electrical",
-    name: "Electrical Work",
-    description: "Wiring, outlets, and electrical systems",
+    nameKey: "quote.step1.services.electrical",
+    descKey: "quote.step1.services.electricalDesc",
     icon: Zap,
   },
   {
     id: "plumbing",
-    name: "Plumbing Services",
-    description: "Pipes, fixtures, and water systems",
+    nameKey: "quote.step1.services.plumbing",
+    descKey: "quote.step1.services.plumbingDesc",
     icon: Wrench,
   },
   {
     id: "repairs",
-    name: "General Repairs",
-    description: "Handyman and maintenance services",
+    nameKey: "quote.step1.services.repairs",
+    descKey: "quote.step1.services.repairsDesc",
     icon: Hammer,
   },
   {
     id: "painting",
-    name: "Painting",
-    description: "Interior and exterior painting",
+    nameKey: "quote.step1.services.painting",
+    descKey: "quote.step1.services.paintingDesc",
     icon: Paintbrush,
   },
   {
     id: "flooring",
-    name: "Flooring",
-    description: "Installation and refinishing",
+    nameKey: "quote.step1.services.flooring",
+    descKey: "quote.step1.services.flooringDesc",
     icon: LayoutGrid,
   },
   {
     id: "other",
-    name: "Other / Not Sure",
-    description: "Describe your project to us",
+    nameKey: "quote.step1.services.other",
+    descKey: "quote.step1.services.otherDesc",
     icon: HelpCircle,
   },
 ];
 
 const urgencyOptions = [
-  { id: "emergency", label: "Emergency", description: "24-48 hours" },
-  { id: "urgent", label: "Urgent", description: "Within a week" },
-  { id: "normal", label: "Normal", description: "Flexible timing" },
-  { id: "planning", label: "Planning", description: "Just getting estimates" },
+  { id: "emergency", labelKey: "quote.step1.urgency.emergency", descKey: "quote.step1.urgency.emergencyDesc" },
+  { id: "urgent", labelKey: "quote.step1.urgency.urgent", descKey: "quote.step1.urgency.urgentDesc" },
+  { id: "normal", labelKey: "quote.step1.urgency.normal", descKey: "quote.step1.urgency.normalDesc" },
+  { id: "planning", labelKey: "quote.step1.urgency.planning", descKey: "quote.step1.urgency.planningDesc" },
 ];
 
 // Project scope options by service type
@@ -178,11 +179,11 @@ const scopeOptionsByService: Record<string, string[]> = {
 };
 
 const projectSizeOptions = [
-  { id: "small", label: "Small", description: "Under $5,000" },
-  { id: "medium", label: "Medium", description: "$5,000 - $20,000" },
-  { id: "large", label: "Large", description: "$20,000 - $50,000" },
-  { id: "major", label: "Major", description: "$50,000+" },
-  { id: "unsure", label: "Not sure", description: "Need estimate" },
+  { id: "small", labelKey: "quote.step2.projectSize.small", descKey: "quote.step2.projectSize.smallDesc" },
+  { id: "medium", labelKey: "quote.step2.projectSize.medium", descKey: "quote.step2.projectSize.mediumDesc" },
+  { id: "large", labelKey: "quote.step2.projectSize.large", descKey: "quote.step2.projectSize.largeDesc" },
+  { id: "major", labelKey: "quote.step2.projectSize.major", descKey: "quote.step2.projectSize.majorDesc" },
+  { id: "unsure", labelKey: "quote.step2.projectSize.unsure", descKey: "quote.step2.projectSize.unsureDesc" },
 ];
 
 const propertyTypes = [
@@ -194,11 +195,11 @@ const propertyTypes = [
 ];
 
 const timelineOptions = [
-  { id: "asap", label: "ASAP" },
-  { id: "2weeks", label: "Within 2 weeks" },
-  { id: "1month", label: "Within a month" },
-  { id: "3months", label: "Within 3 months" },
-  { id: "planning", label: "Just planning" },
+  { id: "asap", labelKey: "quote.step2.timeline.asap" },
+  { id: "2weeks", labelKey: "quote.step2.timeline.2weeks" },
+  { id: "1month", labelKey: "quote.step2.timeline.1month" },
+  { id: "3months", labelKey: "quote.step2.timeline.3months" },
+  { id: "planning", labelKey: "quote.step2.timeline.planning" },
 ];
 
 interface UploadedImage {
@@ -218,6 +219,7 @@ const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/heic", "image/heif", "
 
 const RequestQuote = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [currentStep, setCurrentStep] = useState(1);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
@@ -700,22 +702,22 @@ const RequestQuote = () => {
 
   const getServiceName = () => {
     const service = services.find((s) => s.id === selectedService);
-    return service?.name || "Not selected";
+    return service ? t(service.nameKey) : t('common.notSelected', 'Not selected');
   };
 
   const getUrgencyLabel = () => {
     const urgency = urgencyOptions.find((u) => u.id === selectedUrgency);
-    return urgency ? `${urgency.label} (${urgency.description})` : "Not selected";
+    return urgency ? `${t(urgency.labelKey)} (${t(urgency.descKey)})` : t('common.notSelected', 'Not selected');
   };
 
   const getProjectSizeLabel = () => {
     const size = projectSizeOptions.find((s) => s.id === projectSize);
-    return size ? `${size.label} (${size.description})` : "Not selected";
+    return size ? `${t(size.labelKey)} (${t(size.descKey)})` : t('common.notSelected', 'Not selected');
   };
 
   const getTimelineLabel = () => {
     const tl = timelineOptions.find((t) => t.id === timeline);
-    return tl?.label || "Not selected";
+    return tl ? t(tl.labelKey) : t('common.notSelected', 'Not selected');
   };
 
   const getContactMethodLabel = () => {
@@ -870,7 +872,7 @@ const RequestQuote = () => {
                   )}
                 </div>
                 <span className="text-xs sm:text-sm font-medium hidden sm:block">
-                  {step.name}
+                  {t(step.nameKey)}
                 </span>
               </div>
             ))}
@@ -886,10 +888,10 @@ const RequestQuote = () => {
             {/* Header */}
             <div className="text-center mb-8 md:mb-12">
               <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
-                What service do you need?
+                {t('quote.step1.title')}
               </h1>
               <p className="text-lg text-muted-foreground">
-                Select the type of work you're looking for
+                {t('quote.step1.subtitle', 'Select the type of work you\'re looking for')}
               </p>
             </div>
 
@@ -931,10 +933,10 @@ const RequestQuote = () => {
                     </div>
 
                     <h3 className="text-lg font-semibold text-foreground mb-1">
-                      {service.name}
+                      {t(service.nameKey)}
                     </h3>
                     <p className="text-sm text-muted-foreground">
-                      {service.description}
+                      {t(service.descKey)}
                     </p>
                   </button>
                 );
@@ -944,7 +946,7 @@ const RequestQuote = () => {
             {/* Urgency Selector */}
             <div className="max-w-2xl mx-auto mb-10">
               <h2 className="text-xl font-semibold text-foreground mb-4 text-center">
-                How soon do you need this service?
+                {t('quote.step1.urgencyLabel')}
               </h2>
 
               <RadioGroup
@@ -971,10 +973,10 @@ const RequestQuote = () => {
                       )}
                     >
                       <span className="font-medium text-foreground">
-                        {option.label}
+                        {t(option.labelKey)}
                       </span>
                       <span className="text-xs text-muted-foreground mt-1">
-                        {option.description}
+                        {t(option.descKey)}
                       </span>
                     </Label>
                   </div>
@@ -1104,10 +1106,10 @@ const RequestQuote = () => {
                         )}
                       >
                         <span className="font-medium text-foreground">
-                          {option.label}
+                          {t(option.labelKey)}
                         </span>
                         <span className="text-xs text-muted-foreground mt-1">
-                          {option.description}
+                          {t(option.descKey)}
                         </span>
                       </Label>
                     </div>
@@ -1265,7 +1267,7 @@ const RequestQuote = () => {
                         )}
                       >
                         <span className="font-medium text-foreground text-sm">
-                          {option.label}
+                          {t(option.labelKey)}
                         </span>
                       </Label>
                     </div>
