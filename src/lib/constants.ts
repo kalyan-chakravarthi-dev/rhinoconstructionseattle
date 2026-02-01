@@ -52,6 +52,7 @@ export const STORAGE_KEYS = {
   LAST_SUBMITTED_QUOTE: 'lastSubmittedQuote',
   USER_DATA: 'rhinoUser',
   NOTIFICATION_SETTINGS: 'rhino_notification_settings',
+  SERVICE_ADDRESSES: 'rhino_service_addresses',
 } as const;
 
 export const ROUTES = {
