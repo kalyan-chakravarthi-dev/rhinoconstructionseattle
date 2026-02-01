@@ -1,153 +1,181 @@
 
-# Implementation Plan: Notifications Settings Page
+
+# Comprehensive Spanish Language Support
 
 ## Overview
-Implement a fully functional Notifications settings page at `/dashboard/settings/notifications` with controlled checkboxes, a frequency dropdown, and localStorage persistence.
+
+This plan extends Spanish (Espanol) translations to all remaining sections of the Rhino Construction website. Currently, only the Navbar, Hero, Services section, Call to Action, and Footer are translated. This update will add Spanish support to all other customer-facing pages and components.
 
 ---
 
-## 1. Data Model
+## What Will Be Translated
 
-### Single Settings Object Structure
+### Homepage Components
+- **Testimonials Section** - Customer quotes, section headings, Google review badge text
+- **Service Areas Section** - City names stay in English (proper nouns), but all labels and descriptions will be translated
+- **Before/After Gallery** - Section headings, slider labels, project descriptions
+
+### Main Pages
+- **About Page** - Company story, team section, mission statement, certifications, quality commitment
+- **Services Hub Page** - Page headings, service descriptions, comparison table, process steps, special offers
+- **Contact Page** - Form labels, FAQ section, contact information labels, emergency banner
+- **Before & After Gallery Page** - Page title, descriptions, instructions
+
+### Authentication Pages
+- **Sign In Page** - Form labels, buttons, links
+- **Sign Up Page** - Form labels, buttons, validation messages
+
+### Quote Request Flow
+- **Request Quote Form** - All 5 steps including service types, project details, contact fields, and review section
+- **Quote Confirmation Page** - Success messages, next steps
+
+### Common Elements
+- **Trust Badges** - Already have keys, ensure usage across all pages
+- **Form Validation Messages** - Error messages in Spanish
+- **Buttons & CTAs** - All common action buttons
+
+---
+
+## Implementation Approach
+
+### Phase 1: Expand Translation Files
+Add all new translation keys to `src/i18n/locales/en.json` and `es.json`:
+
+**New Key Sections:**
 ```text
-NotificationSettings {
-  email: {
-    quoteUpdates: boolean
-    projectMilestones: boolean
-    paymentReminders: boolean
-    appointmentConfirmations: boolean
-    marketing: boolean
-    newsletter: boolean
-  }
-  emailFrequency: 'immediate' | 'daily' | 'weekly'
-  sms: {
-    quoteSentApproved: boolean
-    appointmentReminders: boolean
-    emergenciesOnly: boolean
+- testimonials: Section title, subtitle, review badge text
+- serviceAreas: Section title, labels, CTA text
+- gallery: Section headings, slider labels
+- about: All section content (hero, story, stats, team, etc.)
+- servicesPage: Hub page content
+- contact: Form labels, FAQs, contact info labels
+- auth: Sign in/up form labels and messages
+- quote: All 5 steps of the quote form
+- common: Shared buttons, labels, validation messages
+```
+
+### Phase 2: Update Components
+Integrate `useTranslation` hook into each component:
+
+**Homepage Components:**
+1. `Testimonials.tsx` - Section headers, review count text
+2. `ServiceAreas.tsx` - All text except city names
+3. `BeforeAfterGallery.tsx` - Section headers, labels
+
+**Pages:**
+4. `AboutPage.tsx` - All text content
+5. `ServicesPage.tsx` - Headers, descriptions, process steps
+6. `ContactPage.tsx` - Form labels, FAQs, info labels
+7. `SignIn.tsx` - Form labels, buttons
+8. `SignUp.tsx` - Form labels, buttons
+9. `RequestQuote.tsx` - All steps (largest file)
+10. `QuoteConfirmation.tsx` - Success messages
+
+### Phase 3: Data Files Consideration
+For service data in `src/data/services.ts` and `src/data/services-overview.ts`:
+- Create translation keys for service names and descriptions
+- Keep technical specifications in English (brand names, dimensions)
+
+---
+
+## Translation File Structure
+
+The updated `es.json` will include approximately 200+ new translation keys organized as:
+
+```text
+{
+  "nav": { ... },           // Existing
+  "hero": { ... },          // Existing
+  "trustBadges": { ... },   // Existing
+  "services": { ... },      // Existing
+  "cta": { ... },           // Existing
+  "footer": { ... },        // Existing
+  "language": { ... },      // Existing
+  
+  // NEW SECTIONS
+  "testimonials": {
+    "title": "Lo Que Dicen Nuestros Clientes",
+    "subtitle": "No solo tome nuestra palabra",
+    "fromReviews": "de 150+ reseñas",
+    "readMore": "Leer Más Reseñas en Google"
+  },
+  "serviceAreas": {
+    "title": "Cobertura de Servicio",
+    "heading": "Sirviendo Seattle y Áreas Cercanas",
+    ...
+  },
+  "gallery": { ... },
+  "about": {
+    "hero": { ... },
+    "story": { ... },
+    "stats": { ... },
+    "team": { ... },
+    ...
+  },
+  "contact": {
+    "title": "Contáctenos",
+    "form": { ... },
+    "faq": { ... },
+    ...
+  },
+  "auth": {
+    "signIn": { ... },
+    "signUp": { ... }
+  },
+  "quote": {
+    "step1": { ... },
+    "step2": { ... },
+    "step3": { ... },
+    "step4": { ... },
+    "step5": { ... }
+  },
+  "common": {
+    "submit": "Enviar",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "next": "Siguiente",
+    "back": "Atrás",
+    ...
   }
 }
 ```
 
-### Default Values
-- Email: Quote updates, project milestones, payment reminders, and appointment confirmations enabled by default
-- Marketing and newsletter disabled by default
-- Email frequency: Immediate
-- SMS: Quote sent/approved and appointment reminders enabled, emergencies only disabled
+---
+
+## Files to Modify
+
+| File | Changes |
+|------|---------|
+| `src/i18n/locales/en.json` | Add ~200 new translation keys |
+| `src/i18n/locales/es.json` | Add ~200 Spanish translations |
+| `src/components/Testimonials.tsx` | Add `useTranslation` hook |
+| `src/components/ServiceAreas.tsx` | Add `useTranslation` hook |
+| `src/components/BeforeAfterGallery.tsx` | Add `useTranslation` hook |
+| `src/pages/AboutPage.tsx` | Add `useTranslation` hook to all sections |
+| `src/pages/ServicesPage.tsx` | Add `useTranslation` hook |
+| `src/pages/ContactPage.tsx` | Add `useTranslation` hook |
+| `src/pages/SignIn.tsx` | Add `useTranslation` hook |
+| `src/pages/SignUp.tsx` | Add `useTranslation` hook |
+| `src/pages/RequestQuote.tsx` | Add `useTranslation` hook (largest change) |
+| `src/pages/QuoteConfirmation.tsx` | Add `useTranslation` hook |
+| `src/pages/BeforeAfterGalleryPage.tsx` | Add `useTranslation` hook |
+| `src/pages/FAQPage.tsx` | Add `useTranslation` hook |
 
 ---
 
-## 2. Email Notifications Section
+## Estimated Effort
 
-### Checkboxes (6 items)
-| Setting | Label | Default |
-|---------|-------|---------|
-| quoteUpdates | Quote status updates | Enabled |
-| projectMilestones | Project milestones | Enabled |
-| paymentReminders | Payment reminders | Enabled |
-| appointmentConfirmations | Appointment confirmations | Enabled |
-| marketing | Marketing emails | Disabled |
-| newsletter | Newsletter | Disabled |
-
-### Frequency Dropdown
-Replace the current RadioGroup with a Select dropdown:
-- **Immediate** - Get notified right away
-- **Daily digest** - One summary email per day
-- **Weekly summary** - One summary email per week
+- **Translation files**: ~200 new keys per language
+- **Components to update**: 13+ files
+- **Priority order**: Homepage components first, then pages in order of customer visibility
 
 ---
 
-## 3. SMS Notifications Section
+## What Stays in English
 
-### Checkboxes (3 items)
-| Setting | Label | Default |
-|---------|-------|---------|
-| quoteSentApproved | Quote sent/approved | Enabled |
-| appointmentReminders | Appointment reminders | Enabled |
-| emergenciesOnly | Emergencies only | Disabled |
+- Brand names (Rhino Construction, GAF, Kohler, etc.)
+- City names (Seattle, Bellevue, etc.)
+- Technical specifications
+- License numbers
+- Email addresses and phone numbers
 
----
-
-## 4. UI Changes
-
-### Remove Push Notifications Card
-The requirements only specify Email and SMS, so the Push Notifications section will be removed.
-
-### Save Button Behavior
-- **Save Preferences**: Saves current state to localStorage, shows success toast
-- **Reset to Defaults**: Resets all settings to default values (does not auto-save)
-
-### Accessibility
-- All checkboxes have proper `id` and `htmlFor` label associations
-- Checkbox state is keyboard accessible (Tab + Space to toggle)
-- Proper focus indicators maintained from existing Checkbox component
-
----
-
-## 5. localStorage Persistence
-
-### Storage Key
-Add to existing pattern: `rhino_notification_settings`
-
-### Load on Mount
-```text
-1. Check localStorage for saved settings
-2. If found, parse and use
-3. If not found, use default values
-```
-
-### Save Flow
-```text
-1. User clicks "Save Preferences"
-2. Current state saved to localStorage
-3. Success toast shown
-```
-
----
-
-## 6. Mobile Responsiveness
-
-- Checkbox lists stack vertically (already the case)
-- Cards stack vertically on mobile
-- Buttons use `flex-col-reverse sm:flex-row` pattern (already in place)
-
----
-
-## Technical Details
-
-### State Variables
-```text
-- settings: NotificationSettings (main state object)
-- hasChanges: boolean (track if user made changes for UX)
-```
-
-### Key Functions
-- `loadSettings()` - Load from localStorage or defaults
-- `handleEmailChange(key, checked)` - Update email preference
-- `handleSmsChange(key, checked)` - Update SMS preference
-- `handleFrequencyChange(value)` - Update email frequency
-- `saveSettings()` - Persist to localStorage + show toast
-- `resetToDefaults()` - Reset state to defaults
-
----
-
-## File Changes
-
-| File | Change |
-|------|--------|
-| `src/pages/settings/SettingsNotifications.tsx` | Complete rewrite with state management and localStorage |
-| `src/lib/constants.ts` | Add `NOTIFICATION_SETTINGS` storage key |
-
----
-
-## Implementation Steps
-
-1. Add storage key constant to `src/lib/constants.ts`
-2. Define TypeScript interface for NotificationSettings
-3. Create default settings object
-4. Implement useState with localStorage initialization
-5. Create controlled Checkbox components for email preferences
-6. Replace RadioGroup with Select dropdown for frequency
-7. Create controlled Checkbox components for SMS preferences
-8. Remove Push Notifications card
-9. Implement Save and Reset handlers with toast notifications
-10. Add useEffect to track changes (optional UX enhancement)
