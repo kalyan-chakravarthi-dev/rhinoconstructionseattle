@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "react-i18next";
 import {
   Form,
   FormControl,
@@ -33,6 +34,7 @@ const signInSchema = z.object({
 type SignInFormData = z.infer<typeof signInSchema>;
 
 const SignIn = () => {
+  const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
@@ -93,8 +95,8 @@ const SignIn = () => {
 
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold text-foreground mb-2">Welcome Back</h1>
-            <p className="text-muted-foreground">Sign in to your account</p>
+            <h1 className="text-2xl font-bold text-foreground mb-2">{t('auth.signIn.title')}</h1>
+            <p className="text-muted-foreground">{t('auth.signIn.subtitle')}</p>
           </div>
 
           {/* Form */}
@@ -106,13 +108,13 @@ const SignIn = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email Address</FormLabel>
+                    <FormLabel>{t('auth.signIn.email')}</FormLabel>
                     <FormControl>
                       <div className="relative">
                         <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                         <Input
                           type="email"
-                          placeholder="you@example.com"
+                          placeholder={t('auth.signIn.emailPlaceholder')}
                           className="pl-10 h-12"
                           {...field}
                         />
@@ -129,13 +131,13 @@ const SignIn = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>{t('auth.signIn.password')}</FormLabel>
                     <FormControl>
                       <div className="relative">
                         <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                         <Input
                           type={showPassword ? "text" : "password"}
-                          placeholder="Enter your password"
+                          placeholder={t('auth.signIn.passwordPlaceholder')}
                           className="pl-10 pr-10 h-12"
                           {...field}
                         />
@@ -168,7 +170,7 @@ const SignIn = () => {
                         />
                       </FormControl>
                       <FormLabel className="text-sm font-normal cursor-pointer">
-                        Remember me
+                        {t('auth.signIn.rememberMe')}
                       </FormLabel>
                     </FormItem>
                   )}
@@ -177,7 +179,7 @@ const SignIn = () => {
                   href="/forgot-password"
                   className="text-sm text-secondary hover:text-rhino-orange-dark transition-colors"
                 >
-                  Forgot password?
+                  {t('auth.signIn.forgotPassword')}
                 </a>
               </div>
 
@@ -192,10 +194,10 @@ const SignIn = () => {
                 {isLoading ? (
                   <>
                     <Loader2 className="w-5 h-5 animate-spin" />
-                    Signing in...
+                    {t('auth.signIn.submitting')}
                   </>
                 ) : (
-                  "Sign In"
+                  t('auth.signIn.submit')
                 )}
               </Button>
             </form>
@@ -207,7 +209,7 @@ const SignIn = () => {
               <div className="w-full border-t border-border" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="bg-card px-3 text-muted-foreground">OR</span>
+              <span className="bg-card px-3 text-muted-foreground">{t('auth.signIn.or')}</span>
             </div>
           </div>
 
@@ -225,14 +227,14 @@ const SignIn = () => {
               <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
               <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
             </svg>
-            Sign in with Google
+            {t('auth.signIn.googleSignIn')}
           </Button>
 
           {/* Sign Up Link */}
           <p className="text-center text-muted-foreground mt-6">
-            Don't have an account?{" "}
+            {t('auth.signIn.noAccount')}{" "}
             <a href="/sign-up" className="text-secondary font-medium hover:text-rhino-orange-dark transition-colors">
-              Sign Up
+              {t('auth.signIn.signUp')}
             </a>
           </p>
         </div>
@@ -240,7 +242,7 @@ const SignIn = () => {
         {/* Back to Home */}
         <p className="text-center text-muted-foreground mt-6">
           <a href="/" className="hover:text-secondary transition-colors">
-            ← Back to Home
+            {t('auth.signIn.backToHome')}
           </a>
         </p>
       </div>

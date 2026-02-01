@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, GripVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/lib/constants";
+import { useTranslation } from "react-i18next";
 
 // Import images
 import kitchenBefore from "@/assets/kitchen-before.jpg";
@@ -43,9 +44,11 @@ interface ComparisonSliderProps {
   beforeImage: string;
   afterImage: string;
   title: string;
+  beforeLabel: string;
+  afterLabel: string;
 }
 
-const ComparisonSlider = ({ beforeImage, afterImage, title }: ComparisonSliderProps) => {
+const ComparisonSlider = ({ beforeImage, afterImage, title, beforeLabel, afterLabel }: ComparisonSliderProps) => {
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -119,29 +122,31 @@ const ComparisonSlider = ({ beforeImage, afterImage, title }: ComparisonSliderPr
 
       {/* Labels */}
       <div className="absolute top-4 left-4 bg-foreground/80 backdrop-blur-sm text-primary-foreground text-xs font-semibold px-3 py-1.5 rounded-full">
-        BEFORE
+        {beforeLabel}
       </div>
       <div className="absolute top-4 right-4 bg-secondary text-secondary-foreground text-xs font-semibold px-3 py-1.5 rounded-full">
-        AFTER
+        {afterLabel}
       </div>
     </div>
   );
 };
 
 const BeforeAfterGallery = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="py-20 lg:py-28 bg-background">
       <div className="container mx-auto px-4 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 lg:mb-16">
           <span className="inline-block text-secondary font-semibold text-sm uppercase tracking-wider mb-3">
-            Our Portfolio
+            {t('gallery.label')}
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Our Work Speaks For Itself
+            {t('gallery.title')}
           </h2>
           <p className="text-muted-foreground text-lg lg:text-xl">
-            See the Rhino Construction difference
+            {t('gallery.subtitle')}
           </p>
         </div>
 
@@ -157,6 +162,8 @@ const BeforeAfterGallery = () => {
                 beforeImage={project.beforeImage}
                 afterImage={project.afterImage}
                 title={project.title}
+                beforeLabel={t('gallery.before')}
+                afterLabel={t('gallery.after')}
               />
 
               {/* Project Info */}
@@ -181,7 +188,7 @@ const BeforeAfterGallery = () => {
         <p className="text-center text-muted-foreground text-sm mb-8">
           <span className="inline-flex items-center gap-2">
             <GripVertical className="w-4 h-4" />
-            Drag the slider to compare before and after
+            {t('gallery.dragSlider')}
           </span>
         </p>
 
@@ -189,7 +196,7 @@ const BeforeAfterGallery = () => {
         <div className="text-center">
           <Button variant="default" size="lg" asChild>
             <Link to={ROUTES.GALLERY} className="inline-flex items-center gap-2">
-              View Full Gallery
+              {t('gallery.viewFullGallery')}
               <ArrowRight className="w-4 h-4" aria-hidden="true" />
             </Link>
           </Button>
