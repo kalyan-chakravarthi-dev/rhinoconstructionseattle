@@ -65,9 +65,9 @@ const Navbar = () => {
                 className="h-20 sm:h-24 lg:h-28 w-auto"
                 style={{ filter: 'brightness(0) saturate(100%) invert(17%) sepia(45%) saturate(1200%) hue-rotate(185deg) brightness(95%) contrast(95%)' }}
               />
-              <div className="hidden sm:block">
-                <span className="font-bold text-xl lg:text-2xl text-primary tracking-tight">RHINO</span>
-                <span className="font-medium text-xl lg:text-2xl text-muted-foreground ml-1">CONSTRUCTION</span>
+              <div>
+                <span className="font-bold text-sm sm:text-xl lg:text-2xl text-primary tracking-tight">RHINO</span>
+                <span className="font-medium text-sm sm:text-xl lg:text-2xl text-muted-foreground ml-1">CONSTRUCTION</span>
               </div>
             </Link>
 
