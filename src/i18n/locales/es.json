@@ -1,0 +1,51 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "services": "Servicios",
+    "beforeAfter": "Antes y Después",
+    "about": "Sobre Nosotros",
+    "contact": "Contacto",
+    "signIn": "Iniciar Sesión",
+    "requestQuote": "Solicitar Cotización"
+  },
+  "hero": {
+    "title1": "Expertos de Confianza",
+    "title2": "en Reparación de Hogares",
+    "subtitle": "Reparaciones y renovaciones profesionales dentro de 40 millas de Seattle.",
+    "subtitleBold": "Licenciado, Asegurado y Garantizado.",
+    "getQuote": "Cotización Gratis",
+    "callNow": "Llame Ahora:"
+  },
+  "trustBadges": {
+    "licensed": "Licenciado y Asegurado",
+    "experience": "20+ Años de Experiencia",
+    "customers": "1000+ Clientes Satisfechos",
+    "rating": "Calificación A+ BBB"
+  },
+  "services": {
+    "title": "Nuestros Servicios",
+    "subtitle": "Servicios profesionales de reparación y renovación del hogar",
+    "viewAll": "Ver Todos los Servicios",
+    "learnMore": "Más Información",
+    "getQuote": "Obtener Cotización"
+  },
+  "cta": {
+    "title": "¿Listo para Comenzar su Proyecto?",
+    "subtitle": "Obtenga una cotización gratuita y sin compromiso para su proyecto de reparación o renovación.",
+    "button": "Cotización Gratis",
+    "call": "O llámenos al"
+  },
+  "footer": {
+    "tagline": "Construyendo Confianza, Un Proyecto a la Vez",
+    "quickLinks": "Enlaces Rápidos",
+    "ourServices": "Nuestros Servicios",
+    "contact": "Contacto",
+    "rights": "Todos los derechos reservados.",
+    "privacy": "Política de Privacidad",
+    "terms": "Términos de Servicio"
+  },
+  "language": {
+    "en": "English",
+    "es": "Español"
+  }
+}

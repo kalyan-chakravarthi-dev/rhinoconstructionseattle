@@ -1,19 +1,20 @@
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Phone, Shield, Award, Users, Star } from "lucide-react";
-// Responsive hero images - mobile and desktop versions
 import heroImage from "@/assets/hero-construction.png";
 import { COMPANY_INFO, ROUTES } from "@/lib/constants";
 
-const trustBadges = [
-  { icon: Shield, label: "Licensed & Insured" },
-  { icon: Award, label: "20+ Years Experience" },
-  { icon: Users, label: "1000+ Happy Customers" },
-  { icon: Star, label: "A+ BBB Rating" },
-];
-
 const Hero = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  const trustBadges = [
+    { icon: Shield, label: t('trustBadges.licensed') },
+    { icon: Award, label: t('trustBadges.experience') },
+    { icon: Users, label: t('trustBadges.customers') },
+    { icon: Star, label: t('trustBadges.rating') },
+  ];
 
   const handleGetQuote = () => {
     navigate(ROUTES.REQUEST_QUOTE);
@@ -39,9 +40,9 @@ const Hero = () => {
           <h1 
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-primary-foreground leading-tight mb-6 animate-fade-up"
           >
-            Seattle's Trusted
+            {t('hero.title1')}
             <br />
-            <span className="text-secondary">Home Repair Experts</span>
+            <span className="text-secondary">{t('hero.title2')}</span>
           </h1>
 
           {/* Subheadline */}
@@ -49,9 +50,9 @@ const Hero = () => {
             className="text-base sm:text-lg md:text-xl lg:text-2xl text-primary-foreground/85 mb-10 max-w-2xl mx-auto leading-relaxed animate-fade-up"
             style={{ animationDelay: "0.1s" }}
           >
-            Professional repairs and renovations within 40 miles of Seattle.
+            {t('hero.subtitle')}
             <br className="hidden sm:block" />
-            <span className="font-medium">Licensed, Bonded & Insured.</span>
+            <span className="font-medium">{t('hero.subtitleBold')}</span>
           </p>
 
           {/* CTAs */}
@@ -65,7 +66,7 @@ const Hero = () => {
               onClick={handleGetQuote}
               className="w-full sm:w-auto min-h-[52px] text-lg px-10"
             >
-              Get Free Quote
+              {t('hero.getQuote')}
             </Button>
             <Button 
               variant="hero-outline" 
@@ -75,7 +76,7 @@ const Hero = () => {
             >
               <a href={`tel:${COMPANY_INFO.phoneRaw}`} className="flex items-center gap-2">
                 <Phone className="w-5 h-5" aria-hidden="true" />
-                Call Now: {COMPANY_INFO.phone}
+                {t('hero.callNow')} {COMPANY_INFO.phone}
               </a>
             </Button>
           </div>
