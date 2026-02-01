@@ -1,92 +1,114 @@
 
-# Implementation Plan: Security Settings Page
+# Implementation Plan: Notifications Settings Page
 
 ## Overview
-Implement a fully functional Security settings page at `/dashboard/settings/security` with password change form, 2FA setup UI, and active sessions management.
+Implement a fully functional Notifications settings page at `/dashboard/settings/notifications` with controlled checkboxes, a frequency dropdown, and localStorage persistence.
 
 ---
 
-## 1. Change Password Form
+## 1. Data Model
 
-### Fields and State Management
-- **Current Password**: Text input with show/hide toggle
-- **New Password**: Text input with show/hide toggle + real-time validation
-- **Confirm New Password**: Text input with show/hide toggle
-
-### Validation Logic
-Create password validation checks that update in real-time:
-- At least 8 characters
-- One uppercase letter (A-Z)
-- One lowercase letter (a-z)
-- One number (0-9)
-- One special character (!@#$%^&*...)
-
-Each requirement displays with a checkmark (green) or bullet (gray) based on current input.
-
-### Additional Validation
-- Confirm password must match new password
-- Current password field must not be empty
-- Display inline error messages for validation failures
-
-### Actions
-- **Update Password** button: Validates all fields, shows success toast on pass
-- **Forgot Password?** link: UI only (no navigation)
-
----
-
-## 2. Two-Factor Authentication Section
-
-### Toggle Behavior
-- Switch toggle for Enable/Disable 2FA
-- When toggled ON: Show setup wizard UI
-- When toggled OFF: Collapse setup UI, show confirmation toast
-
-### Setup Wizard (UI Only)
-When 2FA is enabled, display:
-
-1. **QR Code Placeholder**
-   - Gray box with QR code icon
-   - Text: "Scan with your authenticator app"
-   - Manual entry code: "RHINO-2FA-DEMO-CODE"
-
-2. **Verification Input**
-   - 6-digit code input field
-   - "Verify Code" button
-   - Simulates verification (any 6-digit code works)
-
-3. **Backup Codes Section**
-   - Display 8 mock backup codes in a grid
-   - "Copy All" and "Download" buttons (UI only)
-   - Warning text about storing codes safely
-
-### Status Indicators
-- "2FA Active" badge when enabled and verified
-- "Setup Required" state when enabled but not verified
-
----
-
-## 3. Active Sessions List
-
-### Mock Data Structure
+### Single Settings Object Structure
 ```text
-Sessions array with:
-- Device type (browser/mobile icon)
-- Device description (e.g., "Chrome on Windows")
-- Location (e.g., "Seattle, WA")
-- Last active time
-- Current session flag
+NotificationSettings {
+  email: {
+    quoteUpdates: boolean
+    projectMilestones: boolean
+    paymentReminders: boolean
+    appointmentConfirmations: boolean
+    marketing: boolean
+    newsletter: boolean
+  }
+  emailFrequency: 'immediate' | 'daily' | 'weekly'
+  sms: {
+    quoteSentApproved: boolean
+    appointmentReminders: boolean
+    emergenciesOnly: boolean
+  }
+}
 ```
 
-### Display
-- Card for each session with device icon
-- "Current" badge for active session
-- "Sign Out" button for non-current sessions
+### Default Values
+- Email: Quote updates, project milestones, payment reminders, and appointment confirmations enabled by default
+- Marketing and newsletter disabled by default
+- Email frequency: Immediate
+- SMS: Quote sent/approved and appointment reminders enabled, emergencies only disabled
 
-### Actions
-- **Individual Sign Out**: Removes session from list, shows toast
-- **Sign out of all other devices**: 
-  - Opens confirmation dialog (AlertDialog)
-  - On confirm: Removes all non-current sessions, shows success toast
+---
+
+## 2. Email Notifications Section
+
+### Checkboxes (6 items)
+| Setting | Label | Default |
+|---------|-------|---------|
+| quoteUpdates | Quote status updates | Enabled |
+| projectMilestones | Project milestones | Enabled |
+| paymentReminders | Payment reminders | Enabled |
+| appointmentConfirmations | Appointment confirmations | Enabled |
+| marketing | Marketing emails | Disabled |
+| newsletter | Newsletter | Disabled |
+
+### Frequency Dropdown
+Replace the current RadioGroup with a Select dropdown:
+- **Immediate** - Get notified right away
+- **Daily digest** - One summary email per day
+- **Weekly summary** - One summary email per week
+
+---
+
+## 3. SMS Notifications Section
+
+### Checkboxes (3 items)
+| Setting | Label | Default |
+|---------|-------|---------|
+| quoteSentApproved | Quote sent/approved | Enabled |
+| appointmentReminders | Appointment reminders | Enabled |
+| emergenciesOnly | Emergencies only | Disabled |
+
+---
+
+## 4. UI Changes
+
+### Remove Push Notifications Card
+The requirements only specify Email and SMS, so the Push Notifications section will be removed.
+
+### Save Button Behavior
+- **Save Preferences**: Saves current state to localStorage, shows success toast
+- **Reset to Defaults**: Resets all settings to default values (does not auto-save)
+
+### Accessibility
+- All checkboxes have proper `id` and `htmlFor` label associations
+- Checkbox state is keyboard accessible (Tab + Space to toggle)
+- Proper focus indicators maintained from existing Checkbox component
+
+---
+
+## 5. localStorage Persistence
+
+### Storage Key
+Add to existing pattern: `rhino_notification_settings`
+
+### Load on Mount
+```text
+1. Check localStorage for saved settings
+2. If found, parse and use
+3. If not found, use default values
+```
+
+### Save Flow
+```text
+1. User clicks "Save Preferences"
+2. Current state saved to localStorage
+3. Success toast shown
+```
+
+---
+
+## 6. Mobile Responsiveness
+
+- Checkbox lists stack vertically (already the case)
+- Cards stack vertically on mobile
+- Buttons use `flex-col-reverse sm:flex-row` pattern (already in place)
 
 ---
 
@@ -94,47 +116,17 @@ Sessions array with:
 
 ### State Variables
 ```text
-- currentPassword, newPassword, confirmPassword (strings)
-- showCurrentPassword, showNewPassword, showConfirmPassword (booleans)
-- passwordErrors (object for field-level errors)
-- twoFactorEnabled (boolean)
-- twoFactorVerified (boolean)
-- verificationCode (string)
-- sessions (array - mock data, managed in state for removal)
-- showSignOutDialog (boolean for confirmation modal)
+- settings: NotificationSettings (main state object)
+- hasChanges: boolean (track if user made changes for UX)
 ```
 
-### Password Validation Helper
-Real-time validation function returning object:
-```text
-{
-  minLength: boolean,
-  hasUppercase: boolean,
-  hasLowercase: boolean,
-  hasNumber: boolean,
-  hasSpecial: boolean
-}
-```
-
-### Components Used
-- Card, CardHeader, CardTitle, CardDescription, CardContent
-- Input, Label, Button, Switch, Badge
-- AlertDialog (for sign out confirmation)
-- Icons: Shield, Smartphone, Monitor, Eye, EyeOff, Check, Copy, Download, QrCode, Key
-
-### Accessibility
-- Proper aria-invalid on inputs with errors
-- aria-describedby linking inputs to error messages
-- Button aria-labels for icon-only actions
-
----
-
-## Mobile Responsiveness
-
-- Password requirements stack vertically on small screens
-- Session cards use flex-wrap for device info
-- Backup codes grid: 2 columns on mobile, 4 on desktop
-- Full-width buttons on mobile
+### Key Functions
+- `loadSettings()` - Load from localStorage or defaults
+- `handleEmailChange(key, checked)` - Update email preference
+- `handleSmsChange(key, checked)` - Update SMS preference
+- `handleFrequencyChange(value)` - Update email frequency
+- `saveSettings()` - Persist to localStorage + show toast
+- `resetToDefaults()` - Reset state to defaults
 
 ---
 
@@ -142,27 +134,20 @@ Real-time validation function returning object:
 
 | File | Change |
 |------|--------|
-| `src/pages/settings/SettingsSecurity.tsx` | Complete rewrite with all sections |
+| `src/pages/settings/SettingsNotifications.tsx` | Complete rewrite with state management and localStorage |
+| `src/lib/constants.ts` | Add `NOTIFICATION_SETTINGS` storage key |
 
 ---
 
-## Mock Data
+## Implementation Steps
 
-### Backup Codes
-```text
-RHINO-A1B2-C3D4
-RHINO-E5F6-G7H8
-RHINO-I9J0-K1L2
-RHINO-M3N4-O5P6
-RHINO-Q7R8-S9T0
-RHINO-U1V2-W3X4
-RHINO-Y5Z6-A7B8
-RHINO-C9D0-E1F2
-```
-
-### Sessions (already defined in skeleton, will keep similar structure)
-```text
-- Chrome on Windows | Seattle, WA | Now | Current
-- Safari on iPhone | Seattle, WA | 2 hours ago
-- Firefox on MacOS | Portland, OR | 3 days ago
-```
+1. Add storage key constant to `src/lib/constants.ts`
+2. Define TypeScript interface for NotificationSettings
+3. Create default settings object
+4. Implement useState with localStorage initialization
+5. Create controlled Checkbox components for email preferences
+6. Replace RadioGroup with Select dropdown for frequency
+7. Create controlled Checkbox components for SMS preferences
+8. Remove Push Notifications card
+9. Implement Save and Reset handlers with toast notifications
+10. Add useEffect to track changes (optional UX enhancement)
