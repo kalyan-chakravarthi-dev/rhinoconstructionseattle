@@ -62,7 +62,7 @@ const Navbar = () => {
               <img 
                 src={rhinoLogo} 
                 alt="Rhino Construction" 
-                className="h-14 sm:h-16 lg:h-20 w-auto"
+                className="h-16 sm:h-20 lg:h-24 w-auto"
                 style={{ filter: 'brightness(0) saturate(100%) invert(17%) sepia(45%) saturate(1200%) hue-rotate(185deg) brightness(95%) contrast(95%)' }}
               />
               <div className="hidden sm:block">
