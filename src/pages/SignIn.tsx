@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -8,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "@/hooks/useAuth";
 import {
   Form,
   FormControl,
@@ -35,6 +37,8 @@ type SignInFormData = z.infer<typeof signInSchema>;
 
 const SignIn = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { signIn } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
@@ -51,11 +55,17 @@ const SignIn = () => {
   const onSubmit = async (data: SignInFormData) => {
     setIsLoading(true);
     
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    const { error } = await signIn(data.email, data.password);
     
-    // Store in localStorage temporarily
-    localStorage.setItem("signInData", JSON.stringify({ email: data.email, rememberMe: data.rememberMe }));
+    if (error) {
+      toast({
+        title: "Sign in failed",
+        description: error.message || "Invalid email or password. Please try again.",
+        variant: "destructive",
+      });
+      setIsLoading(false);
+      return;
+    }
     
     toast({
       title: "Sign in successful!",
@@ -63,11 +73,7 @@ const SignIn = () => {
     });
     
     setIsLoading(false);
-    
-    // Redirect to dashboard
-    setTimeout(() => {
-      window.location.href = "/dashboard";
-    }, 1000);
+    navigate("/dashboard");
   };
 
   const handleGoogleSignIn = () => {

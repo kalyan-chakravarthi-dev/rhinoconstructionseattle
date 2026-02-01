@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -9,6 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "@/hooks/useAuth";
 import {
   Form,
   FormControl,
@@ -85,6 +87,8 @@ const checkPasswordStrength = (password: string) => {
 
 const SignUp = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { signUp } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -110,28 +114,29 @@ const SignUp = () => {
   const onSubmit = async (data: SignUpFormData) => {
     setIsLoading(true);
     
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    
-    // Store in localStorage temporarily (excluding password)
-    localStorage.setItem("signUpData", JSON.stringify({
+    const { error } = await signUp(data.email, data.password, {
       firstName: data.firstName,
       lastName: data.lastName,
-      email: data.email,
       phone: data.phone,
-    }));
+    });
+    
+    if (error) {
+      toast({
+        title: "Sign up failed",
+        description: error.message || "Could not create account. Please try again.",
+        variant: "destructive",
+      });
+      setIsLoading(false);
+      return;
+    }
     
     toast({
       title: "Account created successfully!",
-      description: "Welcome to Rhino Construction. You can now sign in.",
+      description: "Please check your email to verify your account before signing in.",
     });
     
     setIsLoading(false);
-    
-    // Redirect to sign in after success
-    setTimeout(() => {
-      window.location.href = "/sign-in";
-    }, 2000);
+    navigate("/sign-in");
   };
 
   const handleGoogleSignUp = () => {
