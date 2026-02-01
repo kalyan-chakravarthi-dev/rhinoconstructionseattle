@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { 
   Menu, 
   Bell, 
@@ -16,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import DashboardSidebar from "@/components/DashboardSidebar";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/hooks/useAuth";
 
 // Mock data
 const mockUser = {
@@ -68,8 +70,17 @@ const getStatusBadge = (status: string) => {
 };
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const { user, loading } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeItem, setActiveItem] = useState("dashboard");
+
+  // Redirect to sign-in if not authenticated
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate("/sign-in");
+    }
+  }, [user, loading, navigate]);
 
   const currentDate = new Date().toLocaleDateString("en-US", {
     weekday: "long",
@@ -83,6 +94,24 @@ const Dashboard = () => {
     minute: "2-digit",
     hour12: true,
   });
+
+  // Get user's first name from metadata or email
+  const firstName = user?.user_metadata?.firstName || user?.email?.split('@')[0] || 'User';
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-muted/30 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return null; // Will redirect
+  }
 
   return (
     <div className="min-h-screen bg-muted/30 flex">
@@ -126,7 +155,7 @@ const Dashboard = () => {
           {/* Welcome Section */}
           <div className="mb-8">
             <h2 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">
-              Welcome back, {mockUser.firstName}!
+              Welcome back, {firstName}!
             </h2>
             <p className="text-muted-foreground">
               {currentDate} • {currentTime}

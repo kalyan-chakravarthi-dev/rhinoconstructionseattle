@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -281,9 +282,10 @@ const RequestQuote = () => {
   const [showFullDescription, setShowFullDescription] = useState(false);
 
   const { toast } = useToast();
+  const { user, loading: authLoading } = useAuth();
 
-  // Check if user is logged in (simulated)
-  const isLoggedIn = localStorage.getItem("rhinoUser") !== null;
+  // Check if user is logged in via Supabase Auth
+  const isLoggedIn = !!user;
 
   // Load saved data from localStorage on mount
   useEffect(() => {
@@ -321,15 +323,14 @@ const RequestQuote = () => {
       setMarketingOptIn(data.marketingOptIn || false);
     }
 
-    // If logged in, pre-fill contact info
-    const userData = localStorage.getItem("rhinoUser");
-    if (userData) {
-      const user = JSON.parse(userData);
+    // If logged in via Supabase, pre-fill contact info from user metadata
+    if (user) {
+      const metadata = user.user_metadata || {};
       setContactInfo({
-        firstName: user.firstName || "",
-        lastName: user.lastName || "",
+        firstName: metadata.firstName || "",
+        lastName: metadata.lastName || "",
         email: user.email || "",
-        phone: user.phone || "",
+        phone: metadata.phone || "",
       });
     }
   }, []);
@@ -748,10 +749,9 @@ const RequestQuote = () => {
     setQuoteRequestId(newQuoteId);
 
     try {
-      // Save to database
-      const { error: dbError } = await supabase
-        .from('quote_requests')
-        .insert({
+      // Use Edge Function for server-side validation
+      const { data: responseData, error: fnError } = await supabase.functions.invoke('submit-quote', {
+        body: {
           customer_name: `${contactInfo.firstName} ${contactInfo.lastName}`.trim(),
           email: contactInfo.email,
           phone: contactInfo.phone || null,
@@ -759,13 +759,25 @@ const RequestQuote = () => {
           property_city: address.city || null,
           property_state: address.state || null,
           message: projectDescription || null,
-        });
+        },
+      });
 
-      if (dbError) {
-        console.error('Database error:', dbError);
+      if (fnError) {
+        console.error('Edge function error:', fnError);
         toast({
           title: "Error",
           description: "Failed to submit quote. Please try again.",
+          variant: "destructive",
+        });
+        setIsSubmitting(false);
+        return;
+      }
+
+      if (responseData && !responseData.success) {
+        const errorMessage = responseData.errors?.join(', ') || 'Validation failed';
+        toast({
+          title: "Validation Error",
+          description: errorMessage,
           variant: "destructive",
         });
         setIsSubmitting(false);
