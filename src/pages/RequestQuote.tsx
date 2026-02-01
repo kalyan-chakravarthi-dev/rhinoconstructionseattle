@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
@@ -746,46 +747,77 @@ const RequestQuote = () => {
     const newQuoteId = generateQuoteId();
     setQuoteRequestId(newQuoteId);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    try {
+      // Save to database
+      const { error: dbError } = await supabase
+        .from('quote_requests')
+        .insert({
+          customer_name: `${contactInfo.firstName} ${contactInfo.lastName}`.trim(),
+          email: contactInfo.email,
+          phone: contactInfo.phone || null,
+          service_requested: getServiceName(),
+          property_city: address.city || null,
+          property_state: address.state || null,
+          message: projectDescription || null,
+        });
 
-    // Store the complete quote request
-    const quoteRequest = {
-      id: newQuoteId,
-      submittedAt: new Date().toISOString(),
-      service: selectedService,
-      urgency: selectedUrgency,
-      scopes: selectedScopes,
-      projectSize,
-      propertyType,
-      address,
-      timeline,
-      projectDescription,
-      specialRequirements,
-      imageCount: uploadedImages.length,
-      contactInfo,
-      preferredContactMethod,
-      contactTimes,
-      preferredDate: preferredDate?.toISOString(),
-      marketingOptIn,
-      status: "pending",
-    };
+      if (dbError) {
+        console.error('Database error:', dbError);
+        toast({
+          title: "Error",
+          description: "Failed to submit quote. Please try again.",
+          variant: "destructive",
+        });
+        setIsSubmitting(false);
+        return;
+      }
 
-    localStorage.setItem(`quote_${newQuoteId}`, JSON.stringify(quoteRequest));
-    
-    // Store for confirmation page
-    localStorage.setItem("lastSubmittedQuote", JSON.stringify(quoteRequest));
-    
-    // Clear draft data
-    localStorage.removeItem("quoteStep1");
-    localStorage.removeItem("quoteStep2");
-    localStorage.removeItem("quoteStep3");
-    localStorage.removeItem("quoteStep4");
+      // Store the complete quote request locally for UI purposes
+      const quoteRequest = {
+        id: newQuoteId,
+        submittedAt: new Date().toISOString(),
+        service: selectedService,
+        urgency: selectedUrgency,
+        scopes: selectedScopes,
+        projectSize,
+        propertyType,
+        address,
+        timeline,
+        projectDescription,
+        specialRequirements,
+        imageCount: uploadedImages.length,
+        contactInfo,
+        preferredContactMethod,
+        contactTimes,
+        preferredDate: preferredDate?.toISOString(),
+        marketingOptIn,
+        status: "pending",
+      };
 
-    setIsSubmitting(false);
-    
-    // Navigate to confirmation page instead of showing modal
-    navigate(`/request-quote/confirmation?id=${newQuoteId}`);
+      localStorage.setItem(`quote_${newQuoteId}`, JSON.stringify(quoteRequest));
+      
+      // Store for confirmation page
+      localStorage.setItem("lastSubmittedQuote", JSON.stringify(quoteRequest));
+      
+      // Clear draft data
+      localStorage.removeItem("quoteStep1");
+      localStorage.removeItem("quoteStep2");
+      localStorage.removeItem("quoteStep3");
+      localStorage.removeItem("quoteStep4");
+
+      setIsSubmitting(false);
+      
+      // Navigate to confirmation page
+      navigate(`/request-quote/confirmation?id=${newQuoteId}`);
+    } catch (error) {
+      console.error('Submit error:', error);
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred. Please try again.",
+        variant: "destructive",
+      });
+      setIsSubmitting(false);
+    }
   };
 
   const handleStartOver = () => {
