@@ -25,7 +25,7 @@ const Hero = () => {
         <img
           src={heroImage}
           alt="Professional construction site in Seattle"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover object-top md:object-center"
         />
         {/* Dark gradient overlay for better text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-foreground/80 via-foreground/70 to-foreground/90" />
