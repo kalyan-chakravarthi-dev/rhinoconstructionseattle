@@ -2,8 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Phone, Shield, Award, Users, Star } from "lucide-react";
 // Responsive hero images - mobile and desktop versions
-import heroDesktop from "@/assets/hero-construction.png";
-import heroMobile from "@/assets/hero-mobile.jpg";
+import heroImage from "@/assets/hero-construction.png";
 import { COMPANY_INFO, ROUTES } from "@/lib/constants";
 
 const trustBadges = [
@@ -22,28 +21,13 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-[80vh] lg:min-h-screen flex items-center justify-center">
-      {/* 
-        Responsive Hero Image using <picture> element
-        - Mobile (≤768px): Loads hero-mobile.jpg - portrait optimized, truck centered
-        - Desktop (>768px): Loads hero-construction.jpg - landscape, wider composition
-        
-        Benefits:
-        - Browser only downloads the matching image (no wasted bandwidth)
-        - No JavaScript needed for viewport detection
-        - SEO-friendly: search engines understand <picture> semantics
-        - Handles resize/orientation changes automatically
-      */}
+      {/* Hero background image - single branded image for all viewports */}
       <div className="absolute inset-0 z-0">
-        <picture>
-          {/* Desktop image: served when viewport > 768px */}
-          <source media="(min-width: 769px)" srcSet={heroDesktop} />
-          {/* Mobile image: default fallback for viewports ≤ 768px */}
-          <img
-            src={heroMobile}
-            alt="Professional Rhino Repair Services truck in Seattle neighborhood"
-            className="w-full h-full object-cover object-top md:object-center"
-          />
-        </picture>
+        <img
+          src={heroImage}
+          alt="Professional Rhino Repair Services truck in Seattle neighborhood"
+          className="w-full h-full object-cover object-top md:object-center"
+        />
         {/* Dark gradient overlay for better text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-foreground/80 via-foreground/70 to-foreground/90" />
       </div>
