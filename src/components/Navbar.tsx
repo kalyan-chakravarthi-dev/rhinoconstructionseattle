@@ -70,13 +70,13 @@ const Navbar = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}
-            <Link to={ROUTES.HOME} className="flex items-center gap-3 flex-shrink-0">
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-black text-xl">R</span>
+            <Link to={ROUTES.HOME} className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary rounded-lg flex items-center justify-center">
+                <span className="text-primary-foreground font-black text-lg sm:text-xl">R</span>
               </div>
-              <div className="hidden sm:block">
-                <span className="font-bold text-lg lg:text-xl text-foreground tracking-tight">RHINO</span>
-                <span className="font-medium text-lg lg:text-xl text-muted-foreground ml-1">CONSTRUCTION</span>
+              <div>
+                <span className="font-bold text-sm sm:text-lg lg:text-xl text-foreground tracking-tight">RHINO</span>
+                <span className="font-medium text-sm sm:text-lg lg:text-xl text-muted-foreground ml-1">CONSTRUCTION</span>
               </div>
             </Link>
 
