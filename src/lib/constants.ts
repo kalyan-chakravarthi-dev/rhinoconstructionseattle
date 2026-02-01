@@ -53,6 +53,7 @@ export const STORAGE_KEYS = {
   USER_DATA: 'rhinoUser',
   NOTIFICATION_SETTINGS: 'rhino_notification_settings',
   SERVICE_ADDRESSES: 'rhino_service_addresses',
+  PAYMENT_METHODS: 'rhino_payment_methods',
 } as const;
 
 export const ROUTES = {
