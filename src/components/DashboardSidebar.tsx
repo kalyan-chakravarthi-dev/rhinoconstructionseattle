@@ -1,18 +1,14 @@
-import { useState } from "react";
 import { 
   LayoutDashboard, 
   FileText, 
   Calendar, 
   FolderOpen, 
-  User, 
+  Settings, 
   LogOut, 
-  Menu, 
   X,
-  Bell,
-  ChevronRight
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -22,14 +18,16 @@ interface SidebarProps {
 }
 
 const menuItems = [
-  { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { id: "quotes", label: "My Quotes", icon: FileText },
-  { id: "appointments", label: "Appointments", icon: Calendar },
-  { id: "projects", label: "Projects", icon: FolderOpen },
-  { id: "profile", label: "Profile Settings", icon: User },
+  { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
+  { id: "quotes", label: "My Quotes", icon: FileText, path: "/dashboard/quotes" },
+  { id: "appointments", label: "Appointments", icon: Calendar, path: "/dashboard" },
+  { id: "projects", label: "Projects", icon: FolderOpen, path: "/dashboard" },
+  { id: "profile", label: "Settings", icon: Settings, path: "/dashboard/settings" },
 ];
 
 const DashboardSidebar = ({ isOpen, onClose, activeItem, onItemClick }: SidebarProps) => {
+  const navigate = useNavigate();
+  
   // Mock user data
   const user = {
     firstName: "John",
@@ -41,6 +39,12 @@ const DashboardSidebar = ({ isOpen, onClose, activeItem, onItemClick }: SidebarP
   const handleSignOut = () => {
     localStorage.removeItem("signInData");
     window.location.href = "/";
+  };
+
+  const handleNavigation = (item: typeof menuItems[0]) => {
+    onItemClick(item.id);
+    navigate(item.path);
+    onClose();
   };
 
   return (
@@ -106,10 +110,7 @@ const DashboardSidebar = ({ isOpen, onClose, activeItem, onItemClick }: SidebarP
             {menuItems.map((item) => (
               <button
                 key={item.id}
-                onClick={() => {
-                  onItemClick(item.id);
-                  onClose();
-                }}
+                onClick={() => handleNavigation(item)}
                 className={cn(
                   "w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors text-left",
                   activeItem === item.id
