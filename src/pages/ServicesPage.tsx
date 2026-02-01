@@ -103,13 +103,31 @@ const ServiceCard = ({ service }: { service: typeof SERVICES_OVERVIEW[0] }) => {
   
   return (
     <Card 
-      className="h-full flex flex-col transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-border hover:border-primary/30"
+      className={`h-full flex flex-col transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${
+        service.isEmergency 
+          ? 'border-destructive/50 bg-destructive/5' 
+          : 'border-border hover:border-primary/30'
+      }`}
     >
       <CardHeader className="text-center pb-2">
-        <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4 bg-primary/10">
-          <Icon className="w-8 h-8 text-primary" aria-hidden="true" />
+        <div 
+          className={`w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4 ${
+            service.isEmergency 
+              ? 'bg-destructive/10' 
+              : 'bg-primary/10'
+          }`}
+        >
+          <Icon 
+            className={`w-8 h-8 ${service.isEmergency ? 'text-destructive' : 'text-primary'}`} 
+            aria-hidden="true" 
+          />
         </div>
         <h3 className="text-xl font-bold text-foreground">{service.name}</h3>
+        {service.isEmergency && (
+          <span className="inline-block px-2 py-1 bg-destructive text-destructive-foreground text-xs font-semibold rounded-full">
+            24/7 Available
+          </span>
+        )}
       </CardHeader>
       
       <CardContent className="flex-1">
@@ -118,7 +136,7 @@ const ServiceCard = ({ service }: { service: typeof SERVICES_OVERVIEW[0] }) => {
         </p>
         
         <div className="text-center mb-4">
-          <span className="font-semibold text-primary">
+          <span className={`font-semibold ${service.isEmergency ? 'text-destructive' : 'text-primary'}`}>
             {service.startingPrice}
           </span>
         </div>
@@ -126,7 +144,12 @@ const ServiceCard = ({ service }: { service: typeof SERVICES_OVERVIEW[0] }) => {
         <ul className="space-y-2">
           {service.features.map((feature) => (
             <li key={feature} className="flex items-center gap-2 text-sm">
-              <Check className="w-4 h-4 flex-shrink-0 text-primary" aria-hidden="true" />
+              <Check 
+                className={`w-4 h-4 flex-shrink-0 ${
+                  service.isEmergency ? 'text-destructive' : 'text-primary'
+                }`} 
+                aria-hidden="true" 
+              />
               <span className="text-muted-foreground">{feature}</span>
             </li>
           ))}
@@ -134,7 +157,11 @@ const ServiceCard = ({ service }: { service: typeof SERVICES_OVERVIEW[0] }) => {
       </CardContent>
       
       <CardFooter className="flex flex-col gap-2 pt-4">
-        <Button asChild className="w-full">
+        <Button 
+          asChild 
+          className="w-full"
+          variant={service.isEmergency ? 'destructive' : 'default'}
+        >
           <Link to={`/services/${service.slug}`}>
             Learn More
             <ChevronRight className="w-4 h-4 ml-1" aria-hidden="true" />

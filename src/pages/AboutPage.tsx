@@ -73,7 +73,7 @@ const OurStory = () => (
           
           <p>
             Today, that vision lives on in every project we undertake. From kitchen remodels that transform daily life 
-            to repairs that protect your investment, our team of 15+ licensed professionals carries forward the same 
+            to emergency repairs that save the day, our team of 15+ licensed professionals carries forward the same 
             commitment to excellence that built our reputation over two decades ago.
           </p>
         </div>
@@ -502,7 +502,7 @@ const TimelineSection = () => {
     { year: '2008', title: 'Team Expansion', description: 'Grew to 5 full-time employees and added plumbing services.' },
     { year: '2012', title: '500th Project', description: 'Celebrated our 500th completed project with a customer appreciation event.' },
     { year: '2016', title: 'BBB A+ Rating', description: 'Earned A+ rating from Better Business Bureau for customer service excellence.' },
-    { year: '2020', title: 'Community Commitment', description: 'Expanded services and team to better serve our growing community.' },
+    { year: '2020', title: '24/7 Emergency Services', description: 'Launched round-the-clock emergency response to better serve our community.' },
     { year: '2023', title: '20 Years Strong', description: 'Celebrated 20 years and 1,000+ projects with the Seattle community.' },
   ];
 
