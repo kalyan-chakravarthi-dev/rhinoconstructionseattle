@@ -58,12 +58,16 @@ const Navbar = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}
-            <Link to={ROUTES.HOME} className="flex items-center flex-shrink-0">
+            <Link to={ROUTES.HOME} className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
               <img 
                 src={rhinoLogo} 
                 alt="Rhino Construction" 
-                className="h-12 sm:h-14 lg:h-16 w-auto"
+                className="h-10 sm:h-12 lg:h-14 w-auto"
               />
+              <div className="hidden sm:block">
+                <span className="font-bold text-base sm:text-lg lg:text-xl text-foreground tracking-tight">RHINO</span>
+                <span className="font-medium text-base sm:text-lg lg:text-xl text-muted-foreground ml-1">CONSTRUCTION</span>
+              </div>
             </Link>
 
             {/* Desktop Navigation */}
@@ -148,11 +152,17 @@ const Navbar = () => {
         <div className="flex flex-col h-full">
           {/* Drawer Header */}
           <div className="flex items-center justify-between p-4 border-b border-border">
-            <img 
-              src={rhinoLogo} 
-              alt="Rhino Construction" 
-              className="h-10 w-auto"
-            />
+            <div className="flex items-center gap-2">
+              <img 
+                src={rhinoLogo} 
+                alt="Rhino Construction" 
+                className="h-10 w-auto"
+              />
+              <div>
+                <span className="font-bold text-sm text-foreground">RHINO</span>
+                <span className="font-medium text-sm text-muted-foreground ml-1">CONSTRUCTION</span>
+              </div>
+            </div>
             <button
               onClick={() => setIsMobileMenuOpen(false)}
               className="p-2 text-foreground hover:bg-muted rounded-md transition-colors"
