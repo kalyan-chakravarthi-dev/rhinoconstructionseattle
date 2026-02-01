@@ -46,7 +46,7 @@ const Navbar = () => {
   return (
     <>
       {/* Emergency Banner */}
-      <div className="bg-gradient-to-r from-secondary via-rhino-orange-dark to-secondary text-secondary-foreground py-2 px-4 text-center relative z-50">
+      {/* <div className="bg-gradient-to-r from-secondary via-rhino-orange-dark to-secondary text-secondary-foreground py-2 px-4 text-center relative z-50">
         <div className="container mx-auto flex items-center justify-center gap-2 text-sm font-medium">
           <AlertTriangle className="w-4 h-4 animate-pulse" aria-hidden="true" />
           <span>24/7 Emergency Services Available</span>
@@ -58,7 +58,7 @@ const Navbar = () => {
             Call Now
           </a>
         </div>
-      </div>
+      </div> */}
 
       {/* Main Navigation */}
       <nav
