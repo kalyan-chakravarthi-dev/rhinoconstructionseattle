@@ -51,6 +51,7 @@ export const STORAGE_KEYS = {
   AUTH_TOKEN: 'rhino_auth_token',
   LAST_SUBMITTED_QUOTE: 'lastSubmittedQuote',
   USER_DATA: 'rhinoUser',
+  NOTIFICATION_SETTINGS: 'rhino_notification_settings',
 } as const;
 
 export const ROUTES = {
