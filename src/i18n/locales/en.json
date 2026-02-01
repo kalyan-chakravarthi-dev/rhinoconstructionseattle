@@ -1,0 +1,51 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "beforeAfter": "Before & After",
+    "about": "About Us",
+    "contact": "Contact",
+    "signIn": "Sign In",
+    "requestQuote": "Request Quote"
+  },
+  "hero": {
+    "title1": "Seattle's Trusted",
+    "title2": "Home Repair Experts",
+    "subtitle": "Professional repairs and renovations within 40 miles of Seattle.",
+    "subtitleBold": "Licensed, Bonded & Insured.",
+    "getQuote": "Get Free Quote",
+    "callNow": "Call Now:"
+  },
+  "trustBadges": {
+    "licensed": "Licensed & Insured",
+    "experience": "20+ Years Experience",
+    "customers": "1000+ Happy Customers",
+    "rating": "A+ BBB Rating"
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "Professional home repair and renovation services for every need",
+    "viewAll": "View All Services",
+    "learnMore": "Learn More",
+    "getQuote": "Get a Quote"
+  },
+  "cta": {
+    "title": "Ready to Start Your Project?",
+    "subtitle": "Get a free, no-obligation quote for your home repair or renovation project.",
+    "button": "Get Free Quote",
+    "call": "Or call us at"
+  },
+  "footer": {
+    "tagline": "Building Trust, One Project at a Time",
+    "quickLinks": "Quick Links",
+    "ourServices": "Our Services",
+    "contact": "Contact",
+    "rights": "All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  },
+  "language": {
+    "en": "English",
+    "es": "Español"
+  }
+}

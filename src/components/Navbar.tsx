@@ -1,22 +1,25 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Phone, AlertTriangle } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { Menu, X, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { COMPANY_INFO, ROUTES } from "@/lib/constants";
-
-const navItems = [
-  { href: ROUTES.HOME, label: "Home" },
-  { href: "/services", label: "Services" },
-  { href: ROUTES.GALLERY, label: "Before & After" },
-  { href: "/about", label: "About Us" },
-  { href: "/contact", label: "Contact" },
-];
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { t } = useTranslation();
+
+  const navItems = [
+    { href: ROUTES.HOME, label: t('nav.home') },
+    { href: "/services", label: t('nav.services') },
+    { href: ROUTES.GALLERY, label: t('nav.beforeAfter') },
+    { href: "/about", label: t('nav.about') },
+    { href: "/contact", label: t('nav.contact') },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,21 +48,6 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Emergency Banner */}
-      {/* <div className="bg-gradient-to-r from-secondary via-rhino-orange-dark to-secondary text-secondary-foreground py-2 px-4 text-center relative z-50">
-        <div className="container mx-auto flex items-center justify-center gap-2 text-sm font-medium">
-          <AlertTriangle className="w-4 h-4 animate-pulse" aria-hidden="true" />
-          <span>24/7 Emergency Services Available</span>
-          <span className="hidden sm:inline">—</span>
-          <a 
-            href={`tel:${COMPANY_INFO.phoneRaw}`}
-            className="hidden sm:inline underline underline-offset-2 hover:no-underline font-semibold"
-          >
-            Call Now
-          </a>
-        </div>
-      </div> */}
-
       {/* Main Navigation */}
       <nav
         className={cn(
@@ -105,6 +93,9 @@ const Navbar = () => {
 
             {/* Desktop Right Side */}
             <div className="hidden lg:flex items-center gap-3">
+              {/* Language Switcher */}
+              <LanguageSwitcher variant="compact" />
+
               {/* Phone */}
               <a
                 href={`tel:${COMPANY_INFO.phoneRaw}`}
@@ -116,23 +107,26 @@ const Navbar = () => {
 
               {/* Sign In */}
               <Button variant="outline" size="default" asChild>
-                <Link to={ROUTES.SIGN_IN}>Sign In</Link>
+                <Link to={ROUTES.SIGN_IN}>{t('nav.signIn')}</Link>
               </Button>
 
               {/* Request Quote */}
               <Button variant="hero" size="default" asChild>
-                <Link to={ROUTES.REQUEST_QUOTE}>Request Quote</Link>
+                <Link to={ROUTES.REQUEST_QUOTE}>{t('nav.requestQuote')}</Link>
               </Button>
             </div>
 
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(true)}
-              className="lg:hidden p-2 text-foreground hover:bg-muted rounded-md transition-colors"
-              aria-label="Open menu"
-            >
-              <Menu className="w-6 h-6" />
-            </button>
+            {/* Mobile Right Side */}
+            <div className="flex lg:hidden items-center gap-2">
+              <LanguageSwitcher variant="compact" />
+              <button
+                onClick={() => setIsMobileMenuOpen(true)}
+                className="p-2 text-foreground hover:bg-muted rounded-md transition-colors"
+                aria-label="Open menu"
+              >
+                <Menu className="w-6 h-6" />
+              </button>
+            </div>
           </div>
         </div>
       </nav>
@@ -204,7 +198,7 @@ const Navbar = () => {
                 asChild
               >
                 <Link to={ROUTES.SIGN_IN} onClick={() => setIsMobileMenuOpen(false)}>
-                  Sign In
+                  {t('nav.signIn')}
                 </Link>
               </Button>
               <Button 
@@ -214,7 +208,7 @@ const Navbar = () => {
                 asChild
               >
                 <Link to={ROUTES.REQUEST_QUOTE} onClick={() => setIsMobileMenuOpen(false)}>
-                  Request Quote
+                  {t('nav.requestQuote')}
                 </Link>
               </Button>
             </div>
@@ -227,7 +221,7 @@ const Navbar = () => {
               className="flex items-center justify-center gap-3 bg-primary text-primary-foreground py-4 px-6 rounded-lg font-semibold text-lg hover:bg-rhino-blue-dark transition-colors"
             >
               <Phone className="w-5 h-5" aria-hidden="true" />
-              Call {COMPANY_INFO.phone}
+              {t('hero.callNow')} {COMPANY_INFO.phone}
             </a>
             <p className="text-center text-muted-foreground text-sm mt-3">
               Available 24/7 for emergencies

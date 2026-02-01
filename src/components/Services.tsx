@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { ChefHat, Bath, Home, Zap, Wrench, Hammer, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -42,6 +43,8 @@ const services = [
 ];
 
 const Services = () => {
+  const { t } = useTranslation();
+
   return (
     <section id="services" className="py-20 lg:py-28 bg-muted/30">
       <div className="container mx-auto px-4 lg:px-8">
@@ -51,10 +54,10 @@ const Services = () => {
             What We Do
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Our Services
+            {t('services.title')}
           </h2>
           <p className="text-muted-foreground text-lg lg:text-xl">
-            Comprehensive home repair and renovation solutions across Seattle
+            {t('services.subtitle')}
           </p>
         </div>
 
@@ -85,7 +88,7 @@ const Services = () => {
 
               {/* Learn More Link */}
               <div className="flex items-center gap-2 text-secondary font-medium">
-                <span>Learn More</span>
+                <span>{t('services.learnMore')}</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" aria-hidden="true" />
               </div>
             </Link>
@@ -96,7 +99,7 @@ const Services = () => {
         <div className="text-center">
           <Button variant="default" size="lg" asChild>
             <Link to="/services" className="inline-flex items-center gap-2">
-              View All Services
+              {t('services.viewAll')}
               <ArrowRight className="w-4 h-4" aria-hidden="true" />
             </Link>
           </Button>

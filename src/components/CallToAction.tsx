@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Phone, ArrowRight } from "lucide-react";
 import { COMPANY_INFO, ROUTES } from "@/lib/constants";
 
 const CallToAction = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="py-20 lg:py-28 bg-primary relative overflow-hidden">
       {/* Background Pattern */}
@@ -15,16 +18,16 @@ const CallToAction = () => {
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-6">
-            Ready to Start Your Project?
+            {t('cta.title')}
           </h2>
           <p className="text-lg md:text-xl text-primary-foreground/80 mb-10">
-            Get a free, no-obligation estimate for your construction or repair project. Our team is ready to help bring your vision to life.
+            {t('cta.subtitle')}
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button variant="hero" size="xl" asChild>
               <Link to={ROUTES.REQUEST_QUOTE}>
-                Request Free Estimate
+                {t('cta.button')}
                 <ArrowRight className="w-5 h-5" aria-hidden="true" />
               </Link>
             </Button>
@@ -35,7 +38,7 @@ const CallToAction = () => {
               <div className="w-12 h-12 rounded-full bg-primary-foreground/10 flex items-center justify-center">
                 <Phone className="w-5 h-5" aria-hidden="true" />
               </div>
-              <span>Or call {COMPANY_INFO.phone}</span>
+              <span>{t('cta.call')} {COMPANY_INFO.phone}</span>
             </a>
           </div>
         </div>
