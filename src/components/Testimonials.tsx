@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 interface Testimonial {
   id: number;
@@ -65,6 +66,7 @@ const StarRating = ({ rating }: StarRatingProps) => {
 };
 
 const Testimonials = () => {
+  const { t } = useTranslation();
   const [emblaRef, emblaApi] = useEmblaCarousel({ 
     loop: true,
     align: "start",
@@ -106,13 +108,13 @@ const Testimonials = () => {
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 lg:mb-16">
           <span className="inline-block text-secondary font-semibold text-sm uppercase tracking-wider mb-3">
-            Testimonials
+            {t('testimonials.label')}
           </span>
           <h2 id="testimonials-heading" className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            What Our Customers Say
+            {t('testimonials.title')}
           </h2>
           <p className="text-muted-foreground text-lg lg:text-xl">
-            Don't just take our word for it
+            {t('testimonials.subtitle')}
           </p>
         </div>
 
@@ -132,7 +134,7 @@ const Testimonials = () => {
                 ))}
               </div>
               <span className="font-bold text-foreground">4.9</span>
-              <span className="text-muted-foreground text-sm">from 150+ reviews</span>
+              <span className="text-muted-foreground text-sm">{t('testimonials.fromReviews')}</span>
             </div>
           </div>
         </div>
@@ -199,14 +201,14 @@ const Testimonials = () => {
           <button
             onClick={scrollPrev}
             className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-6 w-12 h-12 bg-card rounded-full shadow-lg border border-border flex items-center justify-center text-foreground hover:bg-muted transition-colors hidden md:flex"
-            aria-label="Previous testimonial"
+            aria-label={t('testimonials.prev')}
           >
             <ChevronLeft className="w-6 h-6" aria-hidden="true" />
           </button>
           <button
             onClick={scrollNext}
             className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-6 w-12 h-12 bg-card rounded-full shadow-lg border border-border flex items-center justify-center text-foreground hover:bg-muted transition-colors hidden md:flex"
-            aria-label="Next testimonial"
+            aria-label={t('testimonials.next')}
           >
             <ChevronRight className="w-6 h-6" aria-hidden="true" />
           </button>
@@ -245,7 +247,7 @@ const Testimonials = () => {
               <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
               <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
             </svg>
-            Read More Reviews on Google
+            {t('testimonials.readMore')}
           </a>
         </div>
       </div>
