@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Phone, Shield, Award, Users, Star } from "lucide-react";
 // Responsive hero images - mobile and desktop versions
-import heroDesktop from "@/assets/hero-construction.jpg";
+import heroDesktop from "@/assets/hero-construction.png";
 import heroMobile from "@/assets/hero-mobile.jpg";
 import { COMPANY_INFO, ROUTES } from "@/lib/constants";
 
