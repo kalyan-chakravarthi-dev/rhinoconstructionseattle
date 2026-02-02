@@ -983,52 +983,38 @@ const RequestQuote = () => {
               </p>
             </div>
 
-            {/* Service Selection Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto mb-10">
-              {services.map((service) => {
-                const Icon = service.icon;
-                const isSelected = selectedService === service.id;
-
-                return (
-                  <button
-                    key={service.id}
-                    onClick={() => setSelectedService(service.id)}
-                    className={cn(
-                      "relative p-6 rounded-xl border-2 text-left transition-all duration-200",
-                      "hover:shadow-lg hover:border-primary/50 hover:-translate-y-1",
-                      "focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
-                      isSelected
-                        ? "border-primary bg-primary/5 shadow-md"
-                        : "border-border bg-background"
-                    )}
-                  >
-                    {/* Selected Checkmark */}
-                    {isSelected && (
-                      <div className="absolute top-3 right-3 w-6 h-6 bg-primary rounded-full flex items-center justify-center">
-                        <Check className="w-4 h-4 text-primary-foreground" />
-                      </div>
-                    )}
-
-                    <div
-                      className={cn(
-                        "w-14 h-14 rounded-xl flex items-center justify-center mb-4 transition-colors",
-                        isSelected
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-muted text-muted-foreground"
-                      )}
-                    >
-                      <Icon className="w-7 h-7" />
-                    </div>
-
-                    <h3 className="text-lg font-semibold text-foreground mb-1">
-                      {t(service.nameKey)}
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      {t(service.descKey)}
-                    </p>
-                  </button>
-                );
-              })}
+            {/* Service Selection Dropdown */}
+            <div className="max-w-md mx-auto mb-10">
+              <Label htmlFor="service-select" className="text-base font-medium text-foreground mb-2 block">
+                {t('quote.step1.serviceLabel', 'Select a service')}
+              </Label>
+              <Select value={selectedService || ""} onValueChange={setSelectedService}>
+                <SelectTrigger id="service-select" className="w-full h-14 text-base bg-background">
+                  <SelectValue placeholder={t('quote.step1.servicePlaceholder', 'Choose a service type...')} />
+                </SelectTrigger>
+                <SelectContent className="bg-background border border-border shadow-lg z-50">
+                  {services.map((service) => {
+                    const Icon = service.icon;
+                    return (
+                      <SelectItem 
+                        key={service.id} 
+                        value={service.id}
+                        className="py-3 cursor-pointer"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center flex-shrink-0">
+                            <Icon className="w-4 h-4 text-muted-foreground" />
+                          </div>
+                          <div>
+                            <span className="font-medium">{t(service.nameKey)}</span>
+                            <span className="text-muted-foreground text-sm ml-2">— {t(service.descKey)}</span>
+                          </div>
+                        </div>
+                      </SelectItem>
+                    );
+                  })}
+                </SelectContent>
+              </Select>
             </div>
 
             {/* Urgency Selector */}
