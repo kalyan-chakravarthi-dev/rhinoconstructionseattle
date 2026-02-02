@@ -19,7 +19,7 @@ export const COMPANY_INFO = {
     saturday: 'Sat: 8:00 AM - 4:00 PM',
     sunday: 'Sun: Closed (Emergency services available)',
   },
-  license: '#123456',
+  license: 'RHINOC1750L6',
   serviceRadius: '40 miles from Seattle',
 } as const;
 
