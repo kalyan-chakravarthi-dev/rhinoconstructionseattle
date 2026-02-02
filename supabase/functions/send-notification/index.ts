@@ -124,7 +124,7 @@ async function sendEmail(payload: NotificationPayload): Promise<boolean> {
       },
       body: JSON.stringify({
         personalizations: [{ to: [{ email: businessEmail }] }],
-        from: { email: "noreply@rhinoremodeler.com", name: "Rhino Remodeler" },
+        from: { email: businessEmail, name: "Rhino Remodeler" },
         subject: `🏠 New Quote Request: ${payload.serviceRequested} - ${payload.customerName}`,
         content: [{ type: "text/html", value: emailHtml }],
       }),
