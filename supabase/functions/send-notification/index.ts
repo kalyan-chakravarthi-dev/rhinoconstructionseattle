@@ -17,6 +17,119 @@ interface NotificationPayload {
   imageUrls?: string[];
 }
 
+// Generate a tracking ID from UUID (same format as frontend)
+function generateTrackingId(uuid: string): string {
+  const year = new Date().getFullYear();
+  const numericPart = parseInt(uuid.replace(/-/g, '').slice(0, 8), 16) % 10000;
+  return `RQT-${year}-${numericPart.toString().padStart(4, '0')}`;
+}
+
+// Send confirmation email to customer
+async function sendCustomerConfirmation(payload: NotificationPayload): Promise<boolean> {
+  const sendgridApiKey = Deno.env.get("SENDGRID_API_KEY");
+  const trackingId = generateTrackingId(payload.quoteId);
+
+  const emailHtml = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #ffffff;">
+      <div style="background: #1a1a2e; color: white; padding: 30px; text-align: center;">
+        <h1 style="margin: 0; font-size: 24px;">🦏 Rhino Remodeler</h1>
+        <p style="margin: 10px 0 0 0; opacity: 0.9;">Quote Request Received</p>
+      </div>
+      
+      <div style="padding: 30px;">
+        <h2 style="color: #333; margin-top: 0;">Hi ${payload.customerName},</h2>
+        
+        <p style="color: #555; line-height: 1.6;">
+          Thank you for your interest in Rhino Remodeler! We've received your quote request and our team is reviewing it now.
+        </p>
+        
+        <div style="background: #f8f9fa; border-radius: 8px; padding: 20px; margin: 20px 0;">
+          <h3 style="color: #333; margin-top: 0; border-bottom: 2px solid #e74c3c; padding-bottom: 10px;">
+            Your Request Summary
+          </h3>
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+              <td style="padding: 8px 0; font-weight: bold; color: #555; width: 120px;">Reference ID:</td>
+              <td style="padding: 8px 0; color: #e74c3c; font-weight: bold;">${trackingId}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; font-weight: bold; color: #555;">Service:</td>
+              <td style="padding: 8px 0; color: #333;">${payload.serviceRequested}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; font-weight: bold; color: #555;">Location:</td>
+              <td style="padding: 8px 0; color: #333;">${payload.propertyCity || "N/A"}, ${payload.propertyState || "N/A"}</td>
+            </tr>
+            ${payload.imageUrls && payload.imageUrls.length > 0 ? `
+            <tr>
+              <td style="padding: 8px 0; font-weight: bold; color: #555;">Photos:</td>
+              <td style="padding: 8px 0; color: #333;">${payload.imageUrls.length} photo(s) uploaded</td>
+            </tr>
+            ` : ''}
+          </table>
+        </div>
+        
+        <h3 style="color: #333;">What Happens Next?</h3>
+        <ol style="color: #555; line-height: 1.8; padding-left: 20px;">
+          <li>Our team will review your request within <strong>24-48 hours</strong></li>
+          <li>We'll contact you at <strong>${payload.email}</strong>${payload.phone ? ` or <strong>${payload.phone}</strong>` : ''} to discuss your project</li>
+          <li>We'll schedule a free consultation at your convenience</li>
+          <li>You'll receive a detailed, transparent quote</li>
+        </ol>
+        
+        <div style="background: #e74c3c; color: white; padding: 15px 20px; border-radius: 8px; margin: 25px 0; text-align: center;">
+          <p style="margin: 0; font-size: 14px;">Questions? Call us at</p>
+          <p style="margin: 5px 0 0 0; font-size: 20px; font-weight: bold;">(786) 797-1851</p>
+        </div>
+        
+        <p style="color: #555; line-height: 1.6;">
+          We appreciate you considering Rhino Remodeler for your home improvement needs. We look forward to helping you transform your space!
+        </p>
+        
+        <p style="color: #555; margin-bottom: 0;">
+          Best regards,<br>
+          <strong style="color: #333;">The Rhino Remodeler Team</strong>
+        </p>
+      </div>
+      
+      <div style="background: #333; color: #999; padding: 20px; text-align: center; font-size: 12px;">
+        <p style="margin: 0;">Rhino Remodeler | South Florida's Trusted Home Improvement Experts</p>
+        <p style="margin: 10px 0 0 0;">
+          <a href="https://rhinoremodeler.lovable.app" style="color: #e74c3c; text-decoration: none;">Visit our website</a>
+        </p>
+      </div>
+    </div>
+  `;
+
+  try {
+    const response = await fetch("https://api.sendgrid.com/v3/mail/send", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${sendgridApiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        personalizations: [{ to: [{ email: payload.email }] }],
+        from: { email: "noreply@rhinoremodeller.com", name: "Rhino Remodeler" },
+        subject: `✅ Quote Request Received - ${trackingId}`,
+        content: [{ type: "text/html", value: emailHtml }],
+      }),
+    });
+
+    if (!response.ok) {
+      const error = await response.text();
+      console.error("SendGrid customer email error:", error);
+      return false;
+    }
+
+    console.log("Customer confirmation email sent successfully");
+    return true;
+  } catch (error) {
+    console.error("Customer email send failed:", error);
+    return false;
+  }
+}
+
 // SMS functionality commented out for now - will be enabled when Twilio is configured
 // async function sendSMS(payload: NotificationPayload): Promise<boolean> {
 //   const accountSid = Deno.env.get("TWILIO_ACCOUNT_SID");
@@ -174,14 +287,21 @@ serve(async (req) => {
 
     console.log("Sending notifications for quote:", payload.quoteId);
 
-    // Send email notification (SMS disabled for now)
-    const emailResult = await sendEmail(payload);
+    // Send both business and customer emails in parallel
+    const [businessEmailResult, customerEmailResult] = await Promise.all([
+      sendEmail(payload),
+      sendCustomerConfirmation(payload),
+    ]);
+
+    console.log("Business email:", businessEmailResult ? "sent" : "failed");
+    console.log("Customer confirmation:", customerEmailResult ? "sent" : "failed");
 
     return new Response(
       JSON.stringify({
         success: true,
         sms: false, // SMS disabled
-        email: emailResult,
+        businessEmail: businessEmailResult,
+        customerEmail: customerEmailResult,
       }),
       { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
