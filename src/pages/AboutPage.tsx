@@ -248,7 +248,6 @@ const WhyChooseUs = () => {
 // Certifications Section
 const Certifications = () => {
   const certifications = [
-    { name: 'BBB Accredited', detail: 'A+ Rating', icon: '⭐' },
     { name: 'Licensed Contractor', detail: `#${COMPANY_INFO.license}`, icon: '📋' },
     { name: 'Fully Insured', detail: 'Up to $2M Coverage', icon: '🛡️' },
     { name: 'EPA Certified', detail: 'Lead-Safe Work', icon: '🌿' },
@@ -465,7 +464,7 @@ const TimelineSection = () => {
   const milestones = [
     { year: '2015', title: 'Company Founded', description: 'Francisco starts Rhino Remodeller with a vision for honest, quality service.' },
     { year: '2017', title: 'Team Expansion', description: 'Grew the team and added plumbing and electrical services.' },
-    { year: '2019', title: 'BBB A+ Rating', description: 'Earned A+ rating from Better Business Bureau for customer service excellence.' },
+    { year: '2019', title: 'Google 5-Star Rating', description: 'Achieved 5-star rating on Google Reviews for customer service excellence.' },
     { year: '2021', title: '50th Project', description: 'Celebrated our 50th completed project milestone.' },
     { year: '2023', title: 'Service Expansion', description: 'Expanded service area to cover 40 miles around Seattle.' },
     { year: '2025', title: '10 Years Strong', description: 'Celebrating 10 years and 100+ projects with the Seattle community.' },
