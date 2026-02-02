@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { MapPin, Phone, Mail, Clock, Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import { COMPANY_INFO, ROUTES } from "@/lib/constants";
-import rhinoLogo from "@/assets/rhino-logo.png";
+import rhinoLogo from "@/assets/rhino-remodeller-logo.png";
 
 const socialLinks = [
   { icon: Facebook, href: "#", label: "Facebook" },
@@ -44,12 +44,15 @@ const Footer = () => {
           {/* Column 1 - Company Info */}
           <div className="sm:col-span-2 lg:col-span-1">
             {/* Logo */}
-            <Link to={ROUTES.HOME} className="mb-4 inline-block">
+            <Link to={ROUTES.HOME} className="flex items-center gap-3 mb-4">
               <img 
                 src={rhinoLogo} 
                 alt="Rhino Remodeller" 
-                className="h-16 w-auto brightness-0 invert"
+                className="h-14 sm:h-16 w-auto"
               />
+              <span className="text-xl sm:text-2xl font-bold text-background tracking-tight">
+                RHINO REMODELLER
+              </span>
             </Link>
 
             {/* Tagline */}
