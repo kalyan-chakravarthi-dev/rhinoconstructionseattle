@@ -14,6 +14,7 @@ interface QuoteSubmission {
   property_city?: string | null;
   property_state?: string | null;
   message?: string | null;
+  image_urls?: string[];
 }
 
 // Validation functions
@@ -132,6 +133,7 @@ serve(async (req) => {
       propertyState: sanitizedData.property_state,
       message: sanitizedData.message,
       quoteId: insertedData.id,
+      imageUrls: data.image_urls || [],
     };
 
     // Call notification function asynchronously

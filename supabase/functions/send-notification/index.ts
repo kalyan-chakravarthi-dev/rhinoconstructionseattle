@@ -14,6 +14,7 @@ interface NotificationPayload {
   propertyState?: string | null;
   message?: string | null;
   quoteId: string;
+  imageUrls?: string[];
 }
 
 // SMS functionality commented out for now - will be enabled when Twilio is configured
@@ -66,6 +67,23 @@ async function sendEmail(payload: NotificationPayload): Promise<boolean> {
   const sendgridApiKey = Deno.env.get("SENDGRID_API_KEY");
   const businessEmail = "francisco@rhinoremodeller.com";
 
+  // Generate image gallery HTML if images are present
+  const imageGalleryHtml = payload.imageUrls && payload.imageUrls.length > 0 
+    ? `
+      <h3 style="color: #333; margin-top: 20px;">📷 Project Photos (${payload.imageUrls.length}):</h3>
+      <div style="background: #fff; padding: 15px;">
+        ${payload.imageUrls.map((url, index) => `
+          <div style="margin-bottom: 15px;">
+            <a href="${url}" target="_blank" style="display: block;">
+              <img src="${url}" alt="Project photo ${index + 1}" style="max-width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd;" />
+            </a>
+            <p style="font-size: 12px; color: #666; margin: 5px 0 0 0;">Photo ${index + 1} - <a href="${url}" target="_blank" style="color: #e74c3c;">View full size</a></p>
+          </div>
+        `).join('')}
+      </div>
+    `
+    : '';
+
   const emailHtml = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
       <div style="background: #1a1a2e; color: white; padding: 20px; text-align: center;">
@@ -104,6 +122,8 @@ async function sendEmail(payload: NotificationPayload): Promise<boolean> {
           ${payload.message}
         </div>
         ` : ""}
+        
+        ${imageGalleryHtml}
         
         <div style="margin-top: 20px; padding: 15px; background: #e74c3c; color: white; text-align: center; border-radius: 5px;">
           <strong>Quote ID:</strong> ${payload.quoteId}
