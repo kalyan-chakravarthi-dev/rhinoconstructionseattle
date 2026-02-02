@@ -2467,6 +2467,40 @@ const RequestQuote = () => {
                 </div>
               </div>
 
+              {/* Optional Account & Marketing */}
+              <div className="space-y-4 p-4 bg-muted/30 rounded-lg border">
+                <div className="flex items-start gap-3">
+                  <Checkbox
+                    id="createAccountStep5"
+                    checked={createAccount}
+                    onCheckedChange={(checked) => setCreateAccount(checked === true)}
+                  />
+                  <div>
+                    <Label htmlFor="createAccountStep5" className="font-medium cursor-pointer">
+                      Create an account to track this quote
+                    </Label>
+                    <p className="text-sm text-muted-foreground mt-0.5">
+                      Optional — Get updates on your quote status
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Checkbox
+                    id="marketingOptInStep5"
+                    checked={marketingOptIn}
+                    onCheckedChange={(checked) => setMarketingOptIn(checked === true)}
+                  />
+                  <div>
+                    <Label htmlFor="marketingOptInStep5" className="font-medium cursor-pointer">
+                      I'd like to receive occasional tips and special offers
+                    </Label>
+                    <p className="text-sm text-muted-foreground mt-0.5">
+                      Optional — Unsubscribe anytime
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               {/* Terms & Conditions */}
               <div className="flex items-start gap-3 p-4 bg-background border rounded-lg">
                 <Checkbox
@@ -2483,7 +2517,7 @@ const RequestQuote = () => {
                   <Link to="/privacy" className="text-primary hover:underline">
                     Privacy Policy
                   </Link>
-                  . I understand that Rhino Construction will contact me regarding my quote request.
+                  . I understand that Rhino Remodeller will contact me regarding my quote request.
                 </Label>
               </div>
 
