@@ -190,7 +190,7 @@ const WhyChooseUs = () => {
     {
       icon: Award,
       title: 'Experienced Professionals',
-      description: '20+ years of combined expertise in home renovation and repair services.',
+      description: '10+ years of combined expertise in home renovation and repair services.',
     },
     {
       icon: CheckCircle,
