@@ -756,7 +756,11 @@ const RequestQuote = () => {
         const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
         
         for (const image of uploadedImages) {
-          const fileName = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}-${image.name}`;
+          // Sanitize filename: remove spaces and special characters
+          const sanitizedName = image.name
+            .replace(/\s+/g, '-')  // Replace spaces with hyphens
+            .replace(/[^a-zA-Z0-9.\-_]/g, '');  // Remove other special characters
+          const fileName = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}-${sanitizedName}`;
           const filePath = `quotes/${fileName}`;
           
           const { error: uploadError } = await supabase.storage
