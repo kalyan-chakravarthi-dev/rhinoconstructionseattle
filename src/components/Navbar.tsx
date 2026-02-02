@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { COMPANY_INFO, ROUTES } from "@/lib/constants";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
-import rhinoLogo from "@/assets/rhino-logo.png";
+import rhinoLogo from "@/assets/rhino-remodeller-logo.png";
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -58,17 +58,12 @@ const Navbar = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex items-center justify-between h-20 lg:h-24">
             {/* Logo */}
-            <Link to={ROUTES.HOME} className="flex items-center gap-1 flex-shrink-0 -ml-6 lg:-ml-10">
+            <Link to={ROUTES.HOME} className="flex items-center flex-shrink-0">
               <img 
                 src={rhinoLogo} 
                 alt="Rhino Remodeller" 
-                className="h-24 sm:h-28 lg:h-32 w-auto"
-                style={{ filter: 'brightness(0) saturate(100%) invert(17%) sepia(45%) saturate(1200%) hue-rotate(185deg) brightness(95%) contrast(95%)' }}
+                className="h-16 sm:h-20 lg:h-24 w-auto"
               />
-              <div>
-                <span className="font-bold text-sm sm:text-xl lg:text-2xl text-primary tracking-tight">RHINO</span>
-                <span className="font-medium text-sm sm:text-xl lg:text-2xl text-muted-foreground ml-1">REMODELLER</span>
-              </div>
             </Link>
 
             {/* Desktop Navigation */}
@@ -153,18 +148,11 @@ const Navbar = () => {
         <div className="flex flex-col h-full">
           {/* Drawer Header */}
           <div className="flex items-center justify-between p-4 border-b border-border">
-            <div className="flex items-center gap-2">
-              <img 
-                src={rhinoLogo} 
-                alt="Rhino Remodeller" 
-                className="h-12 w-auto"
-                style={{ filter: 'brightness(0) saturate(100%) invert(17%) sepia(45%) saturate(1200%) hue-rotate(185deg) brightness(95%) contrast(95%)' }}
-              />
-              <div>
-                <span className="font-bold text-base text-primary">RHINO</span>
-                <span className="font-medium text-base text-muted-foreground ml-1">REMODELLER</span>
-              </div>
-            </div>
+            <img 
+              src={rhinoLogo} 
+              alt="Rhino Remodeller" 
+              className="h-12 w-auto"
+            />
             <button
               onClick={() => setIsMobileMenuOpen(false)}
               className="p-2 text-foreground hover:bg-muted rounded-md transition-colors"
