@@ -61,13 +61,13 @@ const Navbar = () => {
             <Link to={ROUTES.HOME} className="flex items-center gap-1 flex-shrink-0 -ml-6 lg:-ml-10">
               <img 
                 src={rhinoLogo} 
-                alt="Rhino Construction" 
+                alt="Rhino Remodeller" 
                 className="h-24 sm:h-28 lg:h-32 w-auto"
                 style={{ filter: 'brightness(0) saturate(100%) invert(17%) sepia(45%) saturate(1200%) hue-rotate(185deg) brightness(95%) contrast(95%)' }}
               />
               <div>
                 <span className="font-bold text-sm sm:text-xl lg:text-2xl text-primary tracking-tight">RHINO</span>
-                <span className="font-medium text-sm sm:text-xl lg:text-2xl text-muted-foreground ml-1">CONSTRUCTION</span>
+                <span className="font-medium text-sm sm:text-xl lg:text-2xl text-muted-foreground ml-1">REMODELLER</span>
               </div>
             </Link>
 
@@ -156,13 +156,13 @@ const Navbar = () => {
             <div className="flex items-center gap-2">
               <img 
                 src={rhinoLogo} 
-                alt="Rhino Construction" 
+                alt="Rhino Remodeller" 
                 className="h-12 w-auto"
                 style={{ filter: 'brightness(0) saturate(100%) invert(17%) sepia(45%) saturate(1200%) hue-rotate(185deg) brightness(95%) contrast(95%)' }}
               />
               <div>
                 <span className="font-bold text-base text-primary">RHINO</span>
-                <span className="font-medium text-base text-muted-foreground ml-1">CONSTRUCTION</span>
+                <span className="font-medium text-base text-muted-foreground ml-1">REMODELLER</span>
               </div>
             </div>
             <button
