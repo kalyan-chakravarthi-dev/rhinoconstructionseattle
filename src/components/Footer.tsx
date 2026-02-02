@@ -47,7 +47,7 @@ const Footer = () => {
             <Link to={ROUTES.HOME} className="mb-4 inline-block">
               <img 
                 src={rhinoLogo} 
-                alt="Rhino Construction" 
+                alt="Rhino Remodeller" 
                 className="h-16 w-auto brightness-0 invert"
               />
             </Link>
