@@ -33,7 +33,7 @@ const AboutHero = () => (
   >
     <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/70" aria-hidden="true" />
     <div className="relative z-10 container mx-auto px-4 text-center text-white py-20">
-      <p className="text-secondary font-semibold mb-2 tracking-wide uppercase">About Rhino Construction</p>
+      <p className="text-secondary font-semibold mb-2 tracking-wide uppercase">About Rhino Remodeller</p>
       <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
         Building Trust Since 2003
       </h1>
@@ -58,14 +58,14 @@ const OurStory = () => (
         
         <div className="prose prose-lg max-w-none text-muted-foreground space-y-6">
           <p>
-            <strong className="text-foreground">Rhino Construction</strong> was founded in 2003 with a simple mission: 
+            <strong className="text-foreground">Rhino Remodeller</strong> was founded in 2003 with a simple mission: 
             to provide Seattle homeowners with honest, quality home repair and renovation services they can trust. 
             What started as a small operation with just two dedicated craftsmen has grown into one of the 
             Puget Sound's most respected home improvement companies.
           </p>
           
           <p>
-            Our founder, John Smith, began his career as a carpenter's apprentice at age 18. After years of working 
+            Our founder, Francisco, began his career as a carpenter's apprentice at age 18. After years of working 
             for large contractors and seeing how customers were often treated as just another job number, he knew 
             there had to be a better way. He envisioned a company that would treat every home as if it were their own, 
             combining old-school craftsmanship with modern techniques and genuine customer care.
@@ -125,9 +125,9 @@ const StatsSection = () => {
 const TeamSection = () => {
   const team = [
     {
-      name: 'John Smith',
+      name: 'Francisco',
       role: 'Founder & CEO',
-      bio: 'With 30+ years in construction, John founded Rhino Construction to bring honest, quality service to Seattle homeowners. He still oversees every major project personally.',
+      bio: 'With 10+ years in construction, Francisco founded Rhino Remodeller to bring honest, quality service to Seattle homeowners. He still oversees every major project personally.',
       image: '/placeholder.svg',
       linkedin: '#',
     },
@@ -254,7 +254,7 @@ const WhyChooseUs = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 id="why-heading" className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Why Choose Rhino Construction
+            Why Choose Rhino Remodeller
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             What sets us apart from the rest
@@ -416,7 +416,7 @@ const TestimonialsSection = () => {
     {
       name: 'Jennifer M.',
       location: 'Bellevue, WA',
-      text: 'Rhino Construction exceeded all expectations with our kitchen remodel. Professional, punctual, and the craftsmanship is outstanding. We\'ve recommended them to all our friends!',
+      text: 'Rhino Remodeller exceeded all expectations with our kitchen remodel. Professional, punctual, and the craftsmanship is outstanding. We\'ve recommended them to all our friends!',
       rating: 5,
     },
     {
