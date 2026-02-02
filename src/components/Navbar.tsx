@@ -62,7 +62,7 @@ const Navbar = () => {
               <img 
                 src={rhinoLogo} 
                 alt="Rhino Remodeller" 
-                className="h-16 sm:h-20 lg:h-24 w-auto"
+                className="h-8 sm:h-9 lg:h-10 w-auto"
               />
             </Link>
 
@@ -151,7 +151,7 @@ const Navbar = () => {
             <img 
               src={rhinoLogo} 
               alt="Rhino Remodeller" 
-              className="h-12 w-auto"
+              className="h-8 w-auto"
             />
             <button
               onClick={() => setIsMobileMenuOpen(false)}
