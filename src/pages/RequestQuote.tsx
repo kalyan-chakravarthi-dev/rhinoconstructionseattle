@@ -338,7 +338,11 @@ const RequestQuote = () => {
 
   // Scroll to top when step changes (especially important for mobile)
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Use a small delay to ensure DOM is updated before scrolling
+    const timer = setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }, 50);
+    return () => clearTimeout(timer);
   }, [currentStep]);
 
   const progressValue = (currentStep / steps.length) * 100;
