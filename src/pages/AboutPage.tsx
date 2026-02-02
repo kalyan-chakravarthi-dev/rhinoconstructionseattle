@@ -131,41 +131,6 @@ const TeamSection = () => {
       image: '/placeholder.svg',
       linkedin: '#',
     },
-    {
-      name: 'Sarah Johnson',
-      role: 'Project Manager',
-      bio: 'Sarah ensures every project runs smoothly from start to finish. Her attention to detail and communication skills keep clients informed and projects on track.',
-      image: '/placeholder.svg',
-      linkedin: '#',
-    },
-    {
-      name: 'Mike Chen',
-      role: 'Lead Carpenter',
-      bio: '15 years of fine carpentry experience make Mike our go-to for custom work. His craftsmanship has earned dozens of 5-star reviews from delighted customers.',
-      image: '/placeholder.svg',
-      linkedin: '#',
-    },
-    {
-      name: 'Lisa Rodriguez',
-      role: 'Customer Relations',
-      bio: 'Lisa is your first point of contact and ensures every customer feels valued. She coordinates schedules and handles all communications with care.',
-      image: '/placeholder.svg',
-      linkedin: '#',
-    },
-    {
-      name: 'David Park',
-      role: 'Master Electrician',
-      bio: 'A licensed master electrician with 20 years of experience, David handles all electrical work with precision and strict adherence to safety codes.',
-      image: '/placeholder.svg',
-      linkedin: '#',
-    },
-    {
-      name: 'Tom Williams',
-      role: 'Plumbing Specialist',
-      bio: 'Tom brings 18 years of plumbing expertise to the team. From minor repairs to complete re-piping, his work is known for being thorough and reliable.',
-      image: '/placeholder.svg',
-      linkedin: '#',
-    },
   ];
 
   return (
