@@ -16,55 +16,55 @@ interface NotificationPayload {
   quoteId: string;
 }
 
-// Send SMS via Twilio
-async function sendSMS(payload: NotificationPayload): Promise<boolean> {
-  const accountSid = Deno.env.get("TWILIO_ACCOUNT_SID") || "YOUR_TWILIO_ACCOUNT_SID";
-  const authToken = Deno.env.get("TWILIO_AUTH_TOKEN") || "YOUR_TWILIO_AUTH_TOKEN";
-  const fromPhone = Deno.env.get("TWILIO_PHONE_NUMBER") || "+15551234567";
-  const businessPhone = Deno.env.get("BUSINESS_PHONE") || "+14253259988";
-
-  const smsBody = `🏠 New Quote Request!
-Customer: ${payload.customerName}
-Service: ${payload.serviceRequested}
-Location: ${payload.propertyCity || "N/A"}, ${payload.propertyState || "N/A"}
-Phone: ${payload.phone || "Not provided"}
-ID: ${payload.quoteId.slice(0, 8)}`;
-
-  try {
-    const response = await fetch(
-      `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`,
-      {
-        method: "POST",
-        headers: {
-          "Authorization": `Basic ${btoa(`${accountSid}:${authToken}`)}`,
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: new URLSearchParams({
-          To: businessPhone,
-          From: fromPhone,
-          Body: smsBody,
-        }),
-      }
-    );
-
-    if (!response.ok) {
-      const error = await response.text();
-      console.error("Twilio SMS error:", error);
-      return false;
-    }
-
-    console.log("SMS sent successfully");
-    return true;
-  } catch (error) {
-    console.error("SMS send failed:", error);
-    return false;
-  }
-}
+// SMS functionality commented out for now - will be enabled when Twilio is configured
+// async function sendSMS(payload: NotificationPayload): Promise<boolean> {
+//   const accountSid = Deno.env.get("TWILIO_ACCOUNT_SID");
+//   const authToken = Deno.env.get("TWILIO_AUTH_TOKEN");
+//   const fromPhone = Deno.env.get("TWILIO_PHONE_NUMBER");
+//   const businessPhone = Deno.env.get("BUSINESS_PHONE");
+//
+//   const smsBody = `🏠 New Quote Request!
+// Customer: ${payload.customerName}
+// Service: ${payload.serviceRequested}
+// Location: ${payload.propertyCity || "N/A"}, ${payload.propertyState || "N/A"}
+// Phone: ${payload.phone || "Not provided"}
+// ID: ${payload.quoteId.slice(0, 8)}`;
+//
+//   try {
+//     const response = await fetch(
+//       `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`,
+//       {
+//         method: "POST",
+//         headers: {
+//           "Authorization": `Basic ${btoa(`${accountSid}:${authToken}`)}`,
+//           "Content-Type": "application/x-www-form-urlencoded",
+//         },
+//         body: new URLSearchParams({
+//           To: businessPhone,
+//           From: fromPhone,
+//           Body: smsBody,
+//         }),
+//       }
+//     );
+//
+//     if (!response.ok) {
+//       const error = await response.text();
+//       console.error("Twilio SMS error:", error);
+//       return false;
+//     }
+//
+//     console.log("SMS sent successfully");
+//     return true;
+//   } catch (error) {
+//     console.error("SMS send failed:", error);
+//     return false;
+//   }
+// }
 
 // Send Email via SendGrid
 async function sendEmail(payload: NotificationPayload): Promise<boolean> {
-  const sendgridApiKey = Deno.env.get("SENDGRID_API_KEY") || "YOUR_SENDGRID_API_KEY";
-  const businessEmail = Deno.env.get("BUSINESS_EMAIL") || "contact@rhinoremodeler.com";
+  const sendgridApiKey = Deno.env.get("SENDGRID_API_KEY");
+  const businessEmail = "francisco@rhinoremodeller.com";
 
   const emailHtml = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -154,16 +154,13 @@ serve(async (req) => {
 
     console.log("Sending notifications for quote:", payload.quoteId);
 
-    // Send both notifications in parallel
-    const [smsResult, emailResult] = await Promise.all([
-      sendSMS(payload),
-      sendEmail(payload),
-    ]);
+    // Send email notification (SMS disabled for now)
+    const emailResult = await sendEmail(payload);
 
     return new Response(
       JSON.stringify({
         success: true,
-        sms: smsResult,
+        sms: false, // SMS disabled
         email: emailResult,
       }),
       { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
