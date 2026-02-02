@@ -35,7 +35,7 @@ const AboutHero = () => (
     <div className="relative z-10 container mx-auto px-4 text-center text-white py-20">
       <p className="text-secondary font-semibold mb-2 tracking-wide uppercase">About Rhino Remodeller</p>
       <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-        Building Trust Since 2003
+        Building Trust Since 2015
       </h1>
       <p className="text-xl md:text-2xl text-white/90 max-w-2xl mx-auto">
         Your Seattle Home Renovation Experts
@@ -58,9 +58,9 @@ const OurStory = () => (
         
         <div className="prose prose-lg max-w-none text-muted-foreground space-y-6">
           <p>
-            <strong className="text-foreground">Rhino Remodeller</strong> was founded in 2003 with a simple mission: 
+            <strong className="text-foreground">Rhino Remodeller</strong> was founded in 2015 with a simple mission: 
             to provide Seattle homeowners with honest, quality home repair and renovation services they can trust. 
-            What started as a small operation with just two dedicated craftsmen has grown into one of the 
+            What started as a small operation has grown into one of the 
             Puget Sound's most respected home improvement companies.
           </p>
           
@@ -210,7 +210,7 @@ const WhyChooseUs = () => {
     {
       icon: MapPin,
       title: 'Local & Trusted',
-      description: 'Seattle-based and community-focused, serving our neighbors with pride since 2003.',
+      description: 'Seattle-based and community-focused, serving our neighbors with pride since 2015.',
     },
   ];
 
@@ -463,12 +463,12 @@ const TestimonialsSection = () => {
 // Timeline Section
 const TimelineSection = () => {
   const milestones = [
-    { year: '2003', title: 'Company Founded', description: 'John Smith starts Rhino Construction with a vision for honest, quality service.' },
-    { year: '2008', title: 'Team Expansion', description: 'Grew to 5 full-time employees and added plumbing services.' },
-    { year: '2012', title: '500th Project', description: 'Celebrated our 500th completed project with a customer appreciation event.' },
-    { year: '2016', title: 'BBB A+ Rating', description: 'Earned A+ rating from Better Business Bureau for customer service excellence.' },
-    { year: '2020', title: '24/7 Emergency Services', description: 'Launched round-the-clock emergency response to better serve our community.' },
-    { year: '2023', title: '20 Years Strong', description: 'Celebrated 20 years and 1,000+ projects with the Seattle community.' },
+    { year: '2015', title: 'Company Founded', description: 'Francisco starts Rhino Remodeller with a vision for honest, quality service.' },
+    { year: '2017', title: 'Team Expansion', description: 'Grew the team and added plumbing and electrical services.' },
+    { year: '2019', title: 'BBB A+ Rating', description: 'Earned A+ rating from Better Business Bureau for customer service excellence.' },
+    { year: '2021', title: '50th Project', description: 'Celebrated our 50th completed project milestone.' },
+    { year: '2023', title: 'Service Expansion', description: 'Expanded service area to cover 40 miles around Seattle.' },
+    { year: '2025', title: '10 Years Strong', description: 'Celebrating 10 years and 100+ projects with the Seattle community.' },
   ];
 
   return (
@@ -478,7 +478,7 @@ const TimelineSection = () => {
           <h2 id="timeline-heading" className="text-3xl font-bold text-foreground mb-4">
             Our Journey
           </h2>
-          <p className="text-muted-foreground">Two decades of growth and commitment to excellence</p>
+          <p className="text-muted-foreground">A decade of growth and commitment to excellence</p>
         </div>
         
         <div className="max-w-3xl mx-auto relative">
@@ -571,9 +571,9 @@ const AboutPage = () => {
     mainEntity: {
       '@type': 'LocalBusiness',
       name: COMPANY_INFO.name,
-      description: 'Seattle home repair and renovation company founded in 2003',
-      foundingDate: '2003',
-      numberOfEmployees: '15+',
+      description: 'Seattle home repair and renovation company founded in 2015',
+      foundingDate: '2015',
+      numberOfEmployees: '10+',
       areaServed: 'Seattle and surrounding areas',
       telephone: COMPANY_INFO.phone,
       address: {
@@ -592,12 +592,12 @@ const AboutPage = () => {
         <title>About Us | {COMPANY_INFO.name} - Seattle Home Renovation Experts</title>
         <meta 
           name="description" 
-          content="Learn about Rhino Construction - Seattle's trusted home repair and renovation company since 2003. Meet our team, see our story, and discover why 1,000+ homeowners choose us." 
+          content="Learn about Rhino Remodeller - Seattle's trusted home repair and renovation company since 2015. Meet our team, see our story, and discover why 100+ homeowners choose us." 
         />
-        <link rel="canonical" href="https://rhinoconstruction.com/about" />
+        <link rel="canonical" href="https://rhinoremodeller.com/about" />
         
         <meta property="og:title" content={`About Us | ${COMPANY_INFO.name}`} />
-        <meta property="og:description" content="Seattle's trusted home renovation experts since 2003. 20+ years, 1,000+ projects, 500+ 5-star reviews." />
+        <meta property="og:description" content="Seattle's trusted home renovation experts since 2015. 10+ years, 100+ projects, 50+ 5-star reviews." />
         <meta property="og:type" content="website" />
         
         <script type="application/ld+json">
