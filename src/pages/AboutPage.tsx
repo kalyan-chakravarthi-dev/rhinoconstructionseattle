@@ -95,10 +95,10 @@ const OurStory = () => (
 // Stats Section
 const StatsSection = () => {
   const stats = [
-    { value: '20+', label: 'Years in Business', icon: Clock },
-    { value: '1,000+', label: 'Projects Completed', icon: Building2 },
-    { value: '500+', label: '5-Star Reviews', icon: Star },
-    { value: '15+', label: 'Licensed Professionals', icon: Users },
+    { value: '10+', label: 'Years in Business', icon: Clock },
+    { value: '100+', label: 'Projects Completed', icon: Building2 },
+    { value: '50+', label: '5-Star Reviews', icon: Star },
+    { value: '10+', label: 'Licensed Professionals', icon: Users },
   ];
 
   return (
