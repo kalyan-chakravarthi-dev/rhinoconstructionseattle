@@ -62,7 +62,7 @@ const Navbar = () => {
               <img 
                 src={rhinoLogo} 
                 alt="Rhino Remodeller" 
-                className="h-12 sm:h-14 lg:h-16 w-auto"
+                className="h-14 sm:h-16 lg:h-20 w-auto"
               />
               <span className="text-xl sm:text-2xl lg:text-3xl font-bold text-primary tracking-tight">
                 RHINO REMODELLER
