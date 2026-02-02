@@ -10,16 +10,16 @@
   },
   "hero": {
     "title1": "Seattle's Trusted",
-    "title2": "Home Repair Experts",
-    "subtitle": "Professional repairs and renovations within 40 miles of Seattle.",
+    "title2": "Home Remodel Experts",
+    "subtitle": "Professional renovations within 40 miles of Seattle.",
     "subtitleBold": "Licensed, Bonded & Insured.",
     "getQuote": "Get Free Quote",
     "callNow": "Call Now:"
   },
   "trustBadges": {
     "licensed": "Licensed & Insured",
-    "experience": "20+ Years Experience",
-    "customers": "1000+ Happy Customers",
+    "experience": "10+ Years Experience",
+    "customers": "100+ Happy Customers",
     "rating": "A+ BBB Rating"
   },
   "services": {
