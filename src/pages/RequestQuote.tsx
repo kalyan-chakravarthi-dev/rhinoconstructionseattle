@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import rhinoLogo from "@/assets/rhino-remodeller-logo.png";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -907,11 +908,15 @@ const RequestQuote = () => {
       {/* Header */}
       <div className="bg-background border-b">
         <div className="container mx-auto px-4 py-4">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-lg">R</span>
-            </div>
-            <span className="text-xl font-bold text-foreground">Rhino Construction</span>
+          <Link to="/" className="flex items-center gap-3 flex-shrink-0">
+            <img 
+              src={rhinoLogo} 
+              alt="Rhino Remodeller" 
+              className="h-12 sm:h-14 w-auto"
+            />
+            <span className="text-xl sm:text-2xl font-bold text-primary tracking-tight">
+              RHINO REMODELLER
+            </span>
           </Link>
         </div>
       </div>
