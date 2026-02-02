@@ -40,7 +40,7 @@ const FAQ_CATEGORIES: FAQCategory[] = [
       },
       {
         question: "Are you licensed and insured?",
-        answer: "Yes! Rhino Construction is fully licensed (License #RHINOC*123AB), bonded, and insured. We carry $2 million in liability insurance for your peace of mind."
+        answer: "Yes! Rhino Remodeller is fully licensed (License #RHINOC*123AB), bonded, and insured. We carry $2 million in liability insurance for your peace of mind."
       },
       {
         question: "How long have you been in business?",
@@ -253,7 +253,7 @@ const FAQPage = () => {
         <title>FAQ - Frequently Asked Questions | {COMPANY_INFO.name}</title>
         <meta 
           name="description" 
-          content="Find answers to common questions about Rhino Construction's home repair and renovation services in Seattle. Learn about pricing, timelines, warranties, and more." 
+          content="Find answers to common questions about Rhino Remodeller's home repair and renovation services in Seattle. Learn about pricing, timelines, warranties, and more." 
         />
         <meta name="keywords" content="FAQ, frequently asked questions, home repair questions, renovation FAQ, Seattle contractor FAQ" />
         <link rel="canonical" href="https://rhinoconstruction.com/faq" />

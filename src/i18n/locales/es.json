@@ -110,18 +110,18 @@
   "gallery": {
     "label": "Nuestro Portafolio",
     "title": "Nuestro Trabajo Habla por Sí Mismo",
-    "subtitle": "Vea la diferencia de Rhino Construction",
+    "subtitle": "Vea la diferencia de Rhino Remodeller",
     "before": "ANTES",
     "after": "DESPUÉS",
     "viewFullGallery": "Ver Galería Completa",
     "dragSlider": "Arrastre el control para comparar antes y después"
   },
   "about": {
-    "label": "Sobre Rhino Construction",
+    "label": "Sobre Rhino Remodeller",
     "title": "Construyendo Confianza Desde 2003",
     "subtitle": "Sus Expertos en Renovación de Hogares en Seattle",
     "storyTitle": "Nuestra Historia",
-    "storyP1": "Rhino Construction fue fundada en 2003 con una misión simple: proporcionar a los propietarios de Seattle servicios honestos y de calidad en reparación y renovación del hogar en los que puedan confiar. Lo que comenzó como una pequeña operación con solo dos artesanos dedicados ha crecido hasta convertirse en una de las empresas de mejoras para el hogar más respetadas de Puget Sound.",
+    "storyP1": "Rhino Remodeller fue fundada en 2003 con una misión simple: proporcionar a los propietarios de Seattle servicios honestos y de calidad en reparación y renovación del hogar en los que puedan confiar. Lo que comenzó como una pequeña operación con solo dos artesanos dedicados ha crecido hasta convertirse en una de las empresas de mejoras para el hogar más respetadas de Puget Sound.",
     "storyP2": "Nuestro fundador, John Smith, comenzó su carrera como aprendiz de carpintero a los 18 años. Después de años trabajando para grandes contratistas y viendo cómo los clientes a menudo eran tratados como solo otro número de trabajo, supo que tenía que haber una mejor manera. Visualizó una empresa que trataría cada hogar como si fuera el suyo propio, combinando la artesanía tradicional con técnicas modernas y genuino cuidado al cliente.",
     "storyP3": "Hoy, esa visión vive en cada proyecto que emprendemos. Desde remodelaciones de cocinas que transforman la vida diaria hasta reparaciones de emergencia que salvan el día, nuestro equipo de más de 15 profesionales con licencia lleva adelante el mismo compromiso con la excelencia que construyó nuestra reputación hace más de dos décadas.",
     "missionTitle": "Nuestra Misión",
@@ -135,7 +135,7 @@
     },
     "teamTitle": "Conozca a Nuestro Equipo",
     "teamSubtitle": "Los profesionales capacitados que hacen realidad sus sueños de mejoras para el hogar",
-    "whyTitle": "Por Qué Elegir Rhino Construction",
+    "whyTitle": "Por Qué Elegir Rhino Remodeller",
     "whySubtitle": "Lo que nos diferencia del resto",
     "why": {
       "licensed": "Licenciado y Asegurado",
@@ -188,7 +188,7 @@
     "heroSubtitle": "Artesanía experta para cada habitación de su hogar",
     "servingArea": "Sirviendo Seattle y áreas cercanas",
     "getQuote": "Cotización Gratis",
-    "trustIntro": "En Rhino Construction, estamos comprometidos a entregar calidad excepcional y servicio en cada proyecto. Desde reparaciones menores hasta renovaciones mayores, nuestro equipo de profesionales capacitados aporta experiencia, confiabilidad y atención al detalle a sus necesidades de mejoras para el hogar.",
+    "trustIntro": "En Rhino Remodeller, estamos comprometidos a entregar calidad excepcional y servicio en cada proyecto. Desde reparaciones menores hasta renovaciones mayores, nuestro equipo de profesionales capacitados aporta experiencia, confiabilidad y atención al detalle a sus necesidades de mejoras para el hogar.",
     "servicesTitle": "Nuestros Servicios",
     "servicesSubtitle": "Desde reparaciones rápidas hasta renovaciones completas, tenemos la experiencia para manejar cualquier proyecto",
     "learnMore": "Más Información",
@@ -238,7 +238,7 @@
       "preferQuote": "¿Prefiere solicitar una cotización?",
       "clickHere": "Haga clic aquí",
       "successTitle": "¡Mensaje Enviado Exitosamente!",
-      "successMessage": "Gracias por contactar a Rhino Construction. Responderemos dentro de 24 horas.",
+      "successMessage": "Gracias por contactar a Rhino Remodeller. Responderemos dentro de 24 horas.",
       "sendAnother": "Enviar Otro Mensaje"
     },
     "info": {
@@ -289,7 +289,7 @@
     },
     "signUp": {
       "title": "Crear Cuenta",
-      "subtitle": "Únase a Rhino Construction hoy",
+      "subtitle": "Únase a Rhino Remodeller hoy",
       "firstName": "Nombre",
       "lastName": "Apellido",
       "email": "Correo Electrónico",

@@ -2,7 +2,7 @@
 // Following development_rules.md standards
 
 export const COMPANY_INFO = {
-  name: 'Rhino Construction',
+  name: 'Rhino Remodeller',
   tagline: 'Building Trust, One Project at a Time',
   phone: '(425) 325-9988',
   phoneRaw: '+14253259988',
