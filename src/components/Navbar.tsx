@@ -58,12 +58,15 @@ const Navbar = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex items-center justify-between h-20 lg:h-24">
             {/* Logo */}
-            <Link to={ROUTES.HOME} className="flex items-center flex-shrink-0">
+            <Link to={ROUTES.HOME} className="flex items-center gap-3 flex-shrink-0">
               <img 
                 src={rhinoLogo} 
                 alt="Rhino Remodeller" 
-                className="h-14 sm:h-16 lg:h-18 w-auto"
+                className="h-12 sm:h-14 lg:h-16 w-auto"
               />
+              <span className="text-xl sm:text-2xl lg:text-3xl font-bold text-primary tracking-tight">
+                RHINO REMODELLER
+              </span>
             </Link>
 
             {/* Desktop Navigation */}
