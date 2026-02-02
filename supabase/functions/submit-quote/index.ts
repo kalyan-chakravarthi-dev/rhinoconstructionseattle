@@ -122,6 +122,28 @@ serve(async (req) => {
       );
     }
 
+    // Send notifications (fire-and-forget, don't block the response)
+    const notificationPayload = {
+      customerName: sanitizedData.customer_name,
+      email: sanitizedData.email,
+      phone: sanitizedData.phone,
+      serviceRequested: sanitizedData.service_requested,
+      propertyCity: sanitizedData.property_city,
+      propertyState: sanitizedData.property_state,
+      message: sanitizedData.message,
+      quoteId: insertedData.id,
+    };
+
+    // Call notification function asynchronously
+    fetch(`${supabaseUrl}/functions/v1/send-notification`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${supabaseServiceKey}`,
+      },
+      body: JSON.stringify(notificationPayload),
+    }).catch((err) => console.error("Notification trigger failed:", err));
+
     return new Response(
       JSON.stringify({ success: true, id: insertedData.id }),
       { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
