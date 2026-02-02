@@ -20,7 +20,7 @@
     "licensed": "Licenciado y Asegurado",
     "experience": "10+ Años de Experiencia",
     "customers": "100+ Clientes Satisfechos",
-    "rating": "Calificación A+ BBB"
+    "rating": "Calificación 5 Estrellas"
   },
   "services": {
     "title": "Nuestros Servicios",
@@ -153,8 +153,6 @@
     },
     "certsTitle": "Certificaciones y Acreditaciones",
     "certs": {
-      "bbb": "Acreditado por BBB",
-      "bbbDetail": "Calificación A+",
       "licensed": "Contratista Licenciado",
       "insured": "Totalmente Asegurado",
       "insuredDetail": "Hasta $2M de Cobertura",

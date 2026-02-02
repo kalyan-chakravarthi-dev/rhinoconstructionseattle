@@ -676,8 +676,8 @@ const TrustIndicators = () => (
         <div className="flex items-center gap-2">
           <Shield className="h-6 w-6 text-primary" />
           <div>
-            <p className="font-semibold text-sm">BBB Accredited</p>
-            <p className="text-xs text-muted-foreground">A+ Rating</p>
+            <p className="font-semibold text-sm">Licensed & Insured</p>
+            <p className="text-xs text-muted-foreground">$2M Coverage</p>
           </div>
         </div>
         <div className="flex items-center gap-2">

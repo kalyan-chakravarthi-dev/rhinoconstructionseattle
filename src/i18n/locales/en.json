@@ -20,7 +20,7 @@
     "licensed": "Licensed & Insured",
     "experience": "10+ Years Experience",
     "customers": "100+ Happy Customers",
-    "rating": "A+ BBB Rating"
+    "rating": "5-Star Rated"
   },
   "services": {
     "title": "Our Services",
@@ -153,8 +153,6 @@
     },
     "certsTitle": "Certifications & Accreditations",
     "certs": {
-      "bbb": "BBB Accredited",
-      "bbbDetail": "A+ Rating",
       "licensed": "Licensed Contractor",
       "insured": "Fully Insured",
       "insuredDetail": "Up to $2M Coverage",
