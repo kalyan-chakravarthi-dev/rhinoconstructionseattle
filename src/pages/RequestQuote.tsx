@@ -1152,43 +1152,29 @@ const RequestQuote = () => {
 
               {/* Project Size */}
               <div className="space-y-4">
-                <Label className="text-base font-semibold">
+                <Label htmlFor="projectSize" className="text-base font-semibold">
                   Approximate project size <span className="text-destructive">*</span>
                 </Label>
 
-                <RadioGroup
-                  value={projectSize}
-                  onValueChange={setProjectSize}
-                  className="grid grid-cols-2 md:grid-cols-5 gap-3"
-                >
-                  {projectSizeOptions.map((option) => (
-                    <div key={option.id}>
-                      <RadioGroupItem
-                        value={option.id}
-                        id={`size-${option.id}`}
-                        className="peer sr-only"
-                      />
-                      <Label
-                        htmlFor={`size-${option.id}`}
-                        className={cn(
-                          "flex flex-col items-center justify-center p-4 rounded-lg border-2 cursor-pointer transition-all text-center",
-                          "hover:border-primary/50 hover:bg-muted/50",
-                          "peer-focus-visible:ring-2 peer-focus-visible:ring-primary peer-focus-visible:ring-offset-2",
-                          projectSize === option.id
-                            ? "border-primary bg-primary/5"
-                            : "border-border bg-background"
-                        )}
-                      >
-                        <span className="font-medium text-foreground">
-                          {t(option.labelKey)}
-                        </span>
-                        <span className="text-xs text-muted-foreground mt-1">
-                          {t(option.descKey)}
-                        </span>
-                      </Label>
-                    </div>
-                  ))}
-                </RadioGroup>
+                <Select value={projectSize} onValueChange={setProjectSize}>
+                  <SelectTrigger
+                    id="projectSize"
+                    className={cn(
+                      "w-full md:w-1/2 h-12 bg-background",
+                      step2Errors.projectSize && "border-destructive"
+                    )}
+                  >
+                    <SelectValue placeholder="Select project size" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background border border-border shadow-lg z-50">
+                    {projectSizeOptions.map((option) => (
+                      <SelectItem key={option.id} value={option.id} className="py-3 cursor-pointer">
+                        <span className="font-medium">{t(option.labelKey)}</span>
+                        <span className="text-muted-foreground text-sm ml-2">— {t(option.descKey)}</span>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
 
                 {step2Errors.projectSize && (
                   <p className="text-sm text-destructive">{step2Errors.projectSize}</p>
