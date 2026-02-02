@@ -459,7 +459,7 @@ const ContactInfo = () => (
           Phone Numbers
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-3">
+      <CardContent>
         <div>
           <p className="text-sm text-muted-foreground">Main Office</p>
           <a
@@ -467,17 +467,6 @@ const ContactInfo = () => (
             className="text-lg font-semibold hover:text-primary transition-colors"
           >
             {COMPANY_INFO.phone}
-          </a>
-        </div>
-        <div className="p-3 bg-destructive/10 rounded-lg border border-destructive/20">
-          <p className="text-sm text-destructive font-medium">
-            Emergency 24/7
-          </p>
-          <a
-            href={`tel:${COMPANY_INFO.emergency.replace(/\D/g, "")}`}
-            className="text-lg font-bold text-destructive hover:underline"
-          >
-            {COMPANY_INFO.emergency}
           </a>
         </div>
       </CardContent>
