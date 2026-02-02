@@ -749,6 +749,35 @@ const RequestQuote = () => {
     setQuoteRequestId(newQuoteId);
 
     try {
+      // Upload images to storage bucket first
+      const imageUrls: string[] = [];
+      
+      if (uploadedImages.length > 0) {
+        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+        
+        for (const image of uploadedImages) {
+          const fileName = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}-${image.name}`;
+          const filePath = `quotes/${fileName}`;
+          
+          const { error: uploadError } = await supabase.storage
+            .from('quote-images')
+            .upload(filePath, image.file, {
+              contentType: image.file.type,
+              upsert: false,
+            });
+          
+          if (uploadError) {
+            console.error('Image upload error:', uploadError);
+            // Continue with other images even if one fails
+            continue;
+          }
+          
+          // Get public URL for the uploaded image
+          const publicUrl = `${supabaseUrl}/storage/v1/object/public/quote-images/${filePath}`;
+          imageUrls.push(publicUrl);
+        }
+      }
+
       // Use Edge Function for server-side validation
       const { data: responseData, error: fnError } = await supabase.functions.invoke('submit-quote', {
         body: {
@@ -759,6 +788,7 @@ const RequestQuote = () => {
           property_city: address.city || null,
           property_state: address.state || null,
           message: projectDescription || null,
+          image_urls: imageUrls,
         },
       });
 
