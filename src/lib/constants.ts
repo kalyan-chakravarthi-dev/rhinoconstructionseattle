@@ -4,15 +4,15 @@
 export const COMPANY_INFO = {
   name: 'Rhino Remodeller',
   tagline: 'Building Trust, One Project at a Time',
-  phone: '(425) 325-9988',
-  phoneRaw: '+14253259988',
-  emergency: '(206) 555-HELP',
-  email: 'info@rhinoconstruction.com',
+  phone: '(206) 487-9677',
+  phoneRaw: '+12064879677',
+  emergency: '(206) 487-9677',
+  email: 'francisco@rhinoremodeller.com',
   address: {
-    street: '123 Main St',
-    city: 'Seattle',
+    street: '4527 S 256th Pl',
+    city: 'Kent',
     state: 'WA',
-    zip: '98101',
+    zip: '98032',
   },
   hours: {
     weekday: 'Mon-Fri: 7:00 AM - 6:00 PM',
