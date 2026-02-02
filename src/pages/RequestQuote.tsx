@@ -335,6 +335,11 @@ const RequestQuote = () => {
     }
   }, []);
 
+  // Scroll to top when step changes (especially important for mobile)
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentStep]);
+
   const progressValue = (currentStep / steps.length) * 100;
 
   const handleStep1Continue = () => {
