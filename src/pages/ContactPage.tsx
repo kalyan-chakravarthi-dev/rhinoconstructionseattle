@@ -108,7 +108,7 @@ const FAQ_ITEMS = [
   {
     question: "Are you licensed and insured?",
     answer:
-      "Absolutely. Rhino Remodeller is fully licensed (License #123456), bonded, and insured up to $2M for your complete peace of mind.",
+      "Absolutely. Rhino Remodeler is fully licensed (License #123456), bonded, and insured up to $2M for your complete peace of mind.",
   },
   {
     question: "What is your typical response time?",
@@ -230,7 +230,7 @@ const ContactForm = () => {
             Message Sent Successfully!
           </h3>
           <p className="text-muted-foreground mb-4">
-            Thank you for contacting Rhino Remodeller. We'll respond within 24
+            Thank you for contacting Rhino Remodeler. We'll respond within 24
             hours.
           </p>
           <Button
@@ -430,7 +430,7 @@ const ContactInfo = () => (
         {/* Map Embed Placeholder */}
         <div className="relative w-full h-48 bg-muted rounded-lg overflow-hidden">
           <iframe
-            title="Rhino Remodeller Location"
+            title="Rhino Remodeler Location"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d172055.9861179649!2d-122.45211751718383!3d47.61475992454509!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5490102c93e83355%3A0x102565466944d59a!2sSeattle%2C%20WA!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
             width="100%"
             height="100%"
@@ -754,7 +754,7 @@ const ContactPage = () => {
     "@type": "ContactPage",
     mainEntity: {
       "@type": "LocalBusiness",
-      name: "Rhino Remodeller",
+      name: "Rhino Remodeler",
       telephone: COMPANY_INFO.phone,
       email: COMPANY_INFO.email,
       address: {
@@ -785,10 +785,10 @@ const ContactPage = () => {
   return (
     <>
       <Helmet>
-        <title>Contact Us | Rhino Remodeller - Seattle Home Renovation</title>
+        <title>Contact Us | Rhino Remodeler - Seattle Home Renovation</title>
         <meta
           name="description"
-          content="Contact Rhino Remodeller for your home repair and renovation needs in Seattle. Call (206) 555-RHINO, email us, or fill out our contact form. 24/7 emergency service available."
+          content="Contact Rhino Remodeler for your home repair and renovation needs in Seattle. Call (206) 555-RHINO, email us, or fill out our contact form. 24/7 emergency service available."
         />
         <link rel="canonical" href="https://rhinoconstruction.com/contact" />
         <script type="application/ld+json">

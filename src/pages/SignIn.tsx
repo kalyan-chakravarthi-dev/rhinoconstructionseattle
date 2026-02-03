@@ -69,7 +69,7 @@ const SignIn = () => {
     
     toast({
       title: "Sign in successful!",
-      description: "Welcome back to Rhino Remodeller.",
+      description: "Welcome back to Rhino Remodeler.",
     });
     
     setIsLoading(false);

@@ -33,7 +33,7 @@ const AboutHero = () => (
   >
     <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/70" aria-hidden="true" />
     <div className="relative z-10 container mx-auto px-4 text-center text-white py-20">
-      <p className="text-secondary font-semibold mb-2 tracking-wide uppercase">About Rhino Remodeller</p>
+      <p className="text-secondary font-semibold mb-2 tracking-wide uppercase">About Rhino Remodeler</p>
       <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
         Building Trust Since 2015
       </h1>
@@ -58,7 +58,7 @@ const OurStory = () => (
         
         <div className="prose prose-lg max-w-none text-muted-foreground space-y-6">
           <p>
-            <strong className="text-foreground">Rhino Remodeller</strong> was founded in 2015 with a simple mission: 
+            <strong className="text-foreground">Rhino Remodeler</strong> was founded in 2015 with a simple mission: 
             to provide Seattle homeowners with honest, quality home repair and renovation services they can trust. 
             What started as a small operation has grown into one of the 
             Puget Sound's most respected home improvement companies.
@@ -127,7 +127,7 @@ const TeamSection = () => {
     {
       name: 'Francisco',
       role: 'Founder & CEO',
-      bio: 'With 10+ years in construction, Francisco founded Rhino Remodeller to bring honest, quality service to Seattle homeowners. He still oversees every major project personally.',
+      bio: 'With 10+ years in construction, Francisco founded Rhino Remodeler to bring honest, quality service to Seattle homeowners. He still oversees every major project personally.',
       image: '/placeholder.svg',
       linkedin: '#',
     },
@@ -219,7 +219,7 @@ const WhyChooseUs = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 id="why-heading" className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Why Choose Rhino Remodeller
+            Why Choose Rhino Remodeler
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             What sets us apart from the rest
@@ -380,7 +380,7 @@ const TestimonialsSection = () => {
     {
       name: 'Jennifer M.',
       location: 'Bellevue, WA',
-      text: 'Rhino Remodeller exceeded all expectations with our kitchen remodel. Professional, punctual, and the craftsmanship is outstanding. We\'ve recommended them to all our friends!',
+      text: 'Rhino Remodeler exceeded all expectations with our kitchen remodel. Professional, punctual, and the craftsmanship is outstanding. We\'ve recommended them to all our friends!',
       rating: 5,
     },
     {
@@ -462,7 +462,7 @@ const TestimonialsSection = () => {
 // Timeline Section
 const TimelineSection = () => {
   const milestones = [
-    { year: '2015', title: 'Company Founded', description: 'Francisco starts Rhino Remodeller with a vision for honest, quality service.' },
+    { year: '2015', title: 'Company Founded', description: 'Francisco starts Rhino Remodeler with a vision for honest, quality service.' },
     { year: '2017', title: 'Team Expansion', description: 'Grew the team and added plumbing and electrical services.' },
     { year: '2019', title: 'Google 5-Star Rating', description: 'Achieved 5-star rating on Google Reviews for customer service excellence.' },
     { year: '2021', title: '50th Project', description: 'Celebrated our 50th completed project milestone.' },
@@ -591,9 +591,9 @@ const AboutPage = () => {
         <title>About Us | {COMPANY_INFO.name} - Seattle Home Renovation Experts</title>
         <meta 
           name="description" 
-          content="Learn about Rhino Remodeller - Seattle's trusted home repair and renovation company since 2015. Meet our team, see our story, and discover why 100+ homeowners choose us." 
+          content="Learn about Rhino Remodeler - Seattle's trusted home repair and renovation company since 2015. Meet our team, see our story, and discover why 100+ homeowners choose us." 
         />
-        <link rel="canonical" href="https://rhinoremodeller.com/about" />
+        <link rel="canonical" href="https://rhinoremodeler.com/about" />
         
         <meta property="og:title" content={`About Us | ${COMPANY_INFO.name}`} />
         <meta property="og:description" content="Seattle's trusted home renovation experts since 2015. 10+ years, 100+ projects, 50+ 5-star reviews." />

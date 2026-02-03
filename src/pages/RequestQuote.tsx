@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import rhinoLogo from "@/assets/rhino-remodeller-logo.png";
+import rhinoLogo from "@/assets/rhino-remodeler-logo.png";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -915,11 +915,11 @@ const RequestQuote = () => {
           <Link to="/" className="flex items-center gap-3 flex-shrink-0">
             <img 
               src={rhinoLogo} 
-              alt="Rhino Remodeller" 
+              alt="Rhino Remodeler" 
               className="h-12 sm:h-14 w-auto"
             />
             <span className="text-xl sm:text-2xl font-bold text-primary tracking-tight">
-              RHINO REMODELLER
+              RHINO REMODELER
             </span>
           </Link>
         </div>
@@ -2517,7 +2517,7 @@ const RequestQuote = () => {
                   <Link to="/privacy" className="text-primary hover:underline">
                     Privacy Policy
                   </Link>
-                  . I understand that Rhino Remodeller will contact me regarding my quote request.
+                  . I understand that Rhino Remodeler will contact me regarding my quote request.
                 </Label>
               </div>
 

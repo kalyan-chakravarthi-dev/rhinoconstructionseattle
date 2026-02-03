@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { COMPANY_INFO, ROUTES } from "@/lib/constants";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
-import rhinoLogo from "@/assets/rhino-remodeller-logo.png";
+import rhinoLogo from "@/assets/rhino-remodeler-logo.png";
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -61,11 +61,11 @@ const Navbar = () => {
             <Link to={ROUTES.HOME} className="flex items-center gap-3 flex-shrink-0">
               <img 
                 src={rhinoLogo} 
-                alt="Rhino Remodeller" 
+                alt="Rhino Remodeler" 
                 className="h-14 sm:h-16 lg:h-20 w-auto"
               />
               <span className="text-xl sm:text-2xl lg:text-3xl font-bold text-primary tracking-tight">
-                RHINO REMODELLER
+                RHINO REMODELER
               </span>
             </Link>
 
@@ -153,7 +153,7 @@ const Navbar = () => {
           <div className="flex items-center justify-between p-4 border-b border-border">
             <img 
               src={rhinoLogo} 
-              alt="Rhino Remodeller" 
+              alt="Rhino Remodeler" 
               className="h-8 w-auto"
             />
             <button
