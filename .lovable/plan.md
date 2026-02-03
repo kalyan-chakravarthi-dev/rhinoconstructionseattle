@@ -1,40 +1,73 @@
 
-# Navigation Restructuring: Move "Before & After" Under Services
+# Add Minimal Sticky Navbar to Quote Confirmation Page
 
 ## Overview
-This change will streamline the navigation by moving the "Before & After" gallery from a standalone navbar item to be accessible through the Services section. This creates a cleaner navigation structure and positions the portfolio as supporting evidence for the services offered.
+Apply the same minimal, sticky navbar treatment from `/request-quote` to the `/request-quote/confirmation` page for consistent brand continuity throughout the quote flow.
 
-## Changes Summary
+## Current State
+The confirmation page (`src/pages/QuoteConfirmation.tsx`) currently has:
+- No navbar/header
+- Direct content starting with the success animation
+- No footer (which is correct per requirements)
 
-### 1. Update Navbar Component (`src/components/Navbar.tsx`)
-- Remove the "Before & After" link from the main `navItems` array
-- Final navigation structure will be: **Home | Services | About Us | Contact**
+## Changes Required
 
-### 2. Add Gallery Link to Services Page (`src/pages/ServicesPage.tsx`)
-- Add a new "View Our Work" section or card that links to the Before & After gallery
-- Position it prominently within the services grid or as a featured CTA
-- This provides a natural discovery path: Services → See our completed work
+### File: `src/pages/QuoteConfirmation.tsx`
 
-### 3. Update Services Component on Homepage (`src/components/Services.tsx`)  
-- Add a secondary CTA or link to the gallery section
-- Users can go from the services overview directly to the portfolio
+**1. Add Required Imports**
+```typescript
+import rhinoLogo from "@/assets/rhino-remodeler-logo.png";
+import { COMPANY_INFO } from "@/lib/constants";
+```
 
-### 4. Update Translation Files
-- No translation changes needed for the navbar (we're just removing the item)
-- May add new gallery-related translations for the Services page if needed
+**2. Add Sticky Navbar Header**
+Insert the same minimal navbar structure used in RequestQuote.tsx at the top of the component's return statement (before the main content div):
 
-## Benefits
-- **Cleaner navigation**: 4 items instead of 5 = less cognitive load
-- **Better conversion flow**: Services → Portfolio → Quote is a natural journey
-- **Logical grouping**: The gallery showcases service quality, so it belongs with services
-- **Mobile-friendly**: Fewer nav items means a tidier mobile menu
+```jsx
+{/* Minimal Sticky Navbar */}
+<header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border/40 print:hidden">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+    {/* Logo - links to home */}
+    <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+      <img 
+        src={rhinoLogo} 
+        alt="Rhino Remodeler" 
+        className="h-10 sm:h-12 w-auto"
+      />
+      <span className="text-lg sm:text-xl font-bold text-primary tracking-tight hidden sm:inline">
+        RHINO REMODELER
+      </span>
+    </Link>
+
+    {/* Phone Number - tap to call */}
+    <a 
+      href={`tel:${COMPANY_INFO.phoneRaw}`}
+      className="flex items-center gap-2 text-sm sm:text-base font-medium text-foreground hover:text-primary transition-colors"
+    >
+      <Phone className="h-4 w-4 sm:h-5 sm:w-5" />
+      <span className="hidden sm:inline">{COMPANY_INFO.phone}</span>
+      <span className="sm:hidden">Call Us</span>
+    </a>
+  </div>
+</header>
+```
+
+**3. Adjust Page Structure**
+Wrap the existing content in a proper container to work with the sticky header:
+- Current: `<div className="min-h-screen bg-muted/30 py-8 px-4 print:bg-white print:py-0">`
+- Will need a wrapper `<div className="min-h-screen bg-muted/30">` with the header, then the content area
+
+## Navbar Specifications
+
+| Element | Desktop | Mobile |
+|---------|---------|--------|
+| Logo | Image + "RHINO REMODELER" text | Image only |
+| Phone | Full number: (206) 487-9677 | "Call Us" with icon |
+| Position | Sticky at top | Sticky at top |
+| Print | Hidden | Hidden |
 
 ## Technical Details
-
-| File | Change Type |
-|------|-------------|
-| `src/components/Navbar.tsx` | Remove gallery from navItems array (line 19) |
-| `src/pages/ServicesPage.tsx` | Add gallery CTA/link section after ServicesGrid |
-| `src/components/Services.tsx` | Add secondary "See Our Work" link |
-| `src/i18n/locales/en.json` | Add new translations for gallery link on services |
-| `src/i18n/locales/es.json` | Add Spanish translations |
+- The `Phone` icon is already imported in the file (line 8)
+- The `Link` component is already imported (line 2)
+- Add `print:hidden` class to navbar to exclude from print view
+- Maintains the same 21st.dev-inspired minimal aesthetic as the quote form
