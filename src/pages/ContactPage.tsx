@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -191,16 +192,39 @@ const ContactForm = () => {
 
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    console.log("Contact form submitted:", data);
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    toast({
-      title: "Message Sent!",
-      description: "We'll get back to you within 24 hours.",
-    });
-    reset();
+    
+    try {
+      const { data: result, error } = await supabase.functions.invoke("submit-contact", {
+        body: {
+          fullName: data.fullName,
+          email: data.email,
+          phone: data.phone,
+          service: data.service || undefined,
+          heardFrom: data.heardFrom || undefined,
+          message: data.message,
+        },
+      });
+
+      if (error) throw error;
+
+      setIsSubmitted(true);
+      toast({
+        title: "Message Sent!",
+        description: result?.trackingId 
+          ? `Your reference ID is ${result.trackingId}. We'll respond within 24 hours.`
+          : "We'll get back to you within 24 hours.",
+      });
+      reset();
+    } catch (error) {
+      console.error("Contact form submission error:", error);
+      toast({
+        title: "Submission Failed",
+        description: "There was an error sending your message. Please try again or call us directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (isSubmitted) {

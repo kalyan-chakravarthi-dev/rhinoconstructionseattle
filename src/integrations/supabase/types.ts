@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      contact_messages: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string
+          heard_from: string | null
+          id: string
+          message: string
+          phone: string
+          service: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          full_name: string
+          heard_from?: string | null
+          id?: string
+          message: string
+          phone: string
+          service?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string
+          heard_from?: string | null
+          id?: string
+          message?: string
+          phone?: string
+          service?: string | null
+        }
+        Relationships: []
+      }
       quote_requests: {
         Row: {
           created_at: string
