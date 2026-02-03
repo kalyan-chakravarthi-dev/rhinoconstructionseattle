@@ -22,12 +22,12 @@ const services = [
   {
     icon: Zap,
     id: "electrical",
-    href: "/services/electrical",
+    href: "/services/electrical-work",
   },
   {
     icon: Wrench,
     id: "plumbing",
-    href: "/services/plumbing",
+    href: "/services/plumbing-services",
   },
   {
     icon: Hammer,
