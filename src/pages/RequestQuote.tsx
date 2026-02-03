@@ -999,7 +999,7 @@ const RequestQuote = () => {
                 <SelectContent className="bg-background border border-border shadow-lg z-50">
                   {services.map((service) => {
                     const Icon = service.icon;
-                    return (
+                      return (
                       <SelectItem 
                         key={service.id} 
                         value={service.id}
@@ -1009,10 +1009,7 @@ const RequestQuote = () => {
                           <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center flex-shrink-0">
                             <Icon className="w-4 h-4 text-muted-foreground" />
                           </div>
-                          <div>
-                            <span className="font-medium">{t(service.nameKey)}</span>
-                            <span className="text-muted-foreground text-sm ml-2">— {t(service.descKey)}</span>
-                          </div>
+                          <span className="font-medium">{t(service.nameKey)}</span>
                         </div>
                       </SelectItem>
                     );
