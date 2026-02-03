@@ -526,7 +526,7 @@ const BottomCTA = () => (
           Become Our Next Success Story
         </h2>
         <p className="text-lg text-primary-foreground/90 mb-8">
-          Join the 1,000+ Seattle homeowners who trust Rhino Construction for their home improvement needs.
+          Join the 1,000+ Seattle homeowners who trust Rhino Remodeler for their home improvement needs.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">

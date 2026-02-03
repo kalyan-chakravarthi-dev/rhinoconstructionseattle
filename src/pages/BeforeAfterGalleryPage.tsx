@@ -288,7 +288,7 @@ const BeforeAfterGalleryPage = () => {
             Our Work Speaks For Itself
           </h1>
           <p className="text-xl text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
-            Browse our completed projects and see the Rhino Construction difference
+            Browse our completed projects and see the Rhino Remodeler difference
           </p>
           <Button asChild size="lg" variant="secondary" className="text-lg px-8">
             <Link to="/request-quote">

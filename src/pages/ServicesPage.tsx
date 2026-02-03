@@ -73,7 +73,7 @@ const TrustBadges = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center mb-8">
           <p className="text-lg text-muted-foreground">
-            At Rhino Construction, we're committed to delivering exceptional quality and service on every project. 
+            At Rhino Remodeler, we're committed to delivering exceptional quality and service on every project. 
             From minor repairs to major renovations, our team of skilled professionals brings expertise, 
             reliability, and attention to detail to your home improvement needs.
           </p>
