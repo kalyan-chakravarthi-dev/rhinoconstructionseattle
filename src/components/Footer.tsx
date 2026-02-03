@@ -44,12 +44,15 @@ const Footer = () => {
           {/* Column 1 - Company Info */}
           <div className="sm:col-span-2 lg:col-span-1">
             {/* Logo */}
-            <Link to={ROUTES.HOME} className="flex items-center mb-4">
+            <Link to={ROUTES.HOME} className="flex items-center gap-3 mb-4">
               <img 
                 src={rhinoLogo} 
                 alt="Rhino Remodeler" 
-                className="h-16 sm:h-20 lg:h-24 w-auto brightness-0 invert"
+                className="h-12 sm:h-14 lg:h-16 w-auto brightness-0 invert"
               />
+              <span className="text-background font-bold text-lg sm:text-xl tracking-wide">
+                RHINO REMODELER
+              </span>
             </Link>
 
             {/* Tagline */}
