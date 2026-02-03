@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { MapPin, Phone, Mail, Clock, Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import { COMPANY_INFO, ROUTES } from "@/lib/constants";
-import rhinoLogo from "@/assets/rhino-logo-footer.png";
+import rhinoLogo from "@/assets/rhino-logo-footer-white.png";
 
 const socialLinks = [
   { icon: Facebook, href: "#", label: "Facebook" },
@@ -49,7 +49,6 @@ const Footer = () => {
                 src={rhinoLogo} 
                 alt="Rhino Remodeler" 
                 className="h-20 sm:h-24 lg:h-28 w-auto"
-                style={{ filter: 'brightness(0) invert(1)' }}
               />
             </Link>
 
