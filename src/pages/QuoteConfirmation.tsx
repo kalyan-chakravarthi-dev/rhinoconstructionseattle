@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { Link, useSearchParams } from "react-router-dom";
 import { Check, Phone, AlertTriangle } from "lucide-react";
 import { format } from "date-fns";
 import rhinoLogo from "@/assets/rhino-remodeler-logo.png";
 import { COMPANY_INFO } from "@/lib/constants";
 
 const QuoteConfirmation = () => {
-  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [showAnimation, setShowAnimation] = useState(false);
   const [quoteData, setQuoteData] = useState<any>(null);
@@ -15,13 +13,10 @@ const QuoteConfirmation = () => {
   const quoteId = searchParams.get("id") || "RQT-0000";
 
   useEffect(() => {
-    // Load quote data from localStorage
     const savedQuote = localStorage.getItem("lastSubmittedQuote");
     if (savedQuote) {
       setQuoteData(JSON.parse(savedQuote));
     }
-
-    // Trigger animation after mount
     const timer = setTimeout(() => setShowAnimation(true), 100);
     return () => clearTimeout(timer);
   }, []);
@@ -41,7 +36,6 @@ const QuoteConfirmation = () => {
     return serviceNames[serviceId] || serviceId || "Not specified";
   };
 
-  // Check if service is emergency-related
   const isEmergencyService = ["electrical", "plumbing", "roofing"].includes(
     quoteData?.service?.toLowerCase() || ""
   );
@@ -117,7 +111,7 @@ const QuoteConfirmation = () => {
                 Request Submitted Successfully
               </h1>
               <p className="text-muted-foreground">
-                We've received your request and our team will contact you shortly.
+                We've received your request and our team will contact you within 24 hours.
               </p>
             </div>
           </div>
@@ -175,23 +169,32 @@ const QuoteConfirmation = () => {
             <ul className="space-y-2 text-muted-foreground text-sm">
               <li className="flex items-start gap-3">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0" />
-                <span>Our team will review your request within 24 hours</span>
+                <span>Request review within 24 hours</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0" />
-                <span>A site visit will be scheduled if needed</span>
+                <span>Site visit scheduled if required</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0" />
-                <span>Your quote will be valid for 30 days</span>
+                <span>Quote delivered after evaluation</span>
               </li>
             </ul>
           </div>
 
+          {/* Reassurance Message */}
+          <p
+            className={`text-center text-sm text-muted-foreground font-medium transition-all duration-500 delay-800 ${
+              showAnimation ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            You don't need to do anything right now.
+          </p>
+
           {/* Emergency Contact (Conditional) */}
           {isEmergencyService && (
             <div
-              className={`flex items-center gap-3 p-4 bg-destructive/10 border border-destructive/20 rounded-xl transition-all duration-500 delay-800 ${
+              className={`flex items-center gap-3 p-4 bg-destructive/10 border border-destructive/20 rounded-xl transition-all duration-500 delay-900 ${
                 showAnimation ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               }`}
             >
@@ -207,36 +210,6 @@ const QuoteConfirmation = () => {
               </p>
             </div>
           )}
-
-          {/* Primary CTA */}
-          <div
-            className={`space-y-4 transition-all duration-500 delay-900 ${
-              showAnimation ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`}
-          >
-            <Button
-              onClick={() => navigate(`/dashboard/quotes/${quoteId}`)}
-              className="w-full rounded-xl"
-              size="lg"
-            >
-              View Quote Status
-            </Button>
-
-            <div className="flex justify-center gap-6 text-sm">
-              <Link
-                to="/request-quote"
-                className="text-muted-foreground hover:text-primary transition-colors"
-              >
-                Request another quote
-              </Link>
-              <Link
-                to="/"
-                className="text-muted-foreground hover:text-primary transition-colors"
-              >
-                Back to home
-              </Link>
-            </div>
-          </div>
         </div>
       </main>
     </div>
