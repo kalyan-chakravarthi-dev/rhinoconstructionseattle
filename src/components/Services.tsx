@@ -90,10 +90,16 @@ const Services = () => {
         </div>
 
         {/* Bottom CTA */}
-        <div className="text-center">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Button variant="default" size="lg" asChild>
             <Link to="/services" className="inline-flex items-center gap-2">
               {t('services.viewAll')}
+              <ArrowRight className="w-4 h-4" aria-hidden="true" />
+            </Link>
+          </Button>
+          <Button variant="outline" size="lg" asChild>
+            <Link to="/before-after" className="inline-flex items-center gap-2">
+              {t('services.seeOurWork')}
               <ArrowRight className="w-4 h-4" aria-hidden="true" />
             </Link>
           </Button>
