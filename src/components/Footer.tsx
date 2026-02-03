@@ -48,9 +48,9 @@ const Footer = () => {
               <img 
                 src={rhinoLogo} 
                 alt="Rhino Remodeler" 
-                className="h-14 sm:h-16 w-auto"
+                className="h-14 sm:h-16 lg:h-20 w-auto"
               />
-              <span className="text-xl sm:text-2xl font-bold text-background tracking-tight">
+              <span className="text-xl sm:text-2xl lg:text-3xl font-bold text-secondary tracking-tight">
                 RHINO REMODELER
               </span>
             </Link>
