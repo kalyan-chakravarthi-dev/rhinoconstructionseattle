@@ -105,7 +105,7 @@ const DashboardQuotes = () => {
     <>
       <Helmet>
         <title>My Quotes | {COMPANY_INFO.name} Dashboard</title>
-        <meta name="description" content="Manage your quote requests, track project progress, and communicate with the Rhino Construction team." />
+        <meta name="description" content="Manage your quote requests, track project progress, and communicate with the Rhino Remodeler team." />
       </Helmet>
 
       <div className="min-h-screen flex w-full bg-background">

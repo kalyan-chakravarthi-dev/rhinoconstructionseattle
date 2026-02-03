@@ -60,7 +60,7 @@ const QuoteConfirmation = () => {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: "Rhino Construction Quote Request",
+          title: "Rhino Remodeler Quote Request",
           text: `Quote Request Confirmation - ${quoteId}`,
           url: window.location.href,
         });
@@ -495,7 +495,7 @@ const QuoteConfirmation = () => {
           }`}
         >
           <p className="text-muted-foreground mb-3">
-            Join 1,000+ happy customers who trust Rhino Construction
+            Join 1,000+ happy customers who trust Rhino Remodeler
           </p>
           <div className="flex items-center justify-center gap-1 mb-3">
             {[1, 2, 3, 4, 5].map((star) => (
@@ -504,7 +504,7 @@ const QuoteConfirmation = () => {
             <span className="ml-2 font-semibold text-foreground">4.9/5</span>
           </div>
           <blockquote className="text-sm text-muted-foreground italic max-w-md mx-auto">
-            "Rhino Construction provided a detailed quote and completed our kitchen remodel on time
+            "Rhino Remodeler provided a detailed quote and completed our kitchen remodel on time
             and on budget. Highly recommend!"
           </blockquote>
           <p className="text-xs text-muted-foreground mt-2">— Sarah M., Seattle</p>

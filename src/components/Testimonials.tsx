@@ -18,7 +18,7 @@ const testimonials: Testimonial[] = [
   {
     id: 1,
     rating: 5,
-    quote: "Rhino Construction transformed our outdated kitchen into a modern masterpiece. Professional, on-time, and within budget. Highly recommend!",
+    quote: "Rhino Remodeler transformed our outdated kitchen into a modern masterpiece. Professional, on-time, and within budget. Highly recommend!",
     name: "Sarah Johnson",
     location: "Seattle, WA",
     project: "Kitchen Remodeling",
