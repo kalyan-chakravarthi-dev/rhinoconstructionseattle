@@ -28,6 +28,8 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { format } from "date-fns";
+import rhinoLogo from "@/assets/rhino-remodeler-logo.png";
+import { COMPANY_INFO } from "@/lib/constants";
 
 const QuoteConfirmation = () => {
   const navigate = useNavigate();
@@ -142,8 +144,36 @@ const QuoteConfirmation = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-muted/30 py-8 px-4 print:bg-white print:py-0">
-      <div className="max-w-2xl mx-auto space-y-8">
+    <div className="min-h-screen bg-muted/30">
+      {/* Minimal Sticky Navbar */}
+      <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border/40 print:hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+          {/* Logo - links to home */}
+          <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <img 
+              src={rhinoLogo} 
+              alt="Rhino Remodeler" 
+              className="h-10 sm:h-12 w-auto"
+            />
+            <span className="text-lg sm:text-xl font-bold text-primary tracking-tight hidden sm:inline">
+              RHINO REMODELER
+            </span>
+          </Link>
+
+          {/* Phone Number - tap to call */}
+          <a 
+            href={`tel:${COMPANY_INFO.phoneRaw}`}
+            className="flex items-center gap-2 text-sm sm:text-base font-medium text-foreground hover:text-primary transition-colors"
+          >
+            <Phone className="h-4 w-4 sm:h-5 sm:w-5" />
+            <span className="hidden sm:inline">{COMPANY_INFO.phone}</span>
+            <span className="sm:hidden">Call Us</span>
+          </a>
+        </div>
+      </header>
+
+      <div className="py-8 px-4 print:bg-white print:py-0">
+        <div className="max-w-2xl mx-auto space-y-8">
         {/* Success Header */}
         <div className="text-center space-y-6">
           {/* Animated Checkmark */}
@@ -514,6 +544,7 @@ const QuoteConfirmation = () => {
             (206) 555-RHINO
           </a>
         </p>
+        </div>
       </div>
     </div>
   );
