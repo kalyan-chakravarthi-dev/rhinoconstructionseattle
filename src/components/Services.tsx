@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ChefHat, Bath, Home, Zap, Wrench, Hammer, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ROUTES } from "@/lib/constants";
 
 const services = [
   {
@@ -98,7 +99,7 @@ const Services = () => {
             </Link>
           </Button>
           <Button variant="outline" size="lg" asChild>
-            <Link to="/before-after" className="inline-flex items-center gap-2">
+            <Link to={ROUTES.GALLERY} className="inline-flex items-center gap-2">
               {t('services.seeOurWork')}
               <ArrowRight className="w-4 h-4" aria-hidden="true" />
             </Link>
