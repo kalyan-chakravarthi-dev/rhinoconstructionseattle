@@ -17,7 +17,9 @@ import {
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import imageCompression from "browser-image-compression";
-import { X, Upload, ChevronRight, ChevronLeft } from "lucide-react";
+import { X, Upload, ChevronRight, ChevronLeft, Phone } from "lucide-react";
+import rhinoLogo from "@/assets/rhino-remodeler-logo.png";
+import { COMPANY_INFO } from "@/lib/constants";
 
 // ============================================
 // CONSTANTS & TYPES
@@ -347,12 +349,30 @@ const RequestQuoteNew = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Minimal Header */}
-      <header className="border-b border-border/40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
-          <Link to="/" className="inline-flex items-center gap-2 text-lg font-semibold text-foreground hover:opacity-80 transition-opacity">
-            <span className="text-primary">←</span> Rhino Remodeler
+      {/* Minimal Sticky Navbar */}
+      <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border/40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+          {/* Logo - links to home */}
+          <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <img 
+              src={rhinoLogo} 
+              alt="Rhino Remodeler" 
+              className="h-10 sm:h-12 w-auto"
+            />
+            <span className="text-lg sm:text-xl font-bold text-primary tracking-tight hidden sm:inline">
+              RHINO REMODELER
+            </span>
           </Link>
+
+          {/* Phone Number - tap to call */}
+          <a 
+            href={`tel:${COMPANY_INFO.phoneRaw}`}
+            className="flex items-center gap-2 text-sm sm:text-base font-medium text-foreground hover:text-primary transition-colors"
+          >
+            <Phone className="h-4 w-4 sm:h-5 sm:w-5" />
+            <span className="hidden sm:inline">{COMPANY_INFO.phone}</span>
+            <span className="sm:hidden">Call Us</span>
+          </a>
         </div>
       </header>
 
