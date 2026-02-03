@@ -205,7 +205,6 @@ const EmergencyContact = () => {
 const ServiceSidebar = ({ currentService }: ServiceSidebarProps) => {
   return (
     <aside className="space-y-6 lg:sticky lg:top-6">
-      <QuickQuoteForm />
       <ServiceAreas />
       <WhyChooseUs />
       <RelatedServices currentSlug={currentService.slug} />
