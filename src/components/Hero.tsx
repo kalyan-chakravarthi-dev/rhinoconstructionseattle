@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Phone, Shield, Award, Users, Star } from "lucide-react";
-import heroImage from "@/assets/hero-construction.png";
+import heroImage from "@/assets/hero-van.png";
 import { COMPANY_INFO, ROUTES } from "@/lib/constants";
 
 const Hero = () => {
@@ -26,8 +26,8 @@ const Hero = () => {
       <div className="absolute inset-0 z-0">
         <img
           src={heroImage}
-          alt="Professional Rhino Repair Services truck in Seattle neighborhood"
-          className="w-full h-full object-contain object-top bg-foreground md:object-cover md:object-center"
+          alt="Professional Rhino Remodeler service van in front of residential home"
+          className="w-full h-full object-cover object-center md:object-center"
         />
         {/* Dark gradient overlay - darker on mobile for better text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-foreground/85 via-foreground/80 to-foreground/90 md:from-foreground/75 md:via-foreground/65 md:to-foreground/85" />
