@@ -1,4 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { sanitizeForEmail, sanitizeMessage, sanitizeUrl } from "../_shared/sanitize.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -24,10 +26,56 @@ function generateTrackingId(uuid: string): string {
   return `RQT-${year}-${numericPart.toString().padStart(4, '0')}`;
 }
 
+// Generate signed URLs for images (private bucket)
+async function getSignedImageUrls(imageUrls: string[]): Promise<string[]> {
+  if (!imageUrls || imageUrls.length === 0) return [];
+  
+  const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+  const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  
+  const signedUrls = await Promise.all(
+    imageUrls.map(async (url) => {
+      try {
+        // Extract path from URL - handle both full URLs and paths
+        let path = url;
+        if (url.includes('/quote-images/')) {
+          path = url.split('/quote-images/')[1];
+        }
+        if (!path) return url;
+        
+        const { data, error } = await supabase.storage
+          .from('quote-images')
+          .createSignedUrl(path, 604800); // 7 days
+        
+        if (error) {
+          console.error('Signed URL error:', error);
+          return url;
+        }
+        
+        return data?.signedUrl || url;
+      } catch (err) {
+        console.error('Signed URL generation failed:', err);
+        return url;
+      }
+    })
+  );
+  
+  return signedUrls;
+}
+
 // Send confirmation email to customer
 async function sendCustomerConfirmation(payload: NotificationPayload): Promise<boolean> {
   const sendgridApiKey = Deno.env.get("SENDGRID_API_KEY");
   const trackingId = generateTrackingId(payload.quoteId);
+
+  // Sanitize all user inputs
+  const safeName = sanitizeForEmail(payload.customerName);
+  const safeService = sanitizeForEmail(payload.serviceRequested);
+  const safeCity = sanitizeForEmail(payload.propertyCity) || "N/A";
+  const safeState = sanitizeForEmail(payload.propertyState) || "N/A";
+  const safeEmail = sanitizeForEmail(payload.email);
+  const safePhone = sanitizeForEmail(payload.phone);
 
   const emailHtml = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #ffffff;">
@@ -37,7 +85,7 @@ async function sendCustomerConfirmation(payload: NotificationPayload): Promise<b
       </div>
       
       <div style="padding: 30px;">
-        <h2 style="color: #333; margin-top: 0;">Hi ${payload.customerName},</h2>
+        <h2 style="color: #333; margin-top: 0;">Hi ${safeName},</h2>
         
         <p style="color: #555; line-height: 1.6;">
           Thank you for your interest in Rhino Remodeler! We've received your quote request and our team is reviewing it now.
@@ -54,11 +102,11 @@ async function sendCustomerConfirmation(payload: NotificationPayload): Promise<b
             </tr>
             <tr>
               <td style="padding: 8px 0; font-weight: bold; color: #555;">Service:</td>
-              <td style="padding: 8px 0; color: #333;">${payload.serviceRequested}</td>
+              <td style="padding: 8px 0; color: #333;">${safeService}</td>
             </tr>
             <tr>
               <td style="padding: 8px 0; font-weight: bold; color: #555;">Location:</td>
-              <td style="padding: 8px 0; color: #333;">${payload.propertyCity || "N/A"}, ${payload.propertyState || "N/A"}</td>
+              <td style="padding: 8px 0; color: #333;">${safeCity}, ${safeState}</td>
             </tr>
             ${payload.imageUrls && payload.imageUrls.length > 0 ? `
             <tr>
@@ -72,7 +120,7 @@ async function sendCustomerConfirmation(payload: NotificationPayload): Promise<b
         <h3 style="color: #333;">What Happens Next?</h3>
         <ol style="color: #555; line-height: 1.8; padding-left: 20px;">
           <li>Our team will review your request within <strong>24-48 hours</strong></li>
-          <li>We'll contact you at <strong>${payload.email}</strong>${payload.phone ? ` or <strong>${payload.phone}</strong>` : ''} to discuss your project</li>
+          <li>We'll contact you at <strong>${safeEmail}</strong>${safePhone ? ` or <strong>${safePhone}</strong>` : ''} to discuss your project</li>
           <li>We'll schedule a free consultation at your convenience</li>
           <li>You'll receive a detailed, transparent quote</li>
         </ol>
@@ -130,69 +178,36 @@ async function sendCustomerConfirmation(payload: NotificationPayload): Promise<b
   }
 }
 
-// SMS functionality commented out for now - will be enabled when Twilio is configured
-// async function sendSMS(payload: NotificationPayload): Promise<boolean> {
-//   const accountSid = Deno.env.get("TWILIO_ACCOUNT_SID");
-//   const authToken = Deno.env.get("TWILIO_AUTH_TOKEN");
-//   const fromPhone = Deno.env.get("TWILIO_PHONE_NUMBER");
-//   const businessPhone = Deno.env.get("BUSINESS_PHONE");
-//
-//   const smsBody = `🏠 New Quote Request!
-// Customer: ${payload.customerName}
-// Service: ${payload.serviceRequested}
-// Location: ${payload.propertyCity || "N/A"}, ${payload.propertyState || "N/A"}
-// Phone: ${payload.phone || "Not provided"}
-// ID: ${payload.quoteId.slice(0, 8)}`;
-//
-//   try {
-//     const response = await fetch(
-//       `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`,
-//       {
-//         method: "POST",
-//         headers: {
-//           "Authorization": `Basic ${btoa(`${accountSid}:${authToken}`)}`,
-//           "Content-Type": "application/x-www-form-urlencoded",
-//         },
-//         body: new URLSearchParams({
-//           To: businessPhone,
-//           From: fromPhone,
-//           Body: smsBody,
-//         }),
-//       }
-//     );
-//
-//     if (!response.ok) {
-//       const error = await response.text();
-//       console.error("Twilio SMS error:", error);
-//       return false;
-//     }
-//
-//     console.log("SMS sent successfully");
-//     return true;
-//   } catch (error) {
-//     console.error("SMS send failed:", error);
-//     return false;
-//   }
-// }
-
 // Send Email via SendGrid
-async function sendEmail(payload: NotificationPayload): Promise<boolean> {
+async function sendEmail(payload: NotificationPayload, signedImageUrls: string[]): Promise<boolean> {
   const sendgridApiKey = Deno.env.get("SENDGRID_API_KEY");
   const businessEmail = "francisco@rhinoremodeler.com";
 
+  // Sanitize all user inputs
+  const safeName = sanitizeForEmail(payload.customerName);
+  const safeService = sanitizeForEmail(payload.serviceRequested);
+  const safeCity = sanitizeForEmail(payload.propertyCity) || "N/A";
+  const safeState = sanitizeForEmail(payload.propertyState) || "N/A";
+  const safeEmail = sanitizeForEmail(payload.email);
+  const safePhone = sanitizeForEmail(payload.phone) || "Not provided";
+  const safeMessage = sanitizeMessage(payload.message);
+
   // Generate image gallery HTML if images are present
-  const imageGalleryHtml = payload.imageUrls && payload.imageUrls.length > 0 
+  const imageGalleryHtml = signedImageUrls && signedImageUrls.length > 0 
     ? `
-      <h3 style="color: #333; margin-top: 20px;">📷 Project Photos (${payload.imageUrls.length}):</h3>
+      <h3 style="color: #333; margin-top: 20px;">📷 Project Photos (${signedImageUrls.length}):</h3>
       <div style="background: #fff; padding: 15px;">
-        ${payload.imageUrls.map((url, index) => `
-          <div style="margin-bottom: 15px;">
-            <a href="${url}" target="_blank" style="display: block;">
-              <img src="${url}" alt="Project photo ${index + 1}" style="max-width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd;" />
-            </a>
-            <p style="font-size: 12px; color: #666; margin: 5px 0 0 0;">Photo ${index + 1} - <a href="${url}" target="_blank" style="color: #e74c3c;">View full size</a></p>
-          </div>
-        `).join('')}
+        ${signedImageUrls.map((url, index) => {
+          const safeUrl = sanitizeUrl(url);
+          return safeUrl ? `
+            <div style="margin-bottom: 15px;">
+              <a href="${safeUrl}" target="_blank" style="display: block;">
+                <img src="${safeUrl}" alt="Project photo ${index + 1}" style="max-width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd;" />
+              </a>
+              <p style="font-size: 12px; color: #666; margin: 5px 0 0 0;">Photo ${index + 1} - <a href="${safeUrl}" target="_blank" style="color: #e74c3c;">View full size</a></p>
+            </div>
+          ` : '';
+        }).join('')}
       </div>
     `
     : '';
@@ -209,30 +224,30 @@ async function sendEmail(payload: NotificationPayload): Promise<boolean> {
         <table style="width: 100%; border-collapse: collapse;">
           <tr>
             <td style="padding: 10px; font-weight: bold; width: 140px;">Name:</td>
-            <td style="padding: 10px;">${payload.customerName}</td>
+            <td style="padding: 10px;">${safeName}</td>
           </tr>
           <tr style="background: #fff;">
             <td style="padding: 10px; font-weight: bold;">Email:</td>
-            <td style="padding: 10px;"><a href="mailto:${payload.email}">${payload.email}</a></td>
+            <td style="padding: 10px;"><a href="mailto:${safeEmail}">${safeEmail}</a></td>
           </tr>
           <tr>
             <td style="padding: 10px; font-weight: bold;">Phone:</td>
-            <td style="padding: 10px;">${payload.phone || "Not provided"}</td>
+            <td style="padding: 10px;">${safePhone}</td>
           </tr>
           <tr style="background: #fff;">
             <td style="padding: 10px; font-weight: bold;">Service:</td>
-            <td style="padding: 10px; color: #e74c3c; font-weight: bold;">${payload.serviceRequested}</td>
+            <td style="padding: 10px; color: #e74c3c; font-weight: bold;">${safeService}</td>
           </tr>
           <tr>
             <td style="padding: 10px; font-weight: bold;">Location:</td>
-            <td style="padding: 10px;">${payload.propertyCity || "N/A"}, ${payload.propertyState || "N/A"}</td>
+            <td style="padding: 10px;">${safeCity}, ${safeState}</td>
           </tr>
         </table>
         
-        ${payload.message ? `
+        ${safeMessage ? `
         <h3 style="color: #333; margin-top: 20px;">Message:</h3>
         <div style="background: #fff; padding: 15px; border-left: 4px solid #e74c3c;">
-          ${payload.message}
+          ${safeMessage}
         </div>
         ` : ""}
         
@@ -258,7 +273,7 @@ async function sendEmail(payload: NotificationPayload): Promise<boolean> {
       body: JSON.stringify({
         personalizations: [{ to: [{ email: businessEmail }] }],
         from: { email: "noreply@rhinoremodeler.com", name: "Rhino Remodeler" },
-        subject: `🏠 New Quote Request: ${payload.serviceRequested} - ${payload.customerName}`,
+        subject: `🏠 New Quote Request: ${safeService} - ${safeName}`,
         content: [{ type: "text/html", value: emailHtml }],
       }),
     });
@@ -287,9 +302,12 @@ serve(async (req) => {
 
     console.log("Sending notifications for quote:", payload.quoteId);
 
+    // Generate signed URLs for images (bucket is now private)
+    const signedImageUrls = await getSignedImageUrls(payload.imageUrls || []);
+
     // Send both business and customer emails in parallel
     const [businessEmailResult, customerEmailResult] = await Promise.all([
-      sendEmail(payload),
+      sendEmail(payload, signedImageUrls),
       sendCustomerConfirmation(payload),
     ]);
 
