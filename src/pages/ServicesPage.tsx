@@ -193,6 +193,31 @@ const ServicesGrid = () => (
           <ServiceCard key={service.id} service={service} />
         ))}
       </div>
+
+      {/* See Our Work CTA */}
+      <div className="mt-12 text-center">
+        <Card className="max-w-2xl mx-auto border-secondary/30 bg-gradient-to-br from-secondary/5 to-secondary/10">
+          <CardContent className="py-8">
+            <div className="flex flex-col items-center gap-4">
+              <div className="w-14 h-14 rounded-full bg-secondary/10 flex items-center justify-center">
+                <Star className="w-7 h-7 text-secondary" aria-hidden="true" />
+              </div>
+              <div className="text-center">
+                <h3 className="text-xl font-bold text-foreground mb-2">See Our Work in Action</h3>
+                <p className="text-muted-foreground mb-4">
+                  Browse our before & after gallery to see the quality of our craftsmanship
+                </p>
+              </div>
+              <Button asChild variant="default" size="lg">
+                <Link to={ROUTES.GALLERY} className="inline-flex items-center gap-2">
+                  View Before & After Gallery
+                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                </Link>
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   </section>
 );

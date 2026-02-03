@@ -16,7 +16,6 @@ const Navbar = () => {
   const navItems = [
     { href: ROUTES.HOME, label: t('nav.home') },
     { href: "/services", label: t('nav.services') },
-    { href: ROUTES.GALLERY, label: t('nav.beforeAfter') },
     { href: "/about", label: t('nav.about') },
     { href: "/contact", label: t('nav.contact') },
   ];
