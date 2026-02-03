@@ -105,10 +105,6 @@ const Navbar = () => {
                 <span className="font-medium text-sm">{COMPANY_INFO.phone}</span>
               </a>
 
-              {/* Sign In */}
-              <Button variant="outline" size="default" asChild>
-                <Link to={ROUTES.SIGN_IN}>{t('nav.signIn')}</Link>
-              </Button>
 
               {/* Request Quote */}
               <Button variant="hero" size="default" asChild>
@@ -188,18 +184,8 @@ const Navbar = () => {
             {/* Divider */}
             <div className="my-6 mx-4 border-t border-border" />
 
-            {/* Auth Links */}
+            {/* CTA */}
             <div className="px-4 space-y-3">
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="w-full"
-                asChild
-              >
-                <Link to={ROUTES.SIGN_IN} onClick={() => setIsMobileMenuOpen(false)}>
-                  {t('nav.signIn')}
-                </Link>
-              </Button>
               <Button 
                 variant="hero" 
                 size="lg" 
