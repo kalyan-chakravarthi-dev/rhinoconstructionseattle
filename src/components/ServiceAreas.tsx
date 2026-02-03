@@ -53,7 +53,7 @@ const ServiceAreas = () => {
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Rhino Remodeller Service Area - Seattle and surrounding areas"
+                title="Rhino Remodeler Service Area - Seattle and surrounding areas"
                 className="absolute inset-0"
               />
               

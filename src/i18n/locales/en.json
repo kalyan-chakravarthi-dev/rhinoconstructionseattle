@@ -110,18 +110,18 @@
   "gallery": {
     "label": "Our Portfolio",
     "title": "Our Work Speaks For Itself",
-    "subtitle": "See the Rhino Remodeller difference",
+    "subtitle": "See the Rhino Remodeler difference",
     "before": "BEFORE",
     "after": "AFTER",
     "viewFullGallery": "View Full Gallery",
     "dragSlider": "Drag the slider to compare before and after"
   },
   "about": {
-    "label": "About Rhino Remodeller",
+    "label": "About Rhino Remodeler",
     "title": "Building Trust Since 2003",
     "subtitle": "Your Seattle Home Renovation Experts",
     "storyTitle": "Our Story",
-    "storyP1": "Rhino Remodeller was founded in 2003 with a simple mission: to provide Seattle homeowners with honest, quality home repair and renovation services they can trust. What started as a small operation with just two dedicated craftsmen has grown into one of the Puget Sound's most respected home improvement companies.",
+    "storyP1": "Rhino Remodeler was founded in 2003 with a simple mission: to provide Seattle homeowners with honest, quality home repair and renovation services they can trust. What started as a small operation with just two dedicated craftsmen has grown into one of the Puget Sound's most respected home improvement companies.",
     "storyP2": "Our founder, John Smith, began his career as a carpenter's apprentice at age 18. After years of working for large contractors and seeing how customers were often treated as just another job number, he knew there had to be a better way. He envisioned a company that would treat every home as if it were their own, combining old-school craftsmanship with modern techniques and genuine customer care.",
     "storyP3": "Today, that vision lives on in every project we undertake. From kitchen remodels that transform daily life to emergency repairs that save the day, our team of 15+ licensed professionals carries forward the same commitment to excellence that built our reputation over two decades ago.",
     "missionTitle": "Our Mission",
@@ -135,7 +135,7 @@
     },
     "teamTitle": "Meet Our Team",
     "teamSubtitle": "The skilled professionals who bring your home improvement dreams to life",
-    "whyTitle": "Why Choose Rhino Remodeller",
+    "whyTitle": "Why Choose Rhino Remodeler",
     "whySubtitle": "What sets us apart from the rest",
     "why": {
       "licensed": "Licensed & Insured",
@@ -186,7 +186,7 @@
     "heroSubtitle": "Expert craftsmanship for every room in your home",
     "servingArea": "Serving Seattle and surrounding areas",
     "getQuote": "Get Free Quote",
-    "trustIntro": "At Rhino Remodeller, we're committed to delivering exceptional quality and service on every project. From minor repairs to major renovations, our team of skilled professionals brings expertise, reliability, and attention to detail to your home improvement needs.",
+    "trustIntro": "At Rhino Remodeler, we're committed to delivering exceptional quality and service on every project. From minor repairs to major renovations, our team of skilled professionals brings expertise, reliability, and attention to detail to your home improvement needs.",
     "servicesTitle": "Our Services",
     "servicesSubtitle": "From quick repairs to complete renovations, we have the expertise to handle any project",
     "learnMore": "Learn More",
@@ -236,7 +236,7 @@
       "preferQuote": "Prefer to request a quote?",
       "clickHere": "Click here",
       "successTitle": "Message Sent Successfully!",
-      "successMessage": "Thank you for contacting Rhino Remodeller. We'll respond within 24 hours.",
+      "successMessage": "Thank you for contacting Rhino Remodeler. We'll respond within 24 hours.",
       "sendAnother": "Send Another Message"
     },
     "info": {
@@ -287,7 +287,7 @@
     },
     "signUp": {
       "title": "Create Account",
-      "subtitle": "Join Rhino Remodeller today",
+      "subtitle": "Join Rhino Remodeler today",
       "firstName": "First Name",
       "lastName": "Last Name",
       "email": "Email Address",

@@ -2,12 +2,12 @@
 // Following development_rules.md standards
 
 export const COMPANY_INFO = {
-  name: 'Rhino Remodeller',
+  name: 'Rhino Remodeler',
   tagline: 'Building Trust, One Project at a Time',
   phone: '(206) 487-9677',
   phoneRaw: '+12064879677',
   emergency: '(206) 487-9677',
-  email: 'francisco@rhinoremodeller.com',
+  email: 'francisco@rhinoremodeler.com',
   address: {
     street: '4527 S 256th Pl',
     city: 'Kent',
