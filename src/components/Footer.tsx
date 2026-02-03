@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { MapPin, Phone, Mail, Clock, Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import { COMPANY_INFO, ROUTES } from "@/lib/constants";
-import rhinoLogo from "@/assets/rhino-logo-new.png";
+import rhinoLogo from "@/assets/rhino-logo.png";
 
 const socialLinks = [
   { icon: Facebook, href: "#", label: "Facebook" },
