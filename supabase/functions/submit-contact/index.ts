@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { sanitizeForEmail, sanitizeMessage } from "../_shared/sanitize.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -94,8 +95,15 @@ serve(async (req: Request): Promise<Response> => {
     // Send email notification
     const sendGridApiKey = Deno.env.get("SENDGRID_API_KEY");
     if (sendGridApiKey) {
-      const serviceLabel = body.service ? SERVICE_LABELS[body.service] || body.service : "Not specified";
-      const heardFromLabel = body.heardFrom ? HEARD_FROM_LABELS[body.heardFrom] || body.heardFrom : "Not specified";
+      // Sanitize all user inputs for email templates
+      const safeFullName = sanitizeForEmail(body.fullName);
+      const safeFirstName = sanitizeForEmail(body.fullName.split(' ')[0]);
+      const safeEmail = sanitizeForEmail(body.email);
+      const safePhone = sanitizeForEmail(body.phone);
+      const safeMessage = sanitizeMessage(body.message);
+      
+      const serviceLabel = body.service ? SERVICE_LABELS[body.service] || sanitizeForEmail(body.service) : "Not specified";
+      const heardFromLabel = body.heardFrom ? HEARD_FROM_LABELS[body.heardFrom] || sanitizeForEmail(body.heardFrom) : "Not specified";
       
       // Business notification email
       const businessEmailHtml = `
@@ -108,16 +116,16 @@ serve(async (req: Request): Promise<Response> => {
             
             <h2 style="color: #1e3a5f; border-bottom: 2px solid #f97316; padding-bottom: 10px;">Contact Details</h2>
             <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
-              <tr><td style="padding: 8px 0; color: #666;">Name:</td><td style="padding: 8px 0;"><strong>${body.fullName}</strong></td></tr>
-              <tr><td style="padding: 8px 0; color: #666;">Email:</td><td style="padding: 8px 0;"><a href="mailto:${body.email}">${body.email}</a></td></tr>
-              <tr><td style="padding: 8px 0; color: #666;">Phone:</td><td style="padding: 8px 0;"><a href="tel:${body.phone.replace(/\D/g, '')}">${body.phone}</a></td></tr>
+              <tr><td style="padding: 8px 0; color: #666;">Name:</td><td style="padding: 8px 0;"><strong>${safeFullName}</strong></td></tr>
+              <tr><td style="padding: 8px 0; color: #666;">Email:</td><td style="padding: 8px 0;"><a href="mailto:${safeEmail}">${safeEmail}</a></td></tr>
+              <tr><td style="padding: 8px 0; color: #666;">Phone:</td><td style="padding: 8px 0;"><a href="tel:${body.phone.replace(/\D/g, '')}">${safePhone}</a></td></tr>
               <tr><td style="padding: 8px 0; color: #666;">Service Interest:</td><td style="padding: 8px 0;">${serviceLabel}</td></tr>
               <tr><td style="padding: 8px 0; color: #666;">How They Found Us:</td><td style="padding: 8px 0;">${heardFromLabel}</td></tr>
             </table>
             
             <h2 style="color: #1e3a5f; border-bottom: 2px solid #f97316; padding-bottom: 10px;">Message</h2>
             <div style="background-color: #ffffff; padding: 15px; border-radius: 8px; border-left: 4px solid #f97316;">
-              <p style="margin: 0; white-space: pre-wrap;">${body.message}</p>
+              <p style="margin: 0;">${safeMessage}</p>
             </div>
           </div>
           <div style="background-color: #1e3a5f; padding: 15px; text-align: center;">
@@ -133,7 +141,7 @@ serve(async (req: Request): Promise<Response> => {
             <h1 style="color: #ffffff; margin: 0;">Message Received!</h1>
           </div>
           <div style="padding: 20px; background-color: #f9f9f9;">
-            <p>Hi ${body.fullName.split(' ')[0]},</p>
+            <p>Hi ${safeFirstName},</p>
             <p>Thank you for contacting <strong>Rhino Remodeler</strong>. We've received your message and will get back to you within 24 hours.</p>
             
             <div style="background-color: #ffffff; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #f97316;">
@@ -142,7 +150,7 @@ serve(async (req: Request): Promise<Response> => {
             </div>
             
             <h3 style="color: #1e3a5f;">Your Message Summary:</h3>
-            <p style="background-color: #ffffff; padding: 15px; border-radius: 8px; white-space: pre-wrap;">${body.message}</p>
+            <p style="background-color: #ffffff; padding: 15px; border-radius: 8px;">${safeMessage}</p>
             
             <p style="margin-top: 20px;">If you have any urgent questions, feel free to call us at <a href="tel:2064879677">(206) 487-9677</a>.</p>
             
@@ -166,7 +174,7 @@ serve(async (req: Request): Promise<Response> => {
           body: JSON.stringify({
             personalizations: [{ to: [{ email: "francisco@rhinoremodeler.com" }] }],
             from: { email: "noreply@rhinoremodeler.com", name: "Rhino Remodeler" },
-            subject: `New Contact: ${body.fullName} - ${serviceLabel}`,
+            subject: `New Contact: ${safeFullName} - ${serviceLabel}`,
             content: [{ type: "text/html", value: businessEmailHtml }],
           }),
         }),
