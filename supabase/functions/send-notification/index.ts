@@ -32,7 +32,7 @@ async function sendCustomerConfirmation(payload: NotificationPayload): Promise<b
   const emailHtml = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #ffffff;">
       <div style="background: #1a1a2e; color: white; padding: 30px; text-align: center;">
-        <h1 style="margin: 0; font-size: 24px;">🦏 Rhino Remodeller</h1>
+        <h1 style="margin: 0; font-size: 24px;">🦏 Rhino Remodeler</h1>
         <p style="margin: 10px 0 0 0; opacity: 0.9;">Quote Request Received</p>
       </div>
       
@@ -40,7 +40,7 @@ async function sendCustomerConfirmation(payload: NotificationPayload): Promise<b
         <h2 style="color: #333; margin-top: 0;">Hi ${payload.customerName},</h2>
         
         <p style="color: #555; line-height: 1.6;">
-          Thank you for your interest in Rhino Remodeller! We've received your quote request and our team is reviewing it now.
+          Thank you for your interest in Rhino Remodeler! We've received your quote request and our team is reviewing it now.
         </p>
         
         <div style="background: #f8f9fa; border-radius: 8px; padding: 20px; margin: 20px 0;">
@@ -83,17 +83,17 @@ async function sendCustomerConfirmation(payload: NotificationPayload): Promise<b
         </div>
         
         <p style="color: #555; line-height: 1.6;">
-          We appreciate you considering Rhino Remodeller for your home improvement needs. We look forward to helping you transform your space!
+          We appreciate you considering Rhino Remodeler for your home improvement needs. We look forward to helping you transform your space!
         </p>
         
         <p style="color: #555; margin-bottom: 0;">
           Best regards,<br>
-          <strong style="color: #333;">The Rhino Remodeller Team</strong>
+          <strong style="color: #333;">The Rhino Remodeler Team</strong>
         </p>
       </div>
       
       <div style="background: #333; color: #999; padding: 20px; text-align: center; font-size: 12px;">
-        <p style="margin: 0;">Rhino Remodeller | Seattle's Trusted Home Improvement Experts</p>
+        <p style="margin: 0;">Rhino Remodeler | Seattle's Trusted Home Improvement Experts</p>
         <p style="margin: 10px 0 0 0;">
           <a href="https://rhinoremodeler.lovable.app" style="color: #e74c3c; text-decoration: none;">Visit our website</a>
         </p>
@@ -110,7 +110,7 @@ async function sendCustomerConfirmation(payload: NotificationPayload): Promise<b
       },
       body: JSON.stringify({
         personalizations: [{ to: [{ email: payload.email }] }],
-        from: { email: "noreply@rhinoremodeller.com", name: "Rhino Remodeller" },
+        from: { email: "noreply@rhinoremodeler.com", name: "Rhino Remodeler" },
         subject: `✅ Quote Request Received - ${trackingId}`,
         content: [{ type: "text/html", value: emailHtml }],
       }),
@@ -178,7 +178,7 @@ async function sendCustomerConfirmation(payload: NotificationPayload): Promise<b
 // Send Email via SendGrid
 async function sendEmail(payload: NotificationPayload): Promise<boolean> {
   const sendgridApiKey = Deno.env.get("SENDGRID_API_KEY");
-  const businessEmail = "francisco@rhinoremodeller.com";
+  const businessEmail = "francisco@rhinoremodeler.com";
 
   // Generate image gallery HTML if images are present
   const imageGalleryHtml = payload.imageUrls && payload.imageUrls.length > 0 
@@ -243,7 +243,7 @@ async function sendEmail(payload: NotificationPayload): Promise<boolean> {
         </div>
       </div>
       <div style="background: #333; color: #999; padding: 15px; text-align: center; font-size: 12px;">
-        This is an automated notification from Rhino Remodeller
+        This is an automated notification from Rhino Remodeler
       </div>
     </div>
   `;
@@ -257,7 +257,7 @@ async function sendEmail(payload: NotificationPayload): Promise<boolean> {
       },
       body: JSON.stringify({
         personalizations: [{ to: [{ email: businessEmail }] }],
-        from: { email: "noreply@rhinoremodeller.com", name: "Rhino Remodeller" },
+        from: { email: "noreply@rhinoremodeler.com", name: "Rhino Remodeler" },
         subject: `🏠 New Quote Request: ${payload.serviceRequested} - ${payload.customerName}`,
         content: [{ type: "text/html", value: emailHtml }],
       }),
