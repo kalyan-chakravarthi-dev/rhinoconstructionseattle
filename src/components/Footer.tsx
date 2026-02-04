@@ -17,23 +17,21 @@ const Footer = () => {
 
   const quickLinks = [
     { label: t('nav.home'), href: ROUTES.HOME },
-    { label: t('nav.services'), href: "/services" },
+    { label: t('nav.services'), href: ROUTES.SERVICES },
     { label: t('nav.beforeAfter'), href: ROUTES.GALLERY },
-    { label: t('nav.about'), href: "/about" },
-    { label: t('footer.blog'), href: "/blog" },
-    { label: t('nav.contact'), href: "/contact" },
-    { label: t('footer.privacy'), href: "/privacy" },
-    { label: t('footer.terms'), href: "/terms" },
+    { label: t('nav.about'), href: ROUTES.ABOUT },
+    { label: t('nav.contact'), href: ROUTES.CONTACT },
+    { label: t('nav.faq'), href: ROUTES.FAQ },
   ];
 
   const services = [
     { label: "Kitchen Remodeling", href: "/services/kitchen-remodeling" },
     { label: "Bathroom Renovation", href: "/services/bathroom-renovation" },
-    { label: "Roofing Services", href: "/services/roofing" },
-    { label: "Electrical Work", href: "/services/electrical" },
-    { label: "Plumbing", href: "/services/plumbing" },
+    { label: "Roofing Services", href: "/services/roofing-services" },
+    { label: "Electrical Work", href: "/services/electrical-work" },
+    { label: "Plumbing", href: "/services/plumbing-services" },
     { label: "General Repairs", href: "/services/general-repairs" },
-    { label: t('footer.emergency'), href: "/services/emergency" },
+    { label: "Flooring", href: "/services/flooring" },
   ];
 
   return (
