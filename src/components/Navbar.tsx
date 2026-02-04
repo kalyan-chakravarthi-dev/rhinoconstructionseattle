@@ -208,9 +208,6 @@ const Navbar = () => {
               <Phone className="w-5 h-5" aria-hidden="true" />
               {t('hero.callNow')} {COMPANY_INFO.phone}
             </a>
-            <p className="text-center text-muted-foreground text-sm mt-3">
-              Available 24/7 for emergencies
-            </p>
           </div>
         </div>
       </div>
