@@ -38,12 +38,14 @@ const SERVICES = [
 ];
 
 const PROJECT_SIZES = [
-  { id: "small", label: "Small – Under $5,000" },
-  { id: "medium", label: "Medium – $5,000 to $20,000" },
-  { id: "large", label: "Large – $20,000 to $50,000" },
-  { id: "major", label: "Major – $50,000+" },
-  { id: "unsure", label: "Not sure yet" },
+  { id: "small", label: "Small – Under $5,000", hint: "Repairs or single-room work" },
+  { id: "medium", label: "Medium – $5,000 to $20,000", hint: "Partial remodel" },
+  { id: "large", label: "Large – $20,000 to $50,000", hint: "Full remodel or structural work" },
+  { id: "major", label: "Major – $50,000+", hint: "Major renovation or addition" },
+  { id: "unsure", label: "Not sure yet", hint: "We'll help you estimate" },
 ];
+
+const STEP_LABELS = ["Project Details", "Photos", "Contact Info"];
 
 interface UploadedImage {
   id: string;
@@ -380,9 +382,32 @@ const RequestQuoteNew = () => {
       <main className="max-w-[640px] mx-auto px-4 sm:px-6 py-8 sm:py-12">
         {/* Step Indicator */}
         <div className="mb-8">
-          <p className="text-sm text-muted-foreground mb-3">
-            Step {currentStep} of 3
-          </p>
+          {/* Step Labels */}
+          <div className="flex items-center justify-between mb-3">
+            {STEP_LABELS.map((label, index) => {
+              const stepNum = index + 1;
+              const isActive = stepNum === currentStep;
+              const isComplete = stepNum < currentStep;
+              return (
+                <div 
+                  key={label} 
+                  className={cn(
+                    "flex items-center gap-1.5 text-xs sm:text-sm font-medium transition-colors",
+                    isActive ? "text-primary" : isComplete ? "text-foreground" : "text-muted-foreground"
+                  )}
+                >
+                  <span className={cn(
+                    "flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 rounded-full text-xs font-semibold transition-colors",
+                    isActive ? "bg-primary text-primary-foreground" : isComplete ? "bg-primary/20 text-primary" : "bg-muted text-muted-foreground"
+                  )}>
+                    {stepNum}
+                  </span>
+                  <span className="hidden sm:inline">{label}</span>
+                </div>
+              );
+            })}
+          </div>
+          {/* Progress Bar */}
           <div className="flex gap-2">
             {[1, 2, 3].map((step) => (
               <div
@@ -422,7 +447,7 @@ const RequestQuoteNew = () => {
                       errors.service && "border-destructive"
                     )}
                   >
-                    <SelectValue placeholder="Select a service" />
+                    <SelectValue placeholder="Select a service (Kitchen, Bathroom, Roofing…)" />
                   </SelectTrigger>
                   <SelectContent>
                     {SERVICES.map((service) => (
@@ -432,8 +457,10 @@ const RequestQuoteNew = () => {
                     ))}
                   </SelectContent>
                 </Select>
-                {errors.service && (
+                {errors.service ? (
                   <p className="text-sm text-destructive">{errors.service}</p>
+                ) : (
+                  <p className="text-xs text-muted-foreground">Choose the service closest to your project</p>
                 )}
               </div>
 
@@ -455,7 +482,10 @@ const RequestQuoteNew = () => {
                   <SelectContent>
                     {PROJECT_SIZES.map((size) => (
                       <SelectItem key={size.id} value={size.id} className="py-3">
-                        {size.label}
+                        <div className="flex flex-col items-start">
+                          <span>{size.label}</span>
+                          <span className="text-xs text-muted-foreground">{size.hint}</span>
+                        </div>
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -474,42 +504,47 @@ const RequestQuoteNew = () => {
                   id="description"
                   value={projectDescription}
                   onChange={(e) => setProjectDescription(e.target.value)}
-                  placeholder="What would you like done?"
-                  className="min-h-[100px] text-base bg-background resize-none"
+                  placeholder="Optional details that help us understand your project"
+                  className="min-h-[80px] text-base bg-background resize-none"
                 />
               </div>
 
-              {/* City & State */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="city" className="text-sm font-medium">
-                    City
-                  </Label>
-                  <Input
-                    id="city"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                    placeholder="Seattle"
-                    className={cn(
-                      "h-12 text-base bg-background",
-                      errors.city && "border-destructive"
+              {/* Project Location Section */}
+              <div className="space-y-3">
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                  Project Location
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="city" className="text-sm font-medium">
+                      City
+                    </Label>
+                    <Input
+                      id="city"
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
+                      placeholder="Seattle"
+                      className={cn(
+                        "h-12 text-base bg-background",
+                        errors.city && "border-destructive"
+                      )}
+                    />
+                    {errors.city && (
+                      <p className="text-sm text-destructive">{errors.city}</p>
                     )}
-                  />
-                  {errors.city && (
-                    <p className="text-sm text-destructive">{errors.city}</p>
-                  )}
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="state" className="text-sm font-medium">
-                    State
-                  </Label>
-                  <Input
-                    id="state"
-                    value={state}
-                    onChange={(e) => setState(e.target.value)}
-                    placeholder="WA"
-                    className="h-12 text-base bg-background"
-                  />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="state" className="text-sm font-medium">
+                      State
+                    </Label>
+                    <Input
+                      id="state"
+                      value={state}
+                      onChange={(e) => setState(e.target.value)}
+                      placeholder="WA"
+                      className="h-12 text-base bg-background"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -523,6 +558,11 @@ const RequestQuoteNew = () => {
               Continue
               <ChevronRight className="ml-2 h-4 w-4" />
             </Button>
+
+            {/* Trust & Reassurance Microcopy */}
+            <p className="text-center text-xs text-muted-foreground">
+              Free estimate • No obligation • We'll contact you within 24 hours
+            </p>
           </div>
         )}
 
