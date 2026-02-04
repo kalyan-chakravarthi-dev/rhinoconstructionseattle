@@ -75,7 +75,7 @@ const Navbar = () => {
                   key={item.href}
                   to={item.href}
                   className={cn(
-                    "relative px-4 py-2 font-medium text-sm transition-colors rounded-md",
+                    "relative px-4 py-2 font-medium text-base transition-colors rounded-md",
                     "hover:text-secondary hover:bg-muted/50",
                     isActive(item.href) 
                       ? "text-secondary" 
@@ -102,7 +102,7 @@ const Navbar = () => {
                 className="flex items-center gap-2 text-foreground hover:text-secondary transition-colors px-3 py-2 rounded-md hover:bg-muted/50"
               >
                 <Phone className="w-4 h-4" aria-hidden="true" />
-                <span className="font-medium text-sm">{COMPANY_INFO.phone}</span>
+                <span className="font-medium text-base">{COMPANY_INFO.phone}</span>
               </a>
 
 
