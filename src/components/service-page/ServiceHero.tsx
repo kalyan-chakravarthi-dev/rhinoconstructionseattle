@@ -2,20 +2,48 @@ import { Link } from 'react-router-dom';
 import { Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { COMPANY_INFO, ROUTES } from '@/lib/constants';
+import { useState, useEffect } from 'react';
 
 interface ServiceHeroProps {
   name: string;
   tagline: string;
   heroImage: string;
+  backgroundImages?: string[];
 }
 
-const ServiceHero = ({ name, tagline, heroImage }: ServiceHeroProps) => {
+const ServiceHero = ({ name, tagline, heroImage, backgroundImages }: ServiceHeroProps) => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const images = backgroundImages && backgroundImages.length > 1 ? backgroundImages : [heroImage];
+  const hasMultipleImages = images.length > 1;
+
+  useEffect(() => {
+    if (!hasMultipleImages) return;
+
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [hasMultipleImages, images.length]);
+
   return (
     <section 
-      className="relative min-h-[50vh] flex items-center justify-center bg-cover bg-center"
-      style={{ backgroundImage: `url(${heroImage})` }}
+      className="relative min-h-[50vh] flex items-center justify-center overflow-hidden"
       aria-label={`${name} hero section`}
     >
+      {/* Background images with crossfade */}
+      {images.map((image, index) => (
+        <div
+          key={index}
+          className="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out"
+          style={{ 
+            backgroundImage: `url(${image})`,
+            opacity: index === currentImageIndex ? 1 : 0,
+          }}
+          aria-hidden="true"
+        />
+      ))}
+      
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-black/60" aria-hidden="true" />
       

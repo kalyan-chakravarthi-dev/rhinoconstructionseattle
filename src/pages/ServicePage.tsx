@@ -100,6 +100,7 @@ const ServicePage = () => {
             name={service.name}
             tagline={service.tagline}
             heroImage={service.heroImage}
+            backgroundImages={service.heroBackgroundImages}
           />
           
           {/* Breadcrumb */}
