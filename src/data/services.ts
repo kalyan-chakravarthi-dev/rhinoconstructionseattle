@@ -36,6 +36,7 @@ export interface ServiceData {
   name: string;
   tagline: string;
   heroImage: string;
+  heroBackgroundImages?: string[];
   metaDescription: string;
   introduction: string;
   whyChooseUs: string[];
@@ -412,7 +413,13 @@ export const SERVICES_DATA: Record<string, ServiceData> = {
     slug: 'flooring',
     name: 'Flooring Installation',
     tagline: 'Beautiful Floors That Last a Lifetime',
-    heroImage: '/placeholder.svg',
+    heroImage: 'https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?auto=format&fit=crop&w=1920&q=80',
+    heroBackgroundImages: [
+      'https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?auto=format&fit=crop&w=1920&q=80',
+      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1920&q=80',
+      'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1920&q=80',
+      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80',
+    ],
     metaDescription: 'Professional flooring installation in Seattle. Hardwood, tile, LVP, carpet, and refinishing. Free in-home estimates!',
     introduction: 'Your floors set the foundation for your entire home\'s aesthetic. Rhino Construction offers expert installation of all flooring types, from classic hardwood to modern luxury vinyl. Our installers bring precision and care to every project, ensuring your new floors look beautiful and perform flawlessly for years to come.',
     whyChooseUs: [
