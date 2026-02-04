@@ -60,7 +60,13 @@ export const SERVICES_DATA: Record<string, ServiceData> = {
     slug: 'kitchen-remodeling',
     name: 'Kitchen Remodeling',
     tagline: 'Transform Your Kitchen Into Your Dream Space',
-    heroImage: '/placeholder.svg',
+    heroImage: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=1920&q=80',
+    heroBackgroundImages: [
+      'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=1920&q=80',
+      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80',
+      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1920&q=80',
+      'https://images.unsplash.com/photo-1556909172-54557c7e4fb7?auto=format&fit=crop&w=1920&q=80',
+    ],
     metaDescription: 'Professional kitchen remodeling services in Seattle. From cabinet installation to complete redesigns. Licensed, insured, 20+ years experience. Free estimates!',
     introduction: 'Your kitchen is the heart of your home, and at Rhino Construction, we understand how important it is to create a space that reflects your style while meeting your functional needs. Our expert team combines innovative design with superior craftsmanship to deliver kitchen remodels that exceed expectations. Whether you\'re looking for a minor refresh or a complete transformation, we\'re here to bring your vision to life.',
     whyChooseUs: [
@@ -123,7 +129,13 @@ export const SERVICES_DATA: Record<string, ServiceData> = {
     slug: 'bathroom-renovation',
     name: 'Bathroom Renovation',
     tagline: 'Create Your Personal Spa Retreat',
-    heroImage: '/placeholder.svg',
+    heroImage: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=1920&q=80',
+    heroBackgroundImages: [
+      'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=1920&q=80',
+      'https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=1920&q=80',
+      'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?auto=format&fit=crop&w=1920&q=80',
+      'https://images.unsplash.com/photo-1600573472592-401b489a3cdc?auto=format&fit=crop&w=1920&q=80',
+    ],
     metaDescription: 'Expert bathroom renovation services in Seattle. Showers, tubs, vanities, and complete remodels. Licensed & insured. Free estimates!',
     introduction: 'Transform your bathroom into a relaxing sanctuary with Rhino Construction\'s expert renovation services. From updating fixtures to complete gut renovations, our skilled team handles every aspect of bathroom remodeling with precision and care. We combine functionality with beautiful design to create spaces that start and end your day right.',
     whyChooseUs: [
@@ -181,7 +193,13 @@ export const SERVICES_DATA: Record<string, ServiceData> = {
     slug: 'roofing-services',
     name: 'Roofing Services',
     tagline: 'Protecting What Matters Most',
-    heroImage: '/placeholder.svg',
+    heroImage: 'https://images.unsplash.com/photo-1632759145355-3e2f1e7b2fc9?auto=format&fit=crop&w=1920&q=80',
+    heroBackgroundImages: [
+      'https://images.unsplash.com/photo-1632759145355-3e2f1e7b2fc9?auto=format&fit=crop&w=1920&q=80',
+      'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1920&q=80',
+      'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1920&q=80',
+      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1920&q=80',
+    ],
     metaDescription: 'Professional roofing services in Seattle. Repairs, replacements, and new installations. Storm damage experts. Licensed & insured. Free inspections!',
     introduction: 'Your roof is your home\'s first line of defense against the Pacific Northwest elements. Rhino Construction provides comprehensive roofing services from minor repairs to complete replacements. Our certified roofing specialists use premium materials and proven techniques to ensure your roof protects your family for decades to come.',
     whyChooseUs: [
@@ -239,7 +257,13 @@ export const SERVICES_DATA: Record<string, ServiceData> = {
     slug: 'electrical-work',
     name: 'Electrical Work',
     tagline: 'Powering Your Home Safely & Efficiently',
-    heroImage: '/placeholder.svg',
+    heroImage: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=1920&q=80',
+    heroBackgroundImages: [
+      'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=1920&q=80',
+      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1920&q=80',
+      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80',
+      'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1920&q=80',
+    ],
     metaDescription: 'Licensed electrical services in Seattle. Panel upgrades, rewiring, lighting, EV chargers, and repairs. 24/7 emergency service. Free estimates!',
     introduction: 'Safe, reliable electrical systems are essential for modern living. Rhino Construction\'s licensed electricians provide comprehensive electrical services from troubleshooting and repairs to complete home rewiring and smart home installations. We prioritize safety, code compliance, and quality workmanship in every project.',
     whyChooseUs: [
@@ -297,7 +321,13 @@ export const SERVICES_DATA: Record<string, ServiceData> = {
     slug: 'plumbing-services',
     name: 'Plumbing Services',
     tagline: 'Expert Plumbing Solutions You Can Trust',
-    heroImage: '/placeholder.svg',
+    heroImage: 'https://images.unsplash.com/photo-1585704032915-c3400ca199e7?auto=format&fit=crop&w=1920&q=80',
+    heroBackgroundImages: [
+      'https://images.unsplash.com/photo-1585704032915-c3400ca199e7?auto=format&fit=crop&w=1920&q=80',
+      'https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=1920&q=80',
+      'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1920&q=80',
+      'https://images.unsplash.com/photo-1600573472592-401b489a3cdc?auto=format&fit=crop&w=1920&q=80',
+    ],
     metaDescription: 'Professional plumbing services in Seattle. Repairs, installations, water heaters, and repiping. 24/7 emergency plumber. Licensed & insured!',
     introduction: 'From dripping faucets to complete repiping, Rhino Construction\'s licensed plumbers deliver reliable solutions for all your plumbing needs. We combine old-school craftsmanship with modern technology to diagnose problems accurately and fix them right the first time. Our 24/7 emergency service means we\'re here when you need us most.',
     whyChooseUs: [
@@ -355,7 +385,13 @@ export const SERVICES_DATA: Record<string, ServiceData> = {
     slug: 'general-repairs',
     name: 'General Repairs',
     tagline: 'No Job Too Big or Small',
-    heroImage: '/placeholder.svg',
+    heroImage: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1920&q=80',
+    heroBackgroundImages: [
+      'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1920&q=80',
+      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80',
+      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1920&q=80',
+      'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1920&q=80',
+    ],
     metaDescription: 'Professional home repair services in Seattle. Drywall, carpentry, doors, windows, and handyman services. Quality work guaranteed!',
     introduction: 'Life happens, and homes need maintenance. Rhino Construction\'s general repair services cover everything from minor fixes to major repairs. Our skilled craftsmen take pride in every job, whether it\'s patching drywall or rebuilding a deck. We bring the same professionalism to small repairs that we bring to major renovations.',
     whyChooseUs: [
