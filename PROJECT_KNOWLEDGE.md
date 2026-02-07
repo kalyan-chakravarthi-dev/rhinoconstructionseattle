@@ -1,4 +1,8 @@
-# Rhino Remodeler - Project Knowledge File
+<!-- DEPRECATED: This file is no longer the source of truth. All project context has been merged into CLAUDE.md. Do not reference this file for new development. -->
+
+# Rhino Remodeler - Project Knowledge File (DEPRECATED)
+
+> **DEPRECATED**: This file has been superseded by `CLAUDE.md`. All relevant project context has been consolidated there. This file is kept for reference only.
 
 ## Company Overview
 

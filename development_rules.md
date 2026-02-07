@@ -1,6 +1,8 @@
-# Rhino Construction - Development Rules & Guidelines
+<!-- DEPRECATED: This file is no longer the source of truth. All rules have been merged into CLAUDE.md. Do not reference this file for new development. -->
 
-> **IMPORTANT**: Read this file BEFORE implementing any feature. These rules ensure consistency, quality, and maintainability across the entire project.
+# Rhino Construction - Development Rules & Guidelines (DEPRECATED)
+
+> **DEPRECATED**: This file has been superseded by `CLAUDE.md`. All relevant rules have been consolidated there. This file is kept for reference only.
 
 ---
 
