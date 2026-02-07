@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { AuthProvider } from "@/hooks/useAuth";
 import ScrollToTop from "@/components/ScrollToTop";
+import ProtectedRoute from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
@@ -44,15 +45,15 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/sign-in" element={<SignIn />} />
             <Route path="/sign-up" element={<SignUp />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/dashboard/quotes" element={<DashboardQuotes />} />
+            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/dashboard/quotes" element={<ProtectedRoute><DashboardQuotes /></ProtectedRoute>} />
             {/* Settings Routes */}
-            <Route path="/dashboard/settings" element={<DashboardSettings />} />
-            <Route path="/dashboard/settings/profile" element={<SettingsProfile />} />
-            <Route path="/dashboard/settings/security" element={<SettingsSecurity />} />
-            <Route path="/dashboard/settings/notifications" element={<SettingsNotifications />} />
-            <Route path="/dashboard/settings/addresses" element={<SettingsAddresses />} />
-            <Route path="/dashboard/settings/payments" element={<SettingsPayments />} />
+            <Route path="/dashboard/settings" element={<ProtectedRoute><DashboardSettings /></ProtectedRoute>} />
+            <Route path="/dashboard/settings/profile" element={<ProtectedRoute><SettingsProfile /></ProtectedRoute>} />
+            <Route path="/dashboard/settings/security" element={<ProtectedRoute><SettingsSecurity /></ProtectedRoute>} />
+            <Route path="/dashboard/settings/notifications" element={<ProtectedRoute><SettingsNotifications /></ProtectedRoute>} />
+            <Route path="/dashboard/settings/addresses" element={<ProtectedRoute><SettingsAddresses /></ProtectedRoute>} />
+            <Route path="/dashboard/settings/payments" element={<ProtectedRoute><SettingsPayments /></ProtectedRoute>} />
             <Route path="/request-quote" element={<RequestQuote />} />
             <Route path="/request-quote/confirmation" element={<QuoteConfirmation />} />
             <Route path="/gallery" element={<BeforeAfterGalleryPage />} />
