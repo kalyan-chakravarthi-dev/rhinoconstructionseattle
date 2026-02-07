@@ -12,14 +12,8 @@ interface NotificationPayload {
   propertyState?: string | null;
   message?: string | null;
   quoteId: string;
+  trackingId: string; // Canonical ID from submit-quote
   imageUrls?: string[];
-}
-
-// Generate a tracking ID from UUID (same format as frontend)
-function generateTrackingId(uuid: string): string {
-  const year = new Date().getFullYear();
-  const numericPart = parseInt(uuid.replace(/-/g, '').slice(0, 8), 16) % 10000;
-  return `RQT-${year}-${numericPart.toString().padStart(4, '0')}`;
 }
 
 // Generate signed URLs for images (private bucket)
@@ -62,7 +56,7 @@ async function getSignedImageUrls(imageUrls: string[]): Promise<string[]> {
 // Send confirmation email to customer
 async function sendCustomerConfirmation(payload: NotificationPayload): Promise<boolean> {
   const sendgridApiKey = Deno.env.get("SENDGRID_API_KEY");
-  const trackingId = generateTrackingId(payload.quoteId);
+  const trackingId = payload.trackingId;
 
   const safeName = sanitizeForEmail(payload.customerName);
   const safeService = sanitizeForEmail(payload.serviceRequested);
@@ -246,7 +240,7 @@ async function sendEmail(payload: NotificationPayload, signedImageUrls: string[]
         ${imageGalleryHtml}
         
         <div style="margin-top: 20px; padding: 15px; background: #e74c3c; color: white; text-align: center; border-radius: 5px;">
-          <strong>Quote ID:</strong> ${payload.quoteId}
+          <strong>Quote ID:</strong> ${payload.trackingId}
         </div>
       </div>
       <div style="background: #333; color: #999; padding: 15px; text-align: center; font-size: 12px;">

@@ -13,6 +13,13 @@ interface QuoteSubmission {
   image_urls?: string[];
 }
 
+// Generate a deterministic tracking ID from the database UUID
+function generateTrackingId(uuid: string): string {
+  const year = new Date().getFullYear();
+  const numericPart = parseInt(uuid.replace(/-/g, '').slice(0, 8), 16) % 10000;
+  return `RQT-${year}-${numericPart.toString().padStart(4, '0')}`;
+}
+
 // Validation functions
 function validateEmail(email: string): boolean {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -119,6 +126,9 @@ serve(async (req) => {
       );
     }
 
+    // Generate canonical tracking ID from the DB UUID (single source of truth)
+    const trackingId = generateTrackingId(insertedData.id);
+
     // Send notifications (fire-and-forget, don't block the response)
     const notificationPayload = {
       customerName: sanitizedData.customer_name,
@@ -129,6 +139,7 @@ serve(async (req) => {
       propertyState: sanitizedData.property_state,
       message: sanitizedData.message,
       quoteId: insertedData.id,
+      trackingId,
       imageUrls: data.image_urls || [],
     };
 
@@ -143,7 +154,7 @@ serve(async (req) => {
     }).catch((err) => console.error("Notification trigger failed:", err));
 
     return new Response(
-      JSON.stringify({ success: true, id: insertedData.id }),
+      JSON.stringify({ success: true, id: insertedData.id, trackingId }),
       { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (err) {
