@@ -311,12 +311,14 @@ const RequestQuoteNew = () => {
         throw new Error(responseData?.errors?.join(", ") || "Submission failed");
       }
 
+      // Use the canonical tracking ID returned by the server
+      const trackingId = responseData?.trackingId || "RQT-0000";
+
       // Store for confirmation page
-      const quoteId = `RQT-${new Date().getFullYear()}-${Math.floor(Math.random() * 9000) + 1000}`;
       localStorage.setItem(
         "lastSubmittedQuote",
         JSON.stringify({
-          id: quoteId,
+          id: trackingId,
           submittedAt: new Date().toISOString(),
           service: selectedService,
           projectSize,
@@ -332,7 +334,7 @@ const RequestQuoteNew = () => {
       localStorage.removeItem("quoteStep3");
       localStorage.removeItem("quoteStep4");
 
-      navigate(`/request-quote/confirmation?id=${quoteId}`);
+      navigate(`/request-quote/confirmation?id=${trackingId}`);
     } catch (error) {
       console.error("Submit error:", error);
       toast({
