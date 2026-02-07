@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Phone, Shield, Award, Users, Star } from "lucide-react";
@@ -6,7 +6,6 @@ import heroImage from "@/assets/hero-van.png";
 import { COMPANY_INFO, ROUTES } from "@/lib/constants";
 
 const Hero = () => {
-  const navigate = useNavigate();
   const { t } = useTranslation();
 
   const trustBadges = [
@@ -15,10 +14,6 @@ const Hero = () => {
     { icon: Users, label: t('trustBadges.customers') },
     { icon: Star, label: t('trustBadges.rating') },
   ];
-
-  const handleGetQuote = () => {
-    navigate(ROUTES.REQUEST_QUOTE);
-  };
 
   return (
     <section className="relative">
@@ -38,11 +33,11 @@ const Hero = () => {
         {/* Content section on dark background */}
         <div className="bg-foreground px-4 py-8 text-center">
           {/* Main Headline */}
-          <h1 className="text-3xl sm:text-4xl font-bold leading-tight mb-4 animate-fade-up">
+          <p className="text-3xl sm:text-4xl font-bold leading-tight mb-4 animate-fade-up" aria-hidden="true">
             <span className="text-primary-foreground">{t('hero.title1')}</span>
             <br />
             <span className="text-secondary">{t('hero.title2')}</span>
-          </h1>
+          </p>
 
           {/* Subheadline */}
           <p className="text-base sm:text-lg text-primary-foreground/85 mb-8 max-w-md mx-auto leading-relaxed animate-fade-up" style={{ animationDelay: "0.1s" }}>
@@ -53,13 +48,13 @@ const Hero = () => {
 
           {/* CTAs */}
           <div className="flex flex-col gap-4 mb-10 animate-fade-up" style={{ animationDelay: "0.2s" }}>
-            <Button 
-              variant="hero" 
-              size="xl" 
-              onClick={handleGetQuote}
+            <Button
+              variant="hero"
+              size="xl"
+              asChild
               className="w-full min-h-[56px] text-lg font-semibold"
             >
-              {t('hero.getQuote')}
+              <Link to={ROUTES.REQUEST_QUOTE}>{t('hero.getQuote')}</Link>
             </Button>
             <Button 
               variant="hero-outline" 
@@ -131,13 +126,13 @@ const Hero = () => {
               className="flex flex-row items-center justify-center gap-6 mb-12 animate-fade-up"
               style={{ animationDelay: "0.2s" }}
             >
-              <Button 
-                variant="hero" 
-                size="xl" 
-                onClick={handleGetQuote}
+              <Button
+                variant="hero"
+                size="xl"
+                asChild
                 className="min-h-[52px] text-lg px-10"
               >
-                {t('hero.getQuote')}
+                <Link to={ROUTES.REQUEST_QUOTE}>{t('hero.getQuote')}</Link>
               </Button>
               <Button 
                 variant="hero-outline" 

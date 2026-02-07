@@ -1,4 +1,4 @@
-// Rhino Construction - Centralized Constants
+// Rhino Remodeler - Centralized Constants
 // Following development_rules.md standards
 
 export const COMPANY_INFO = {

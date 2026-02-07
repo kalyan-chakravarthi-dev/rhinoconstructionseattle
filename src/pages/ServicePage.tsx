@@ -77,13 +77,13 @@ const ServicePage = () => {
         <title>{service.name} | {COMPANY_INFO.name} - Seattle</title>
         <meta name="description" content={service.metaDescription} />
         <meta name="keywords" content={service.keywords.join(', ')} />
-        <link rel="canonical" href={`https://rhinoconstruction.com/services/${service.slug}`} />
+        <link rel="canonical" href={`https://rhinoremodeler.com/services/${service.slug}`} />
         
         {/* Open Graph */}
         <meta property="og:title" content={`${service.name} | ${COMPANY_INFO.name}`} />
         <meta property="og:description" content={service.metaDescription} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={`https://rhinoconstruction.com/services/${service.slug}`} />
+        <meta property="og:url" content={`https://rhinoremodeler.com/services/${service.slug}`} />
         
         {/* Structured Data */}
         <script type="application/ld+json">

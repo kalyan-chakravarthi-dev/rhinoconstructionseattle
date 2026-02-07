@@ -1,4 +1,4 @@
-// Rhino Construction - Services Overview Data
+// Rhino Remodeler - Services Overview Data
 // Data for the main /services hub page
 
 import { 
@@ -202,7 +202,7 @@ export const PROCESS_STEPS = [
 export const SPECIAL_OFFERS = [
   {
     title: 'First-Time Customer Discount',
-    description: '10% off your first project with Rhino Construction',
+    description: '10% off your first project with Rhino Remodeler',
     highlight: true,
   },
   {

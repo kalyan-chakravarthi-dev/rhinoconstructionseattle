@@ -15,9 +15,11 @@ const Navbar = () => {
 
   const navItems = [
     { href: ROUTES.HOME, label: t('nav.home') },
-    { href: "/services", label: t('nav.services') },
-    { href: "/about", label: t('nav.about') },
-    { href: "/contact", label: t('nav.contact') },
+    { href: ROUTES.SERVICES, label: t('nav.services') },
+    { href: ROUTES.GALLERY, label: t('nav.beforeAfter') },
+    { href: ROUTES.ABOUT, label: t('nav.about') },
+    { href: ROUTES.FAQ, label: t('nav.faq') },
+    { href: ROUTES.CONTACT, label: t('nav.contact') },
   ];
 
   useEffect(() => {

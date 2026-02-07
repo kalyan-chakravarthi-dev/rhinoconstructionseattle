@@ -499,19 +499,19 @@ const ContactInfo = () => (
         <div>
           <p className="text-sm text-muted-foreground">Quote Requests</p>
           <a
-            href="mailto:quotes@rhinoconstruction.com"
+            href="mailto:quotes@rhinoremodeler.com"
             className="text-primary hover:underline"
           >
-            quotes@rhinoconstruction.com
+            quotes@rhinoremodeler.com
           </a>
         </div>
         <div>
           <p className="text-sm text-muted-foreground">Customer Support</p>
           <a
-            href="mailto:support@rhinoconstruction.com"
+            href="mailto:support@rhinoremodeler.com"
             className="text-primary hover:underline"
           >
-            support@rhinoconstruction.com
+            support@rhinoremodeler.com
           </a>
         </div>
       </CardContent>
@@ -601,12 +601,12 @@ const AlternativeContactMethods = () => (
         <Card className="text-center hover:shadow-lg transition-shadow">
           <CardContent className="pt-6">
             <Calendar className="h-12 w-12 text-primary mx-auto mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Schedule a Call</h3>
+            <h3 className="text-xl font-semibold mb-2">Call Us</h3>
             <p className="text-muted-foreground mb-4">
-              Prefer to talk? Choose a time that works for you.
+              Prefer to talk? Give us a call during business hours.
             </p>
-            <Button variant="outline" className="w-full">
-              Book Appointment
+            <Button variant="outline" className="w-full" asChild>
+              <a href={`tel:${COMPANY_INFO.phoneRaw}`}>Call {COMPANY_INFO.phone}</a>
             </Button>
           </CardContent>
         </Card>
@@ -615,12 +615,12 @@ const AlternativeContactMethods = () => (
         <Card className="text-center hover:shadow-lg transition-shadow">
           <CardContent className="pt-6">
             <MessageSquare className="h-12 w-12 text-primary mx-auto mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Live Chat</h3>
+            <h3 className="text-xl font-semibold mb-2">Email Us</h3>
             <p className="text-muted-foreground mb-4">
-              Chat with us now. Average response: 5 minutes.
+              Send us a message. We respond within 24 hours.
             </p>
-            <Button variant="outline" className="w-full">
-              Start Chat
+            <Button variant="outline" className="w-full" asChild>
+              <a href={`mailto:${COMPANY_INFO.email}`}>Send Email</a>
             </Button>
           </CardContent>
         </Card>
@@ -756,9 +756,10 @@ const ContactPage = () => {
     "@type": "ContactPage",
     mainEntity: {
       "@type": "LocalBusiness",
-      name: "Rhino Remodeler",
-      telephone: COMPANY_INFO.phone,
+      name: COMPANY_INFO.name,
+      telephone: COMPANY_INFO.phoneRaw,
       email: COMPANY_INFO.email,
+      url: "https://rhinoremodeler.com",
       address: {
         "@type": "PostalAddress",
         streetAddress: COMPANY_INFO.address.street,
@@ -792,7 +793,7 @@ const ContactPage = () => {
           name="description"
           content="Contact Rhino Remodeler for your home repair and renovation needs in Seattle. Call (206) 555-RHINO, email us, or fill out our contact form. 24/7 emergency service available."
         />
-        <link rel="canonical" href="https://rhinoconstruction.com/contact" />
+        <link rel="canonical" href="https://rhinoremodeler.com/contact" />
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
         </script>

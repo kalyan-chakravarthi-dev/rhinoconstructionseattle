@@ -1,4 +1,4 @@
-// Rhino Construction - Centralized Validation Schemas
+// Rhino Remodeler - Centralized Validation Schemas
 // Following development_rules.md standards
 
 import { z } from 'zod';
