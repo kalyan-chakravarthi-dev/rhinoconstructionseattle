@@ -1,11 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { sanitizeForEmail, sanitizeMessage, sanitizeUrl } from "../_shared/sanitize.ts";
-
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-};
+import { getCorsHeaders, handleCorsPreflightIfNeeded } from "../_shared/cors.ts";
 
 interface NotificationPayload {
   customerName: string;
@@ -37,7 +33,6 @@ async function getSignedImageUrls(imageUrls: string[]): Promise<string[]> {
   const signedUrls = await Promise.all(
     imageUrls.map(async (url) => {
       try {
-        // Extract path from URL - handle both full URLs and paths
         let path = url;
         if (url.includes('/quote-images/')) {
           path = url.split('/quote-images/')[1];
@@ -46,7 +41,7 @@ async function getSignedImageUrls(imageUrls: string[]): Promise<string[]> {
         
         const { data, error } = await supabase.storage
           .from('quote-images')
-          .createSignedUrl(path, 604800); // 7 days
+          .createSignedUrl(path, 604800);
         
         if (error) {
           console.error('Signed URL error:', error);
@@ -69,7 +64,6 @@ async function sendCustomerConfirmation(payload: NotificationPayload): Promise<b
   const sendgridApiKey = Deno.env.get("SENDGRID_API_KEY");
   const trackingId = generateTrackingId(payload.quoteId);
 
-  // Sanitize all user inputs
   const safeName = sanitizeForEmail(payload.customerName);
   const safeService = sanitizeForEmail(payload.serviceRequested);
   const safeCity = sanitizeForEmail(payload.propertyCity) || "N/A";
@@ -183,7 +177,6 @@ async function sendEmail(payload: NotificationPayload, signedImageUrls: string[]
   const sendgridApiKey = Deno.env.get("SENDGRID_API_KEY");
   const businessEmail = "francisco@rhinoremodeler.com";
 
-  // Sanitize all user inputs
   const safeName = sanitizeForEmail(payload.customerName);
   const safeService = sanitizeForEmail(payload.serviceRequested);
   const safeCity = sanitizeForEmail(payload.propertyCity) || "N/A";
@@ -192,7 +185,6 @@ async function sendEmail(payload: NotificationPayload, signedImageUrls: string[]
   const safePhone = sanitizeForEmail(payload.phone) || "Not provided";
   const safeMessage = sanitizeMessage(payload.message);
 
-  // Generate image gallery HTML if images are present
   const imageGalleryHtml = signedImageUrls && signedImageUrls.length > 0 
     ? `
       <h3 style="color: #333; margin-top: 20px;">📷 Project Photos (${signedImageUrls.length}):</h3>
@@ -293,19 +285,18 @@ async function sendEmail(payload: NotificationPayload, signedImageUrls: string[]
 }
 
 serve(async (req) => {
-  if (req.method === "OPTIONS") {
-    return new Response(null, { headers: corsHeaders });
-  }
+  const preflightResponse = handleCorsPreflightIfNeeded(req);
+  if (preflightResponse) return preflightResponse;
+
+  const corsHeaders = getCorsHeaders(req);
 
   try {
     const payload: NotificationPayload = await req.json();
 
     console.log("Sending notifications for quote:", payload.quoteId);
 
-    // Generate signed URLs for images (bucket is now private)
     const signedImageUrls = await getSignedImageUrls(payload.imageUrls || []);
 
-    // Send both business and customer emails in parallel
     const [businessEmailResult, customerEmailResult] = await Promise.all([
       sendEmail(payload, signedImageUrls),
       sendCustomerConfirmation(payload),
@@ -317,7 +308,7 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({
         success: true,
-        sms: false, // SMS disabled
+        sms: false,
         businessEmail: businessEmailResult,
         customerEmail: customerEmailResult,
       }),

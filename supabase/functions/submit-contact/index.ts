@@ -1,12 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { sanitizeForEmail, sanitizeMessage } from "../_shared/sanitize.ts";
-
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
-};
+import { getCorsHeaders, handleCorsPreflightIfNeeded } from "../_shared/cors.ts";
 
 interface ContactRequest {
   fullName: string;
@@ -37,15 +32,14 @@ const HEARD_FROM_LABELS: Record<string, string> = {
 };
 
 serve(async (req: Request): Promise<Response> => {
-  // Handle CORS preflight
-  if (req.method === "OPTIONS") {
-    return new Response(null, { headers: corsHeaders });
-  }
+  const preflightResponse = handleCorsPreflightIfNeeded(req);
+  if (preflightResponse) return preflightResponse;
+
+  const corsHeaders = getCorsHeaders(req);
 
   try {
     const body: ContactRequest = await req.json();
     
-    // Validate required fields
     if (!body.fullName || !body.email || !body.phone || !body.message) {
       return new Response(
         JSON.stringify({ error: "Missing required fields" }),
@@ -53,7 +47,6 @@ serve(async (req: Request): Promise<Response> => {
       );
     }
 
-    // Validate field lengths
     if (body.fullName.length > 100 || body.email.length > 255 || body.message.length > 500) {
       return new Response(
         JSON.stringify({ error: "Field length exceeds maximum" }),
@@ -61,12 +54,10 @@ serve(async (req: Request): Promise<Response> => {
       );
     }
 
-    // Initialize Supabase with service role
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Insert into database
     const { data: contactData, error: insertError } = await supabase
       .from("contact_messages")
       .insert({
@@ -88,14 +79,11 @@ serve(async (req: Request): Promise<Response> => {
       );
     }
 
-    // Generate tracking ID
     const createdAt = new Date(contactData.created_at);
     const trackingId = `MSG-${createdAt.getFullYear()}-${contactData.id.substring(0, 4).toUpperCase()}`;
 
-    // Send email notification
     const sendGridApiKey = Deno.env.get("SENDGRID_API_KEY");
     if (sendGridApiKey) {
-      // Sanitize all user inputs for email templates
       const safeFullName = sanitizeForEmail(body.fullName);
       const safeFirstName = sanitizeForEmail(body.fullName.split(' ')[0]);
       const safeEmail = sanitizeForEmail(body.email);
@@ -105,7 +93,6 @@ serve(async (req: Request): Promise<Response> => {
       const serviceLabel = body.service ? SERVICE_LABELS[body.service] || sanitizeForEmail(body.service) : "Not specified";
       const heardFromLabel = body.heardFrom ? HEARD_FROM_LABELS[body.heardFrom] || sanitizeForEmail(body.heardFrom) : "Not specified";
       
-      // Business notification email
       const businessEmailHtml = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background-color: #1e3a5f; padding: 20px; text-align: center;">
@@ -134,7 +121,6 @@ serve(async (req: Request): Promise<Response> => {
         </div>
       `;
 
-      // Customer confirmation email
       const customerEmailHtml = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background-color: #1e3a5f; padding: 20px; text-align: center;">
@@ -162,9 +148,7 @@ serve(async (req: Request): Promise<Response> => {
         </div>
       `;
 
-      // Send both emails
       const emailPromises = [
-        // Business notification
         fetch("https://api.sendgrid.com/v3/mail/send", {
           method: "POST",
           headers: {
@@ -178,7 +162,6 @@ serve(async (req: Request): Promise<Response> => {
             content: [{ type: "text/html", value: businessEmailHtml }],
           }),
         }),
-        // Customer confirmation
         fetch("https://api.sendgrid.com/v3/mail/send", {
           method: "POST",
           headers: {
