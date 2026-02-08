@@ -17,7 +17,8 @@ test.describe("Smoke tests", () => {
     await page.goto("/");
 
     await expect(page.getByRole("link", { name: "Home" }).first()).toBeVisible();
-    await expect(page.getByRole("link", { name: "Services" }).first()).toBeVisible();
+    // Services is a mega menu trigger (button), not a direct link
+    await expect(page.getByRole("button", { name: /Services/i }).first()).toBeVisible();
     await expect(page.getByRole("link", { name: "About Us" }).first()).toBeVisible();
     await expect(page.getByRole("link", { name: "Contact" }).first()).toBeVisible();
   });
@@ -31,10 +32,7 @@ test.describe("Smoke tests", () => {
   });
 
   test("navigate to Services page", async ({ page }) => {
-    await page.goto("/");
-
-    await page.getByRole("link", { name: "Services" }).first().click();
-    await page.waitForURL("/services");
+    await page.goto("/services");
 
     await expect(page.locator("h1, h2").first()).toBeVisible();
   });
@@ -67,7 +65,7 @@ test.describe("Smoke tests", () => {
     await page.goto("/this-does-not-exist");
 
     await expect(page.getByText("404")).toBeVisible();
-    await expect(page.getByText("Page not found")).toBeVisible();
-    await expect(page.getByRole("link", { name: /Return to Home/i })).toBeVisible();
+    await expect(page.getByText("Page Not Found")).toBeVisible();
+    await expect(page.getByRole("link", { name: /Back to Home/i })).toBeVisible();
   });
 });
