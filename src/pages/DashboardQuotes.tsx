@@ -79,10 +79,11 @@ const DashboardQuotes = () => {
           return new Date(b.submittedDate).getTime() - new Date(a.submittedDate).getTime();
         case 'status':
           return a.status.localeCompare(b.status);
-        case 'amount':
+        case 'amount': {
           const aVal = a.estimatedValue?.max || 0;
           const bVal = b.estimatedValue?.max || 0;
           return bVal - aVal;
+        }
         default:
           return 0;
       }

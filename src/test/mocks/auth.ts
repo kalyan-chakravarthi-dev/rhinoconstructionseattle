@@ -5,8 +5,8 @@ import { vi } from "vitest";
  * Override individual fields per test as needed.
  */
 export const mockAuthValues = {
-  user: null as any,
-  session: null as any,
+  user: null as Record<string, unknown> | null,
+  session: null as Record<string, unknown> | null,
   loading: false,
   signUp: vi.fn().mockResolvedValue({ error: null }),
   signIn: vi.fn().mockResolvedValue({ error: null }),

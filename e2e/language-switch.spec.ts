@@ -7,7 +7,8 @@ test.describe("Language Switch", () => {
     // ── Verify default English ────────────────────────────────────
     const nav = page.getByRole("navigation");
     await expect(nav.getByRole("link", { name: "Home" }).first()).toBeVisible();
-    await expect(nav.getByRole("link", { name: "Services" }).first()).toBeVisible();
+    // Services is a mega menu trigger (button), not a direct link
+    await expect(nav.getByRole("button", { name: /Services/i }).first()).toBeVisible();
     await expect(nav.getByRole("link", { name: "About Us" }).first()).toBeVisible();
     await expect(nav.getByRole("link", { name: "Contact" }).first()).toBeVisible();
 
@@ -18,7 +19,7 @@ test.describe("Language Switch", () => {
 
     // Nav links update to Spanish
     await expect(nav.getByRole("link", { name: "Inicio" }).first()).toBeVisible();
-    await expect(nav.getByRole("link", { name: "Servicios" }).first()).toBeVisible();
+    await expect(nav.getByRole("button", { name: /Servicios/i }).first()).toBeVisible();
     await expect(nav.getByRole("link", { name: "Sobre Nosotros" }).first()).toBeVisible();
     await expect(nav.getByRole("link", { name: "Contacto" }).first()).toBeVisible();
 
@@ -34,7 +35,7 @@ test.describe("Language Switch", () => {
 
     // Nav links revert to English
     await expect(nav.getByRole("link", { name: "Home" }).first()).toBeVisible();
-    await expect(nav.getByRole("link", { name: "Services" }).first()).toBeVisible();
+    await expect(nav.getByRole("button", { name: /Services/i }).first()).toBeVisible();
 
     // Hero heading reverts to English
     await expect(

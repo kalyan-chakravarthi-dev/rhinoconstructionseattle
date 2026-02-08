@@ -5,10 +5,16 @@ import { format } from "date-fns";
 import rhinoLogo from "@/assets/rhino-remodeler-logo.png";
 import { COMPANY_INFO } from "@/lib/constants";
 
+interface QuoteData {
+  service?: string;
+  contactInfo?: { email?: string };
+  address?: { city?: string; state?: string };
+}
+
 const QuoteConfirmation = () => {
   const [searchParams] = useSearchParams();
   const [showAnimation, setShowAnimation] = useState(false);
-  const [quoteData, setQuoteData] = useState<any>(null);
+  const [quoteData, setQuoteData] = useState<QuoteData | null>(null);
 
   const quoteId = searchParams.get("id") || "RQT-0000";
 
@@ -21,7 +27,7 @@ const QuoteConfirmation = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const getServiceName = (serviceId: string) => {
+  const getServiceName = (serviceId: string | undefined) => {
     const serviceNames: Record<string, string> = {
       kitchen: "Kitchen Remodeling",
       bathroom: "Bathroom Renovation",
@@ -33,7 +39,7 @@ const QuoteConfirmation = () => {
       flooring: "Flooring",
       other: "Other / Custom Project",
     };
-    return serviceNames[serviceId] || serviceId || "Not specified";
+    return (serviceId && serviceNames[serviceId]) || serviceId || "Not specified";
   };
 
   const isEmergencyService = ["electrical", "plumbing", "roofing"].includes(

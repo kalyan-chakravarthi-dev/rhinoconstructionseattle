@@ -20,7 +20,7 @@ import { vi } from "vitest";
 
 // ── Auth ──────────────────────────────────────────────────────────────
 
-type AuthCallback = (event: string, session: any) => void;
+type AuthCallback = (event: string, session: unknown) => void;
 
 /** Stores the latest onAuthStateChange callback so tests can trigger auth events. */
 let _authStateCallback: AuthCallback | null = null;
@@ -55,7 +55,7 @@ export const mockSupabaseAuth = {
  *
  *   simulateAuthStateChange("SIGNED_IN", mockSession);
  */
-export function simulateAuthStateChange(event: string, session: any) {
+export function simulateAuthStateChange(event: string, session: unknown) {
   if (_authStateCallback) {
     _authStateCallback(event, session);
   }
