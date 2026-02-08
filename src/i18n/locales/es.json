@@ -7,7 +7,11 @@
     "contact": "Contacto",
     "faq": "Preguntas Frecuentes",
     "signIn": "Iniciar Sesión",
-    "requestQuote": "Solicitar Cotización"
+    "requestQuote": "Solicitar Cotización",
+    "ourServices": "Nuestros Servicios",
+    "viewAllServices": "Ver Todos los Servicios",
+    "portfolio": "Portafolio",
+    "viewGallery": "Ver Galería"
   },
   "hero": {
     "title1": "Expertos de Confianza",

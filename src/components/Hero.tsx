@@ -35,7 +35,7 @@ const Hero = () => {
           {/* Main Headline */}
           <p className="text-3xl sm:text-4xl font-bold leading-tight mb-4 animate-fade-up" aria-hidden="true">
             <span className="text-primary-foreground">{t('hero.title1')}</span>
-            <br />
+            {" "}<br />
             <span className="text-secondary">{t('hero.title2')}</span>
           </p>
 
@@ -107,7 +107,7 @@ const Hero = () => {
             {/* Main Headline */}
             <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold text-primary-foreground leading-tight mb-6 animate-fade-up">
               {t('hero.title1')}
-              <br />
+              {" "}<br />
               <span className="text-secondary">{t('hero.title2')}</span>
             </h1>
 
