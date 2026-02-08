@@ -138,10 +138,10 @@ const TeamSection = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 id="team-heading" className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Meet Our Team
+            Meet the Founder
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            The skilled professionals who bring your home improvement dreams to life
+            The person behind Rhino Remodeler's commitment to quality
           </p>
         </div>
         

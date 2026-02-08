@@ -474,7 +474,7 @@ const BeforeAfterGalleryPage = () => {
                         <ChevronRight className="w-4 h-4 ml-1" />
                       </Button>
                       <Button asChild size="sm" className="flex-1">
-                        <Link to="/request-quote">Get Similar Quote</Link>
+                        <Link to="/request-quote">Get Quote</Link>
                       </Button>
                     </div>
                   </div>
