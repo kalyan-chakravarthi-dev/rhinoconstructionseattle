@@ -1,4 +1,6 @@
 const ALLOWED_ORIGINS = [
+  "https://rhinoremodeler.com",
+  "https://www.rhinoremodeler.com",
   "https://rhinoremodeler.lovable.app",
   "https://id-preview--980a5d59-efda-410d-ab8c-3ab8ae7e441d.lovable.app",
 ];
