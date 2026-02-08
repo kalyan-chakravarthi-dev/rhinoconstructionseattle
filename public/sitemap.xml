@@ -19,25 +19,25 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://rhinoremodeler.com/services/bathroom-remodeling</loc>
+    <loc>https://rhinoremodeler.com/services/bathroom-renovation</loc>
     <lastmod>2026-02-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://rhinoremodeler.com/services/roofing</loc>
+    <loc>https://rhinoremodeler.com/services/roofing-services</loc>
     <lastmod>2026-02-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://rhinoremodeler.com/services/electrical</loc>
+    <loc>https://rhinoremodeler.com/services/electrical-work</loc>
     <lastmod>2026-02-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://rhinoremodeler.com/services/plumbing</loc>
+    <loc>https://rhinoremodeler.com/services/plumbing-services</loc>
     <lastmod>2026-02-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -53,6 +53,24 @@
     <lastmod>2026-02-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rhinoremodeler.com/services/painting</loc>
+    <lastmod>2026-02-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rhinoremodeler.com/gallery</loc>
+    <lastmod>2026-02-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://rhinoremodeler.com/faq</loc>
+    <lastmod>2026-02-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://rhinoremodeler.com/about</loc>

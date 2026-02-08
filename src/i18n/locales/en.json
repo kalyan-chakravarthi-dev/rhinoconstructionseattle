@@ -7,7 +7,11 @@
     "contact": "Contact",
     "faq": "FAQ",
     "signIn": "Sign In",
-    "requestQuote": "Request Quote"
+    "requestQuote": "Request Quote",
+    "ourServices": "Our Services",
+    "viewAllServices": "View All Services",
+    "portfolio": "Portfolio",
+    "viewGallery": "View Gallery"
   },
   "hero": {
     "title1": "Seattle's Trusted",
