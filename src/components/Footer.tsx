@@ -140,7 +140,7 @@ const Footer = () => {
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-secondary flex-shrink-0 mt-0.5" aria-hidden="true" />
                 <span className="text-muted-foreground text-sm">
-                  {COMPANY_INFO.address.street}<br />
+                  {COMPANY_INFO.address.street}{" "}<br />
                   {COMPANY_INFO.address.city}, {COMPANY_INFO.address.state} {COMPANY_INFO.address.zip}
                 </span>
               </li>
@@ -149,7 +149,7 @@ const Footer = () => {
               <li className="flex items-start gap-3">
                 <Clock className="w-5 h-5 text-secondary flex-shrink-0 mt-0.5" aria-hidden="true" />
                 <span className="text-muted-foreground text-sm">
-                  {t('footer.hours.weekdays')}<br />
+                  {t('footer.hours.weekdays')}{" "}<br />
                   {t('footer.hours.saturday')}
                 </span>
               </li>

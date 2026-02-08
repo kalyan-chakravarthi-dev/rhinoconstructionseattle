@@ -97,7 +97,7 @@ const ServiceAreas = () => {
 const WhyChooseUs = () => {
   const reasons = [
     'Licensed & Insured',
-    '20+ Years Experience',
+    '10+ Years Experience',
     'Free Estimates',
     'Quality Guarantee',
     'On-Time Completion',

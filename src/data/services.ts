@@ -67,7 +67,7 @@ export const SERVICES_DATA: Record<string, ServiceData> = {
       'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1920&q=80',
       'https://images.unsplash.com/photo-1556909172-54557c7e4fb7?auto=format&fit=crop&w=1920&q=80',
     ],
-    metaDescription: 'Professional kitchen remodeling services in Seattle. From cabinet installation to complete redesigns. Licensed, insured, 20+ years experience. Free estimates!',
+    metaDescription: 'Professional kitchen remodeling services in Seattle. From cabinet installation to complete redesigns. Licensed, insured, 10+ years experience. Free estimates!',
     introduction: 'Your kitchen is the heart of your home, and at Rhino Remodeler, we understand how important it is to create a space that reflects your style while meeting your functional needs. Our expert team combines innovative design with superior craftsmanship to deliver kitchen remodels that exceed expectations. Whether you\'re looking for a minor refresh or a complete transformation, we\'re here to bring your vision to life.',
     whyChooseUs: [
       'Over 500 successful kitchen remodels completed',

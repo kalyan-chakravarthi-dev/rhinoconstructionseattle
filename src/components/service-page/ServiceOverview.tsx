@@ -8,7 +8,7 @@ interface ServiceOverviewProps {
 const ServiceOverview = ({ introduction, whyChooseUs }: ServiceOverviewProps) => {
   const trustIndicators = [
     { icon: Shield, label: 'Licensed & Insured' },
-    { icon: Award, label: '20+ Years Experience' },
+    { icon: Award, label: '10+ Years Experience' },
     { icon: Clock, label: 'On-Time Guarantee' },
   ];
 

@@ -63,7 +63,7 @@ const ServicesHero = () => (
 const TrustBadges = () => {
   const badges = [
     { icon: Shield, label: 'Licensed & Insured', value: 'Full Coverage' },
-    { icon: Award, label: 'Experience', value: '20+ Years' },
+    { icon: Award, label: 'Experience', value: '10+ Years' },
     { icon: Users, label: 'Completed Projects', value: '1,000+' },
     { icon: Star, label: 'Customer Rating', value: '4.9/5 Stars' },
   ];
