@@ -1,3 +1,11 @@
+/**
+ * RequestQuote – "Get Free Quote" multi-step form.
+ *
+ * DEPLOY NOTE: After making changes to this page (or any frontend code),
+ * you must **publish** the app (Share → Publish → Update) for the changes
+ * to appear on the production domain (rhinoremodeler.com).
+ * Edge-function / backend changes deploy automatically; frontend does not.
+ */
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
