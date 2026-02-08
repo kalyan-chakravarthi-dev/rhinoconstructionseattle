@@ -144,7 +144,7 @@ const SOCIAL_LINKS = [
 // ============================================
 const ContactHero = () => (
   <section className="relative bg-gradient-to-br from-primary to-primary/80 text-primary-foreground py-16 md:py-24">
-    <div className="absolute inset-0 bg-[url('/placeholder.svg')] opacity-10 bg-cover bg-center" />
+    <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1920&q=80')] opacity-10 bg-cover bg-center" />
     <div className="container mx-auto px-4 relative z-10 text-center">
       <h1 className="text-4xl md:text-5xl font-bold mb-4">Get In Touch</h1>
       <p className="text-xl md:text-2xl opacity-90 max-w-2xl mx-auto">
@@ -800,28 +800,30 @@ const ContactPage = () => {
       </Helmet>
 
       <Navbar />
-      <ContactHero />
+      <main id="main-content">
+        <ContactHero />
 
-      {/* Main Two-Column Layout */}
-      <section className="py-12 md:py-16">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-            {/* Left Column - Form */}
-            <div>
-              <ContactForm />
-            </div>
-            {/* Right Column - Contact Info */}
-            <div>
-              <ContactInfo />
+        {/* Main Two-Column Layout */}
+        <section className="py-12 md:py-16">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+              {/* Left Column - Form */}
+              <div>
+                <ContactForm />
+              </div>
+              {/* Right Column - Contact Info */}
+              <div>
+                <ContactInfo />
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <AlternativeContactMethods />
-      <FAQSection />
-      <TrustIndicators />
-      <VisitUsSection />
+        <AlternativeContactMethods />
+        <FAQSection />
+        <TrustIndicators />
+        <VisitUsSection />
+      </main>
       <Footer />
     </>
   );
