@@ -572,9 +572,9 @@ const RequestQuoteNew = () => {
         {currentStep === 2 && (
           <div className="space-y-8">
             <div>
-              <h1 className="text-2xl sm:text-3xl font-semibold text-foreground tracking-tight">
+              <h2 className="text-2xl sm:text-3xl font-semibold text-foreground tracking-tight">
                 Upload photos
-              </h1>
+              </h2>
               <p className="mt-2 text-muted-foreground">
                 Photos help us provide a faster, more accurate quote.
               </p>
@@ -678,9 +678,9 @@ const RequestQuoteNew = () => {
         {currentStep === 3 && (
           <div className="space-y-8">
             <div>
-              <h1 className="text-2xl sm:text-3xl font-semibold text-foreground tracking-tight">
+              <h2 className="text-2xl sm:text-3xl font-semibold text-foreground tracking-tight">
                 How can we reach you?
-              </h1>
+              </h2>
               <p className="mt-2 text-muted-foreground">
                 We'll follow up within 24 hours.
               </p>

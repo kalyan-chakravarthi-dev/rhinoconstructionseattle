@@ -10,7 +10,7 @@ test.describe("Smoke tests", () => {
   test("homepage has Get Free Quote CTA", async ({ page }) => {
     await page.goto("/");
 
-    await expect(page.getByRole("button", { name: /Get Free Quote/i })).toBeVisible();
+    await expect(page.getByRole("link", { name: /Get Free Quote/i }).first()).toBeVisible();
   });
 
   test("navbar renders navigation links", async ({ page }) => {

@@ -236,7 +236,7 @@ const Testimonials = () => {
         {/* Read More Link */}
         <div className="text-center mt-10">
           <a
-            href="https://www.google.com/maps"
+            href="https://www.google.com/maps/place/Rhino+Remodeler"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-secondary transition-colors font-medium"

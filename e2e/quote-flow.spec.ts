@@ -24,7 +24,7 @@ test.describe("Quote Request Flow", () => {
     ).toBeVisible();
 
     // Click the hero CTA to start a quote
-    await page.getByRole("button", { name: /Get Free Quote/i }).first().click();
+    await page.getByRole("link", { name: /Get Free Quote/i }).first().click();
     await page.waitForURL("/request-quote");
 
     // ── 2. Step 1: Project Details ────────────────────────────────

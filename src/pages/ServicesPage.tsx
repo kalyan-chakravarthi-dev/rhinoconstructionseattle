@@ -485,7 +485,7 @@ const ServicesPage = () => {
           name="keywords" 
           content="home repair Seattle, renovation services, kitchen remodeling, bathroom renovation, roofing, electrical, plumbing, handyman" 
         />
-        <link rel="canonical" href="https://rhinoconstruction.com/services" />
+        <link rel="canonical" href="https://rhinoremodeler.com/services" />
         
         <meta property="og:title" content={`Services | ${COMPANY_INFO.name}`} />
         <meta property="og:description" content="Professional home repair and renovation services in Seattle. Free estimates!" />

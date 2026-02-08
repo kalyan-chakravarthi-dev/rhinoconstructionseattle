@@ -149,10 +149,11 @@ const TeamSection = () => {
           {team.map((member) => (
             <Card key={member.name} className="overflow-hidden hover:shadow-lg transition-shadow">
               <div className="aspect-square bg-muted relative">
-                <img 
-                  src={member.image} 
+                <img
+                  src={member.image}
                   alt={`${member.name}, ${member.role}`}
                   className="w-full h-full object-cover"
+                  loading="lazy"
                 />
               </div>
               <CardContent className="p-5">

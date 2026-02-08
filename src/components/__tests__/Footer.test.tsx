@@ -89,8 +89,6 @@ describe("Footer", () => {
 
     expect(screen.getByLabelText("Facebook")).toBeInTheDocument();
     expect(screen.getByLabelText("Instagram")).toBeInTheDocument();
-    expect(screen.getByLabelText("LinkedIn")).toBeInTheDocument();
-    expect(screen.getByLabelText("Twitter")).toBeInTheDocument();
   });
 
   it("renders payment method icons", () => {

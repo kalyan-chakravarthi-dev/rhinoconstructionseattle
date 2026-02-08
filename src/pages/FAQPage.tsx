@@ -256,7 +256,7 @@ const FAQPage = () => {
           content="Find answers to common questions about Rhino Remodeler's home repair and renovation services in Seattle. Learn about pricing, timelines, warranties, and more." 
         />
         <meta name="keywords" content="FAQ, frequently asked questions, home repair questions, renovation FAQ, Seattle contractor FAQ" />
-        <link rel="canonical" href="https://rhinoconstruction.com/faq" />
+        <link rel="canonical" href="https://rhinoremodeler.com/faq" />
         <script type="application/ld+json">
           {JSON.stringify(faqSchema)}
         </script>
