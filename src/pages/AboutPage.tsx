@@ -28,7 +28,7 @@ import { COMPANY_INFO, ROUTES } from '@/lib/constants';
 const AboutHero = () => (
   <section 
     className="relative min-h-[50vh] flex items-center justify-center bg-cover bg-center"
-    style={{ backgroundImage: 'url(/placeholder.svg)' }}
+    style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1920&q=80)' }}
     aria-label="About us hero section"
   >
     <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/70" aria-hidden="true" />
@@ -128,7 +128,7 @@ const TeamSection = () => {
       name: 'Francisco',
       role: 'Founder & CEO',
       bio: 'With 10+ years in construction, Francisco founded Rhino Remodeler to bring honest, quality service to Seattle homeowners. He still oversees every major project personally.',
-      image: '/placeholder.svg',
+      image: 'https://images.unsplash.com/photo-1540569014015-19a7be504e3a?auto=format&fit=crop&w=600&q=80',
       linkedin: '#',
     },
   ];
@@ -608,7 +608,7 @@ const AboutPage = () => {
       <div className="min-h-screen flex flex-col">
         <Navbar />
         
-        <main className="flex-1">
+        <main id="main-content" className="flex-1">
           <AboutHero />
           <OurStory />
           <StatsSection />

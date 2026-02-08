@@ -280,6 +280,7 @@ const BeforeAfterGalleryPage = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
 
+      <main id="main-content">
       {/* Hero Header */}
       <section className="relative bg-primary py-20 px-4">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1920&h=600&fit=crop')] bg-cover bg-center opacity-20" />
@@ -523,6 +524,7 @@ const BeforeAfterGalleryPage = () => {
           </div>
         </div>
       </section>
+      </main>
 
       <Footer />
 

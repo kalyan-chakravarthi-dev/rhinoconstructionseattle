@@ -381,7 +381,7 @@ const RequestQuoteNew = () => {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-[640px] mx-auto px-4 sm:px-6 py-8 sm:py-12">
+      <main id="main-content" className="max-w-[640px] mx-auto px-4 sm:px-6 py-8 sm:py-12">
         {/* Step Indicator */}
         <div className="mb-8">
           {/* Step Labels */}

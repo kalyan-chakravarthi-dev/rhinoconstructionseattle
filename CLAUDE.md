@@ -199,5 +199,11 @@ Do NOT introduce:
 - Test shared components in `components/shared`
 - Avoid snapshot testing unless explicitly requested
 
+## CI & Testing
+All pull requests and pushes to main must pass:
+- Unit tests (Vitest)
+- E2E tests (Playwright)
+CI failures must be fixed before merge.
+
 If user instructions conflict with these rules, **follow the user**.
 

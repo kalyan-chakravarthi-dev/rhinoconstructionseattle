@@ -264,7 +264,7 @@ const FAQPage = () => {
 
       <Navbar />
 
-      <main className="min-h-screen bg-background">
+      <main id="main-content" className="min-h-screen bg-background">
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-primary/10 via-primary/5 to-background py-16 md:py-24">
           <div className="container mx-auto px-4">

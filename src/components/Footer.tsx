@@ -65,6 +65,8 @@ const Footer = () => {
                 <a
                   key={social.label}
                   href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={social.label}
                   className="w-10 h-10 rounded-lg bg-muted-foreground/20 hover:bg-secondary flex items-center justify-center transition-colors duration-200"
                 >
@@ -76,7 +78,7 @@ const Footer = () => {
 
           {/* Column 2 - Quick Links */}
           <div>
-            <h4 className="text-background font-semibold text-lg mb-5">{t('footer.quickLinks')}</h4>
+            <h3 className="text-background font-semibold text-lg mb-5">{t('footer.quickLinks')}</h3>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.label}>
@@ -93,7 +95,7 @@ const Footer = () => {
 
           {/* Column 3 - Services */}
           <div>
-            <h4 className="text-background font-semibold text-lg mb-5">{t('footer.ourServices')}</h4>
+            <h3 className="text-background font-semibold text-lg mb-5">{t('footer.ourServices')}</h3>
             <ul className="space-y-3">
               {services.map((service) => (
                 <li key={service.label}>
@@ -110,7 +112,7 @@ const Footer = () => {
 
           {/* Column 4 - Contact Info */}
           <div>
-            <h4 className="text-background font-semibold text-lg mb-5">{t('footer.getInTouch')}</h4>
+            <h3 className="text-background font-semibold text-lg mb-5">{t('footer.getInTouch')}</h3>
             <ul className="space-y-4">
               {/* Phone */}
               <li className="flex items-start gap-3">
@@ -140,7 +142,7 @@ const Footer = () => {
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-secondary flex-shrink-0 mt-0.5" aria-hidden="true" />
                 <span className="text-muted-foreground text-sm">
-                  {COMPANY_INFO.address.street}<br />
+                  {COMPANY_INFO.address.street}{" "}<br />
                   {COMPANY_INFO.address.city}, {COMPANY_INFO.address.state} {COMPANY_INFO.address.zip}
                 </span>
               </li>
@@ -149,7 +151,7 @@ const Footer = () => {
               <li className="flex items-start gap-3">
                 <Clock className="w-5 h-5 text-secondary flex-shrink-0 mt-0.5" aria-hidden="true" />
                 <span className="text-muted-foreground text-sm">
-                  {t('footer.hours.weekdays')}<br />
+                  {t('footer.hours.weekdays')}{" "}<br />
                   {t('footer.hours.saturday')}
                 </span>
               </li>

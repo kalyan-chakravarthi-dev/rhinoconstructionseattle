@@ -88,12 +88,14 @@ const Index = () => {
 
       <div className="min-h-screen">
         <Navbar />
-        <Hero />
-        <Services />
-        <BeforeAfterGallery />
-        <Testimonials />
-        <ServiceAreas />
-        <CallToAction />
+        <main id="main-content">
+          <Hero />
+          <Services />
+          <BeforeAfterGallery />
+          <Testimonials />
+          <ServiceAreas />
+          <CallToAction />
+        </main>
         <Footer />
       </div>
     </>
