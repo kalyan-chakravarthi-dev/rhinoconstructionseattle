@@ -78,7 +78,7 @@ const Footer = () => {
 
           {/* Column 2 - Quick Links */}
           <div>
-            <h3 className="text-background font-semibold text-lg mb-5">{t('footer.quickLinks')}</h4>
+            <h3 className="text-background font-semibold text-lg mb-5">{t('footer.quickLinks')}</h3>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.label}>
@@ -95,7 +95,7 @@ const Footer = () => {
 
           {/* Column 3 - Services */}
           <div>
-            <h3 className="text-background font-semibold text-lg mb-5">{t('footer.ourServices')}</h4>
+            <h3 className="text-background font-semibold text-lg mb-5">{t('footer.ourServices')}</h3>
             <ul className="space-y-3">
               {services.map((service) => (
                 <li key={service.label}>
@@ -112,7 +112,7 @@ const Footer = () => {
 
           {/* Column 4 - Contact Info */}
           <div>
-            <h3 className="text-background font-semibold text-lg mb-5">{t('footer.getInTouch')}</h4>
+            <h3 className="text-background font-semibold text-lg mb-5">{t('footer.getInTouch')}</h3>
             <ul className="space-y-4">
               {/* Phone */}
               <li className="flex items-start gap-3">

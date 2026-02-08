@@ -115,6 +115,7 @@ const ImageComparisonSlider = ({
         alt="After"
         className="absolute inset-0 w-full h-full object-cover"
         draggable={false}
+        loading="lazy"
       />
 
       {/* Before Image (Clipped) */}
@@ -127,6 +128,7 @@ const ImageComparisonSlider = ({
           alt="Before"
           className="absolute inset-0 w-full h-full object-cover"
           draggable={false}
+          loading="lazy"
         />
       </div>
 

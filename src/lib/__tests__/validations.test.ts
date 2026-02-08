@@ -91,8 +91,16 @@ describe("contactFormSchema", () => {
   });
 
   // Phone
-  it("rejects phone without proper format", () => {
-    const badPhones = ["2064879677", "206-487-9677", "206.487.9677", "(206)487-9677", "(206) 487 9677"];
+  it("accepts common phone formats", () => {
+    const goodPhones = ["2064879677", "206-487-9677", "206.487.9677", "(206)487-9677", "(206) 487 9677", "(206) 487-9677"];
+    for (const phone of goodPhones) {
+      const result = contactFormSchema.safeParse({ ...validContact, phone });
+      expect(result.success).toBe(true);
+    }
+  });
+
+  it("rejects phone with wrong digit count", () => {
+    const badPhones = ["12345", "123456789", "12345678901234"];
     for (const phone of badPhones) {
       const result = contactFormSchema.safeParse({ ...validContact, phone });
       expect(result.success).toBe(false);
@@ -471,7 +479,7 @@ describe("quoteStep4Schema", () => {
   it("rejects invalid phone in contact info", () => {
     const result = quoteStep4Schema.safeParse({
       ...validStep4,
-      contactInfo: { ...validStep4.contactInfo, phone: "1234567890" },
+      contactInfo: { ...validStep4.contactInfo, phone: "12345" },
     });
     expect(result.success).toBe(false);
   });
@@ -603,8 +611,13 @@ describe("signUpSchema", () => {
     expect(result.success).toBe(true);
   });
 
-  it("rejects improperly formatted phone", () => {
+  it("accepts various phone formats", () => {
     const result = signUpSchema.safeParse({ ...validSignUp, phone: "5551234567" });
+    expect(result.success).toBe(true);
+  });
+
+  it("rejects phone with wrong digit count", () => {
+    const result = signUpSchema.safeParse({ ...validSignUp, phone: "555123" });
     expect(result.success).toBe(false);
   });
 

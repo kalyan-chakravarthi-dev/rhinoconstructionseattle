@@ -3,8 +3,13 @@
 
 import { z } from 'zod';
 
-// Phone number regex for (XXX) XXX-XXXX format
-const phoneRegex = /^\(\d{3}\) \d{3}-\d{4}$/;
+// Phone validation: strip non-digits and check for 10 digits
+// Accepts: (206) 487-9677, 206-487-9677, 206.487.9677, 2064879677, etc.
+const isValidPhone = (value: string) => {
+  const digits = value.replace(/\D/g, '');
+  // Allow 10 digits, or 11 digits starting with 1 (country code)
+  return digits.length === 10 || (digits.length === 11 && digits.startsWith('1'));
+};
 
 // ZIP code regex
 const zipCodeRegex = /^\d{5}(-\d{4})?$/;
@@ -30,7 +35,7 @@ export const contactFormSchema = z.object({
     .max(255, 'Email must be less than 255 characters'),
   phone: z
     .string()
-    .regex(phoneRegex, 'Phone must be in format (XXX) XXX-XXXX'),
+    .refine(isValidPhone, 'Please enter a valid 10-digit phone number'),
   message: z
     .string()
     .trim()
@@ -129,7 +134,7 @@ export const quoteStep4Schema = z.object({
       .email('Please enter a valid email address'),
     phone: z
       .string()
-      .regex(phoneRegex, 'Phone must be in format (XXX) XXX-XXXX'),
+      .refine(isValidPhone, 'Please enter a valid 10-digit phone number'),
   }),
   preferredContactMethod: z
     .enum(['phone', 'text', 'email', 'any']),
@@ -186,7 +191,7 @@ export const signUpSchema = z.object({
     .email('Please enter a valid email address'),
   phone: z
     .string()
-    .regex(phoneRegex, 'Phone must be in format (XXX) XXX-XXXX')
+    .refine(isValidPhone, 'Please enter a valid 10-digit phone number')
     .optional()
     .or(z.literal('')),
   password: z
