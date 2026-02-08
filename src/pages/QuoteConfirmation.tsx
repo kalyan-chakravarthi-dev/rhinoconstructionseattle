@@ -78,7 +78,7 @@ const QuoteConfirmation = () => {
       </header>
 
       {/* Main Content */}
-      <main className="px-4 py-12 sm:py-16">
+      <main id="main-content" className="px-4 py-12 sm:py-16">
         <div className="max-w-md mx-auto space-y-8">
           {/* Success Confirmation */}
           <div className="text-center space-y-4">

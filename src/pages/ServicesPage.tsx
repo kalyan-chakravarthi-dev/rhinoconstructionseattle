@@ -31,7 +31,7 @@ import { SERVICES_OVERVIEW, PROCESS_STEPS, SPECIAL_OFFERS } from '@/data/service
 // Hero Section
 const ServicesHero = () => (
   <section className="relative bg-gradient-to-br from-primary to-primary/80 text-primary-foreground py-20 lg:py-28">
-    <div className="absolute inset-0 bg-[url('/placeholder.svg')] opacity-10 bg-cover bg-center" aria-hidden="true" />
+    <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1920&q=80')] opacity-10 bg-cover bg-center" aria-hidden="true" />
     <div className="container mx-auto px-4 relative z-10">
       <div className="max-w-3xl mx-auto text-center">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
@@ -499,7 +499,7 @@ const ServicesPage = () => {
       <div className="min-h-screen flex flex-col">
         <Navbar />
         
-        <main className="flex-1">
+        <main id="main-content" className="flex-1">
           <ServicesHero />
           <TrustBadges />
           <ServicesGrid />
