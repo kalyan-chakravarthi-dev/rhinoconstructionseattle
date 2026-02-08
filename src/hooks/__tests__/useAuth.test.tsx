@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 
 // Use vi.hoisted so mock values are available before vi.mock factory runs
 const { mockAuth, mockSubscription, simulateAuthChange, resetMocks } = vi.hoisted(() => {
-  type AuthCallback = (event: string, session: any) => void;
+  type AuthCallback = (event: string, session: unknown) => void;
   let _callback: AuthCallback | null = null;
 
   const subscription = { unsubscribe: vi.fn() };
@@ -20,7 +20,7 @@ const { mockAuth, mockSubscription, simulateAuthChange, resetMocks } = vi.hoiste
     signOut: vi.fn().mockResolvedValue({ error: null }),
   };
 
-  function simulateAuthChange(event: string, session: any) {
+  function simulateAuthChange(event: string, session: unknown) {
     if (_callback) _callback(event, session);
   }
 
