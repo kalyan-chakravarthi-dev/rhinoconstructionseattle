@@ -26,7 +26,7 @@ export function getCorsHeaders(req: Request): Record<string, string> {
 
   return {
     ...CORS_HEADERS_BASE,
-    "Access-Control-Allow-Origin": allowed ? origin : ALLOWED_ORIGINS[0],
+    "Access-Control-Allow-Origin": allowed ? origin : "",
     ...(allowed ? { "Vary": "Origin" } : {}),
   };
 }
