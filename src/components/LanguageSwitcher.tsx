@@ -40,8 +40,8 @@ const LanguageSwitcher = ({ variant = 'default', className }: LanguageSwitcherPr
           )}
         >
           <Globe className="w-4 h-4" aria-hidden="true" />
-          <span className={cn(variant === 'compact' ? 'hidden sm:inline' : '')}>
-            {currentLang.flag} {variant === 'default' && currentLang.label}
+          <span className={cn("text-xl", variant === 'compact' ? 'hidden sm:inline' : '')}>
+            {currentLang.flag} {variant === 'default' && <span className="text-sm">{currentLang.label}</span>}
           </span>
         </Button>
       </DropdownMenuTrigger>
