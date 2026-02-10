@@ -33,6 +33,22 @@ import { COMPANY_INFO } from "@/lib/constants";
 // CONSTANTS & TYPES
 // ============================================
 
+const CITIES = [
+  "Seattle",
+  "Bellevue",
+  "Redmond",
+  "Kirkland",
+  "Renton",
+  "Federal Way",
+  "Tacoma",
+  "Everett",
+  "Bothell",
+  "Sammamish",
+  "Issaquah",
+  "Mercer Island",
+  "Other",
+];
+
 const SERVICES = [
   { id: "kitchen", label: "Kitchen Remodeling" },
   { id: "bathroom", label: "Bathroom Renovation" },
@@ -114,8 +130,7 @@ const RequestQuoteNew = () => {
   const validateStep1 = () => {
     const newErrors: Record<string, string> = {};
     if (!selectedService) newErrors.service = "Please select a service";
-    if (!projectSize) newErrors.projectSize = "Please select a project size";
-    if (!city.trim()) newErrors.city = "City is required";
+    if (!city) newErrors.city = "Please select a city";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -457,7 +472,7 @@ const RequestQuoteNew = () => {
                       errors.service && "border-destructive"
                     )}
                   >
-                    <SelectValue placeholder="Select a service (Kitchen, Bathroom, Roofing…)" />
+                    <SelectValue placeholder="Select a service" />
                   </SelectTrigger>
                   <SelectContent>
                     {SERVICES.map((service) => (
@@ -474,47 +489,16 @@ const RequestQuoteNew = () => {
                 )}
               </div>
 
-              {/* Project Size Select */}
-              <div className="space-y-2">
-                <Label htmlFor="projectSize" className="text-sm font-medium">
-                  Project Size
-                </Label>
-                <Select value={projectSize} onValueChange={setProjectSize}>
-                  <SelectTrigger 
-                    id="projectSize" 
-                    className={cn(
-                      "h-12 text-base bg-background",
-                      errors.projectSize && "border-destructive"
-                    )}
-                  >
-                    <SelectValue placeholder="Select project size" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {PROJECT_SIZES.map((size) => (
-                      <SelectItem key={size.id} value={size.id} className="py-3">
-                        <div className="flex flex-col items-start">
-                          <span>{size.label}</span>
-                          <span className="text-xs text-muted-foreground">{size.hint}</span>
-                        </div>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                {errors.projectSize && (
-                  <p className="text-sm text-destructive">{errors.projectSize}</p>
-                )}
-              </div>
-
               {/* Description (optional) */}
               <div className="space-y-2">
                 <Label htmlFor="description" className="text-sm font-medium">
-                  Brief Description <span className="text-muted-foreground font-normal">(optional)</span>
+                  Brief Description
                 </Label>
                 <Textarea
                   id="description"
                   value={projectDescription}
                   onChange={(e) => setProjectDescription(e.target.value)}
-                  placeholder="Optional details that help us understand your project"
+                  placeholder="Describe your project briefly"
                   className="min-h-[80px] text-base bg-background resize-none"
                 />
               </div>
@@ -529,16 +513,24 @@ const RequestQuoteNew = () => {
                     <Label htmlFor="city" className="text-sm font-medium">
                       City
                     </Label>
-                    <Input
-                      id="city"
-                      value={city}
-                      onChange={(e) => setCity(e.target.value)}
-                      placeholder="Seattle"
-                      className={cn(
-                        "h-12 text-base bg-background",
-                        errors.city && "border-destructive"
-                      )}
-                    />
+                    <Select value={city} onValueChange={setCity}>
+                      <SelectTrigger
+                        id="city"
+                        className={cn(
+                          "h-12 text-base bg-background",
+                          errors.city && "border-destructive"
+                        )}
+                      >
+                        <SelectValue placeholder="Select a city" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {CITIES.map((c) => (
+                          <SelectItem key={c} value={c} className="py-3">
+                            {c}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     {errors.city && (
                       <p className="text-sm text-destructive">{errors.city}</p>
                     )}
@@ -782,12 +774,6 @@ const RequestQuoteNew = () => {
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Service</span>
                     <span className="font-medium">{getServiceLabel()}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Project Size</span>
-                    <span className="font-medium">
-                      {PROJECT_SIZES.find((s) => s.id === projectSize)?.label.split(" – ")[0] || "—"}
-                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Location</span>
