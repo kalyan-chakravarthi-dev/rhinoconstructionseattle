@@ -36,12 +36,9 @@ test.describe("Quote Request Flow", () => {
     await page.getByLabel("Service Requested").click();
     await page.getByRole("option", { name: "Kitchen Remodeling" }).click();
 
-    // Select project size (Radix Select)
-    await page.getByLabel("Project Size").click();
-    await page.getByRole("option", { name: /Medium/i }).click();
-
-    // Enter city (state defaults to "WA")
-    await page.getByLabel("City").fill("Seattle");
+    // Select city (Radix Select)
+    await page.getByLabel("City").click();
+    await page.getByRole("option", { name: "Seattle" }).click();
 
     // Continue to step 2
     await page.getByRole("button", { name: /Continue/i }).click();
