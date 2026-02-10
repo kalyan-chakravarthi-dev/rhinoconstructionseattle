@@ -47,6 +47,81 @@ export type Database = {
         }
         Relationships: []
       }
+      gallery_images: {
+        Row: {
+          id: string
+          drive_file_id: string
+          drive_file_name: string
+          drive_modified_time: string | null
+          category: string
+          category_display_name: string
+          storage_path: string
+          storage_url: string
+          thumbnail_path: string | null
+          thumbnail_url: string | null
+          title: string | null
+          description: string | null
+          width: number | null
+          height: number | null
+          file_size_bytes: number | null
+          mime_type: string | null
+          published: boolean
+          featured: boolean
+          social_posted_at: Json | null
+          synced_at: string
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          drive_file_id: string
+          drive_file_name: string
+          drive_modified_time?: string | null
+          category: string
+          category_display_name: string
+          storage_path: string
+          storage_url: string
+          thumbnail_path?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          description?: string | null
+          width?: number | null
+          height?: number | null
+          file_size_bytes?: number | null
+          mime_type?: string | null
+          published?: boolean
+          featured?: boolean
+          social_posted_at?: Json | null
+          synced_at?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          drive_file_id?: string
+          drive_file_name?: string
+          drive_modified_time?: string | null
+          category?: string
+          category_display_name?: string
+          storage_path?: string
+          storage_url?: string
+          thumbnail_path?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          description?: string | null
+          width?: number | null
+          height?: number | null
+          file_size_bytes?: number | null
+          mime_type?: string | null
+          published?: boolean
+          featured?: boolean
+          social_posted_at?: Json | null
+          synced_at?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       quote_requests: {
         Row: {
           created_at: string
@@ -80,6 +155,45 @@ export type Database = {
           property_city?: string | null
           property_state?: string | null
           service_requested?: string
+        }
+        Relationships: []
+      }
+      sync_log: {
+        Row: {
+          id: string
+          sync_type: string
+          started_at: string
+          completed_at: string | null
+          status: string
+          files_found: number | null
+          files_synced: number | null
+          files_skipped: number | null
+          files_errored: number | null
+          error_details: Json | null
+        }
+        Insert: {
+          id?: string
+          sync_type?: string
+          started_at?: string
+          completed_at?: string | null
+          status?: string
+          files_found?: number | null
+          files_synced?: number | null
+          files_skipped?: number | null
+          files_errored?: number | null
+          error_details?: Json | null
+        }
+        Update: {
+          id?: string
+          sync_type?: string
+          started_at?: string
+          completed_at?: string | null
+          status?: string
+          files_found?: number | null
+          files_synced?: number | null
+          files_skipped?: number | null
+          files_errored?: number | null
+          error_details?: Json | null
         }
         Relationships: []
       }

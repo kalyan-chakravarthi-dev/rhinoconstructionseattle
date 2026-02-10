@@ -1,0 +1,53 @@
+name: Sync Gallery Images from Google Drive
+
+on:
+  schedule:
+    # Every 15 minutes
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger sync Edge Function
+        id: sync
+        run: |
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
+            "${{ secrets.SUPABASE_URL }}/functions/v1/sync-drive-images" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
+            -H "Content-Type: application/json")
+
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+
+          echo "HTTP Status: $HTTP_CODE"
+          echo "Response: $BODY"
+
+          # Write step summary
+          echo "## Gallery Sync Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Status Code:** $HTTP_CODE" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo '```json' >> $GITHUB_STEP_SUMMARY
+          echo "$BODY" | jq '.' 2>/dev/null || echo "$BODY" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "::error::Sync failed with HTTP $HTTP_CODE"
+            exit 1
+          fi
+
+          # Extract counts for summary
+          SYNCED=$(echo "$BODY" | jq -r '.files_synced // 0')
+          FOUND=$(echo "$BODY" | jq -r '.files_found // 0')
+          SKIPPED=$(echo "$BODY" | jq -r '.files_skipped // 0')
+          ERRORED=$(echo "$BODY" | jq -r '.files_errored // 0')
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Metric | Count |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Found | $FOUND |" >> $GITHUB_STEP_SUMMARY
+          echo "| Synced | $SYNCED |" >> $GITHUB_STEP_SUMMARY
+          echo "| Skipped | $SKIPPED |" >> $GITHUB_STEP_SUMMARY
+          echo "| Errored | $ERRORED |" >> $GITHUB_STEP_SUMMARY
