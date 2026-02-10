@@ -344,9 +344,7 @@ const RequestQuoteNew = () => {
           id: trackingId,
           submittedAt: new Date().toISOString(),
           service: selectedService,
-          projectSize,
-          city,
-          state,
+          address: { city, state },
           contactInfo: { fullName, email, phone },
         })
       );
