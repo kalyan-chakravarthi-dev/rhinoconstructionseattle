@@ -598,6 +598,29 @@
       "emergency": "Emergency Services"
     }
   },
+  "recentProjects": {
+    "label": "Recent Work",
+    "title": "Our Recent Projects",
+    "subtitle": "Browse the latest projects completed by our expert team",
+    "viewAll": "View All Projects"
+  },
+  "recentProjectsPage": {
+    "heroTitle": "Recent Projects",
+    "heroSubtitle": "Explore our latest completed projects and see the quality craftsmanship Rhino Remodeler delivers",
+    "getQuote": "Get Your Free Quote",
+    "allProjects": "All Projects",
+    "searchPlaceholder": "Search projects...",
+    "showing": "Showing",
+    "of": "of",
+    "projects": "projects",
+    "noProjects": "No projects found",
+    "noProjectsDesc": "Try adjusting your filters or search terms",
+    "clearFilters": "Clear Filters",
+    "loadMore": "Load More Projects",
+    "ctaTitle": "Ready to Start Your Project?",
+    "ctaSubtitle": "Free estimates, no obligation. Let us bring your vision to life.",
+    "requestQuote": "Request Free Quote"
+  },
   "common": {
     "submit": "Submit",
     "cancel": "Cancel",

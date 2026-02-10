@@ -78,6 +78,7 @@ export const ROUTES = {
   SERVICE_PLUMBING: '/services/plumbing-services',
   SERVICE_GENERAL: '/services/general-repairs',
   SERVICE_FLOORING: '/services/flooring',
+  RECENT_PROJECTS: '/recent-projects',
 } as const;
 
 // Type exports for TypeScript

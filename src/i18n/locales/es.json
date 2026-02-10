@@ -598,6 +598,29 @@
       "emergency": "Servicios de Emergencia"
     }
   },
+  "recentProjects": {
+    "label": "Trabajo Reciente",
+    "title": "Nuestros Proyectos Recientes",
+    "subtitle": "Explore los últimos proyectos completados por nuestro equipo de expertos",
+    "viewAll": "Ver Todos los Proyectos"
+  },
+  "recentProjectsPage": {
+    "heroTitle": "Proyectos Recientes",
+    "heroSubtitle": "Explore nuestros últimos proyectos completados y vea la calidad artesanal que ofrece Rhino Remodeler",
+    "getQuote": "Obtenga su Cotización Gratis",
+    "allProjects": "Todos los Proyectos",
+    "searchPlaceholder": "Buscar proyectos...",
+    "showing": "Mostrando",
+    "of": "de",
+    "projects": "proyectos",
+    "noProjects": "No se encontraron proyectos",
+    "noProjectsDesc": "Intente ajustar sus filtros o términos de búsqueda",
+    "clearFilters": "Limpiar Filtros",
+    "loadMore": "Cargar Más Proyectos",
+    "ctaTitle": "¿Listo para Comenzar su Proyecto?",
+    "ctaSubtitle": "Estimaciones gratuitas, sin compromiso. Permítanos dar vida a su visión.",
+    "requestQuote": "Solicitar Cotización Gratis"
+  },
   "common": {
     "submit": "Enviar",
     "cancel": "Cancelar",
