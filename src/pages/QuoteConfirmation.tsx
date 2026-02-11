@@ -48,8 +48,8 @@ const QuoteConfirmation = () => {
 
   const customerEmail = quoteData?.contactInfo?.email || "your email address";
   const serviceType = getServiceName(quoteData?.service);
-  const location = quoteData?.address
-    ? `${quoteData.address.city}, ${quoteData.address.state}`
+  const location = quoteData?.address?.city
+    ? `${quoteData.address.city}${quoteData.address.state ? `, ${quoteData.address.state}` : ""}`
     : "Not specified";
   const submittedDate = format(new Date(), "MMMM d, yyyy");
 
