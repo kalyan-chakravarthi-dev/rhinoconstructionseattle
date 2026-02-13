@@ -598,6 +598,225 @@
       "emergency": "Servicios de Emergencia"
     }
   },
+  "privacyPage": {
+    "metaTitle": "Política de Privacidad",
+    "metaDescription": "Política de Privacidad de Rhino Remodeler. Conozca cómo recopilamos, usamos y protegemos su información personal, incluidas nuestras prácticas de mensajería SMS.",
+    "badge": "Su Privacidad Importa",
+    "title": "Política de Privacidad",
+    "effectiveDate": "Fecha de Vigencia: {{date}}",
+    "intro": "Rhino Remodeler (\"nosotros\" o \"nuestro\") está comprometido con la protección de su privacidad. Esta Política de Privacidad explica cómo recopilamos, usamos, divulgamos y protegemos su información cuando visita nuestro sitio web (rhinoremodeler.com), usa nuestro portal de clientes o interactúa con nuestros servicios. Por favor lea esta política cuidadosamente. Al usar nuestro sitio web o servicios, usted consiente las prácticas descritas en esta política.",
+    "sections": {
+      "infoCollect": {
+        "title": "1. Información que Recopilamos",
+        "description": "Recopilamos información que usted nos proporciona directamente, así como información recopilada automáticamente cuando usa nuestros servicios. La información personal que podemos recopilar incluye:",
+        "items": [
+          "Nombre completo (nombre y apellido)",
+          "Dirección de correo electrónico",
+          "Número de teléfono (incluyendo número móvil para comunicaciones SMS)",
+          "Dirección de hogar o propiedad",
+          "Detalles y descripciones del proyecto",
+          "Fotos e imágenes de su propiedad o áreas del proyecto",
+          "Información de pago (procesada de forma segura a través de procesadores de pago de terceros)",
+          "Credenciales de cuenta (para acceso al portal de clientes)"
+        ],
+        "autoCollect": "También recopilamos automáticamente cierta información cuando visita nuestro sitio web, incluyendo:",
+        "autoItems": [
+          "Dirección IP y ubicación geográfica aproximada",
+          "Tipo y versión del navegador",
+          "Tipo de dispositivo y sistema operativo",
+          "Páginas visitadas, tiempo de permanencia y patrones de navegación",
+          "Sitio web de referencia o fuente"
+        ]
+      },
+      "howWeUse": {
+        "title": "2. Cómo Usamos su Información",
+        "description": "Usamos la información que recopilamos para los siguientes propósitos:",
+        "items": [
+          "Para proporcionar, mantener y mejorar nuestros servicios de remodelación y reparación del hogar",
+          "Para procesar y gestionar sus solicitudes de cotización y consultas de proyectos",
+          "Para comunicarnos con usted sobre sus proyectos, citas y cuenta",
+          "Para enviarle actualizaciones del proyecto, recordatorios de citas y notificaciones de servicio por correo electrónico, teléfono o SMS",
+          "Para enviar comunicaciones de marketing y ofertas especiales (solo con su consentimiento explícito)",
+          "Para procesar pagos y gestionar la facturación",
+          "Para operar y mejorar nuestro sitio web y portal de clientes",
+          "Para responder a sus comentarios, preguntas y solicitudes de servicio al cliente",
+          "Para cumplir con obligaciones legales y proteger nuestros derechos"
+        ]
+      },
+      "sms": {
+        "title": "3. Mensajería SMS/Texto",
+        "description": "Rhino Remodeler ofrece servicios de mensajería SMS/texto para proporcionarle actualizaciones del proyecto, recordatorios de citas, notificaciones de cotizaciones y ofertas promocionales. Al proporcionar su número de teléfono móvil y optar por participar, usted consiente recibir mensajes de texto de Rhino Remodeler.",
+        "items": [
+          "Se requiere consentimiento: Debe consentir expresamente para recibir mensajes SMS de nuestra parte. Puede optar por participar marcando la casilla de consentimiento SMS en nuestro formulario de solicitud de cotización, registrándose a través de nuestro sitio web o enviando un mensaje de texto con una palabra clave a nuestro número.",
+          "Frecuencia de mensajes: Puede recibir aproximadamente 2-4 mensajes por mes. La frecuencia puede variar según sus interacciones con nuestros servicios y proyectos activos.",
+          "Pueden aplicarse tarifas de mensajes y datos. Las tarifas estándar de mensajería y datos de su operador móvil se aplicarán a cualquier mensaje que envíe o reciba. Rhino Remodeler no es responsable de los cargos incurridos.",
+          "Los mensajes SMS pueden incluir: confirmaciones y recordatorios de citas, actualizaciones del estado del proyecto, notificaciones de cotizaciones, ofertas promocionales y descuentos (con consentimiento), y comunicaciones de servicio al cliente."
+        ],
+        "optOut": "Para cancelar: Puede dejar de recibir mensajes SMS en cualquier momento respondiendo STOP a cualquier mensaje que reciba de nosotros. Después de enviar STOP, recibirá un mensaje de confirmación único y no se enviarán más mensajes a menos que opte por participar nuevamente.",
+        "help": "Para ayuda: Responda HELP a cualquier mensaje para obtener asistencia, o contáctenos al (206) 487-9677 o francisco@rhinoremodeler.com. También puede enviar HELP para recibir información sobre nuestro programa de SMS.",
+        "consent": "El consentimiento no es condición de compra. No se requiere que consienta recibir mensajes SMS como condición para comprar bienes o servicios de Rhino Remodeler.",
+        "noSharing": "No compartimos su número de teléfono ni datos de consentimiento SMS con terceros o afiliados con fines de marketing. Su información se utiliza únicamente para los propósitos descritos en esta Política de Privacidad."
+      },
+      "cookies": {
+        "title": "4. Cookies y Tecnologías de Seguimiento",
+        "description": "Usamos cookies y tecnologías de seguimiento similares para mejorar su experiencia en nuestro sitio web. Estas tecnologías nos ayudan a:",
+        "items": [
+          "Cookies esenciales: Necesarias para la funcionalidad básica del sitio web, como mantener su sesión y seguridad",
+          "Cookies analíticas: Nos ayudan a entender cómo los visitantes interactúan con nuestro sitio web, qué páginas son más populares y cómo mejorar la experiencia del usuario",
+          "Cookies funcionales: Recuerdan sus preferencias, configuración de idioma e información de inicio de sesión para su comodidad",
+          "Cookies de marketing: Usadas para entregar anuncios relevantes y rastrear la efectividad de nuestras campañas de marketing"
+        ],
+        "manage": "Puede administrar sus preferencias de cookies a través de la configuración de su navegador. Tenga en cuenta que deshabilitar ciertas cookies puede limitar la funcionalidad de nuestro sitio web."
+      },
+      "thirdParty": {
+        "title": "5. Servicios de Terceros",
+        "description": "Usamos los siguientes servicios de terceros para operar y mejorar nuestro negocio:",
+        "items": [
+          "Google Analytics: Para analizar el tráfico del sitio web, el comportamiento del usuario y mejorar nuestra experiencia en línea. Google Analytics puede recopilar información sobre su dispositivo y actividad de navegación. Consulte la Política de Privacidad de Google para más detalles.",
+          "Procesadores de pago: Usamos procesadores de pago seguros de terceros para manejar todas las transacciones financieras. No almacenamos la información completa de su tarjeta de crédito en nuestros servidores.",
+          "Twilio: Usamos Twilio para entregar mensajes SMS/texto. Twilio procesa su número de teléfono y el contenido del mensaje para facilitar la entrega. Consulte la Política de Privacidad de Twilio para más detalles.",
+          "Supabase: Usamos Supabase para almacenamiento seguro de datos, autenticación de usuarios y servicios backend. Consulte la Política de Privacidad de Supabase para más detalles."
+        ],
+        "note": "Estos servicios de terceros tienen sus propias políticas de privacidad, y le animamos a revisarlas. No vendemos su información personal a terceros."
+      },
+      "security": {
+        "title": "6. Seguridad de Datos",
+        "description": "Implementamos medidas de seguridad técnicas y organizativas apropiadas para proteger su información personal, incluyendo:",
+        "items": [
+          "Cifrado SSL/TLS para todos los datos transmitidos entre su navegador y nuestros servidores",
+          "Almacenamiento cifrado de datos sensibles incluyendo contraseñas e información de pago",
+          "Auditorías de seguridad regulares y evaluaciones de vulnerabilidades",
+          "Controles de acceso que limitan el acceso de empleados a la información personal según la necesidad de conocer",
+          "Procedimientos de respaldo seguros para la recuperación de datos"
+        ],
+        "disclaimer": "Si bien nos esforzamos por proteger su información, ningún método de transmisión por Internet o almacenamiento electrónico es 100% seguro. No podemos garantizar seguridad absoluta, pero estamos comprometidos a proteger sus datos lo mejor posible."
+      },
+      "rights": {
+        "title": "7. Sus Derechos",
+        "description": "Usted tiene los siguientes derechos con respecto a su información personal:",
+        "items": [
+          "Acceso: Puede solicitar una copia de la información personal que tenemos sobre usted",
+          "Corrección: Puede solicitar que corrijamos cualquier información inexacta o incompleta",
+          "Eliminación: Puede solicitar que eliminemos su información personal, sujeto a ciertas excepciones legales",
+          "Cancelar marketing: Puede optar por no recibir comunicaciones promocionales en cualquier momento haciendo clic en \"cancelar suscripción\" en nuestros correos electrónicos, respondiendo STOP a mensajes SMS o contactándonos directamente",
+          "Portabilidad de datos: Puede solicitar sus datos en un formato comúnmente utilizado y legible por máquina",
+          "Restringir procesamiento: Puede solicitar que limitemos cómo usamos su información en ciertas circunstancias"
+        ],
+        "howTo": "Para ejercer cualquiera de estos derechos, contáctenos en francisco@rhinoremodeler.com o llame al (206) 487-9677. Responderemos a su solicitud dentro de 30 días."
+      },
+      "children": {
+        "title": "8. Privacidad de Menores",
+        "description": "Nuestro sitio web y servicios no están dirigidos a menores de 13 años. No recopilamos deliberadamente información personal de menores de 13 años. Si descubrimos que hemos recopilado inadvertidamente información de un menor de 13 años, eliminaremos esa información de inmediato. Si cree que un menor de 13 años nos ha proporcionado información personal, contáctenos inmediatamente en francisco@rhinoremodeler.com."
+      },
+      "changes": {
+        "title": "9. Cambios a Esta Política",
+        "description": "Podemos actualizar esta Política de Privacidad periódicamente para reflejar cambios en nuestras prácticas, tecnología, requisitos legales u otros factores. Cuando hagamos cambios materiales, le notificaremos actualizando la \"Fecha de Vigencia\" en la parte superior de esta política y, cuando sea apropiado, proporcionaremos notificación adicional por correo electrónico o un aviso prominente en nuestro sitio web. Le animamos a revisar esta política periódicamente para mantenerse informado sobre cómo protegemos su información."
+      },
+      "contact": {
+        "title": "10. Contáctenos",
+        "description": "Si tiene alguna pregunta, inquietud o solicitud con respecto a esta Política de Privacidad o nuestras prácticas de datos, contáctenos:"
+      }
+    }
+  },
+  "termsPage": {
+    "metaTitle": "Términos y Condiciones",
+    "metaDescription": "Términos y Condiciones de Rhino Remodeler. Revise los términos que rigen el uso de nuestro sitio web, servicios y comunicaciones SMS.",
+    "badge": "Acuerdo Legal",
+    "title": "Términos y Condiciones",
+    "effectiveDate": "Fecha de Vigencia: {{date}}",
+    "intro": "Bienvenido a Rhino Remodeler. Estos Términos y Condiciones (\"Términos\") rigen su acceso y uso del sitio web de Rhino Remodeler (rhinoremodeler.com), portal de clientes y todos los servicios relacionados proporcionados por Rhino Remodeler (\"nosotros\" o \"nuestro\"). Por favor lea estos Términos cuidadosamente antes de usar nuestro sitio web o servicios.",
+    "sections": {
+      "acceptance": {
+        "title": "1. Aceptación de los Términos",
+        "description": "Al acceder o usar nuestro sitio web, crear una cuenta, enviar una solicitud de cotización o usar cualquiera de nuestros servicios, usted acepta estar sujeto a estos Términos y nuestra Política de Privacidad. Si no está de acuerdo con estos Términos, por favor no use nuestro sitio web o servicios. Podemos actualizar estos Términos periódicamente, y su uso continuado de nuestros servicios constituye la aceptación de los Términos actualizados."
+      },
+      "services": {
+        "title": "2. Descripción de Servicios",
+        "description": "Rhino Remodeler proporciona servicios de remodelación, renovación y reparación del hogar en el área metropolitana de Seattle y regiones circundantes dentro de un radio de 40 millas. Nuestros servicios incluyen, pero no se limitan a:",
+        "items": [
+          "Estimaciones de remodelación del hogar y consultas de proyectos",
+          "Remodelación de cocina, renovación de baño, techos, trabajo eléctrico, plomería, pintura, pisos y servicios de reparación general",
+          "Gestión de proyectos y coordinación de mejoras del hogar",
+          "Un portal de clientes para rastrear solicitudes de cotización, estado del proyecto y comunicación",
+          "Envío de solicitudes de cotización en línea con capacidades de carga de fotos"
+        ],
+        "note": "La disponibilidad del servicio puede variar según la ubicación, el alcance del proyecto y la programación. Nos reservamos el derecho de rechazar cualquier proyecto a nuestra discreción."
+      },
+      "estimates": {
+        "title": "3. Estimaciones y Precios",
+        "description": "Todas las estimaciones y cotizaciones proporcionadas a través de nuestro sitio web o en persona son con fines informativos y están sujetas a los siguientes términos:",
+        "items": [
+          "Las estimaciones no son vinculantes hasta que un contrato formal por escrito sea firmado por ambas partes",
+          "Las cotizaciones son típicamente válidas por 30 días desde la fecha de emisión, a menos que se indique lo contrario",
+          "El precio final puede variar según las condiciones reales del proyecto, costos de materiales, requisitos de permisos y cambios de alcance descubiertos durante el proyecto",
+          "Cualquier cambio en el alcance de trabajo acordado se le comunicará y requerirá aprobación por escrito antes de que comience el trabajo adicional",
+          "Los términos de pago, cronogramas y métodos se describirán en el contrato del proyecto",
+          "Nos reservamos el derecho de ajustar precios según las condiciones del mercado y la disponibilidad de materiales"
+        ]
+      },
+      "sms": {
+        "title": "4. Comunicaciones SMS/Mensaje de Texto",
+        "description": "Al proporcionar su número de teléfono móvil y optar por recibir mensajes de texto, usted acepta los siguientes términos con respecto a las comunicaciones SMS de Rhino Remodeler:",
+        "items": [
+          "Usted consiente recibir mensajes de texto automatizados recurrentes de Rhino Remodeler al número móvil que proporcionó, incluyendo recordatorios de citas, actualizaciones del proyecto, notificaciones de cotizaciones y ofertas promocionales",
+          "Frecuencia de mensajes: Aproximadamente 2-4 mensajes por mes. La frecuencia puede variar dependiendo de sus proyectos activos e interacciones de servicio",
+          "Pueden aplicarse tarifas de mensajes y datos según lo determine su operador móvil. Rhino Remodeler no es responsable de ningún cargo de mensajería o datos impuesto por su operador",
+          "Los mensajes SMS pueden incluir: confirmaciones de citas y recordatorios de programación, actualizaciones de hitos del proyecto y notificaciones de finalización, actualizaciones de estado de solicitudes de cotización, promociones estacionales y ofertas especiales (con su consentimiento), y seguimientos de servicio al cliente"
+        ],
+        "optOut": "Para cancelar los mensajes SMS en cualquier momento, responda STOP a cualquier mensaje de texto que reciba de nosotros. Recibirá un único mensaje de confirmación reconociendo su solicitud y ya no recibirá mensajes de nuestra parte a menos que opte por participar nuevamente.",
+        "help": "Para ayuda o soporte con mensajería SMS, responda HELP a cualquier mensaje, llámenos al (206) 487-9677 o envíe un correo electrónico a francisco@rhinoremodeler.com.",
+        "rates": "Pueden aplicarse tarifas de mensajes y datos. Consulte su plan móvil para más detalles. Rhino Remodeler no cobra por los mensajes SMS, pero se aplican las tarifas estándar de su operador.",
+        "carriers": "Compatible con la mayoría de los principales operadores de EE.UU., incluyendo AT&T, Verizon, T-Mobile, Sprint y otros. Los operadores no son responsables de mensajes retrasados o no entregados."
+      },
+      "accounts": {
+        "title": "5. Cuentas de Usuario",
+        "description": "Cuando crea una cuenta en nuestro portal de clientes, usted acepta lo siguiente:",
+        "items": [
+          "Usted es responsable de mantener la confidencialidad de las credenciales de su cuenta (correo electrónico y contraseña)",
+          "Usted es responsable de toda la actividad que ocurra bajo su cuenta",
+          "Acepta proporcionar información precisa, actual y completa durante el registro y actualizarla según sea necesario",
+          "Debe notificarnos inmediatamente de cualquier acceso no autorizado o uso de su cuenta",
+          "Nos reservamos el derecho de suspender o cancelar cuentas que violen estos Términos o que estén inactivas por un período prolongado",
+          "Puede eliminar su cuenta en cualquier momento contactándonos. Tras la eliminación, eliminaremos sus datos personales de acuerdo con nuestra Política de Privacidad"
+        ]
+      },
+      "ip": {
+        "title": "6. Propiedad Intelectual",
+        "description": "Todo el contenido del sitio web de Rhino Remodeler está protegido por leyes de propiedad intelectual. Esto incluye:",
+        "items": [
+          "Todas las fotografías, imágenes y videos de nuestros proyectos completados son propiedad de Rhino Remodeler y no pueden usarse sin nuestro permiso por escrito",
+          "El diseño del sitio web, logotipos, marcas comerciales y elementos de marca son propiedad de Rhino Remodeler",
+          "El contenido escrito, incluyendo publicaciones de blog, descripciones de servicios y materiales de marketing, tiene derechos de autor de Rhino Remodeler",
+          "Al enviar fotos o contenido a través de nuestro sitio web (por ejemplo, fotos del proyecto para solicitudes de cotización), nos otorga una licencia no exclusiva para usar esos materiales para proporcionarle nuestros servicios",
+          "No puede copiar, reproducir, distribuir o crear trabajos derivados del contenido de nuestro sitio web sin consentimiento previo por escrito"
+        ]
+      },
+      "liability": {
+        "title": "7. Limitación de Responsabilidad",
+        "description": "En la máxima medida permitida por la ley:",
+        "items": [
+          "El sitio web y los servicios en línea de Rhino Remodeler se proporcionan \"tal cual\" y \"según disponibilidad\" sin garantías de ningún tipo, ya sean expresas o implícitas",
+          "No garantizamos que nuestro sitio web será ininterrumpido, libre de errores o libre de componentes dañinos",
+          "Rhino Remodeler no será responsable de daños indirectos, incidentales, especiales, consecuentes o punitivos que surjan de su uso de nuestro sitio web o servicios en línea",
+          "Nuestra responsabilidad total por cualquier reclamo relacionado con nuestro sitio web o servicios en línea no excederá la cantidad que nos haya pagado, si la hubiera, en los doce (12) meses anteriores al reclamo",
+          "Esta limitación de responsabilidad se aplica solo al sitio web y servicios en línea. La responsabilidad relacionada con servicios físicos de remodelación y construcción se rige por los términos de su contrato de proyecto y la ley aplicable del Estado de Washington",
+          "Nada en estos Términos limita nuestra responsabilidad por fraude, mala conducta intencional o cualquier responsabilidad que no pueda excluirse por ley"
+        ]
+      },
+      "governing": {
+        "title": "8. Ley Aplicable",
+        "description": "Estos Términos y Condiciones se regirán e interpretarán de acuerdo con las leyes del Estado de Washington, Estados Unidos, sin tener en cuenta sus disposiciones sobre conflictos de leyes. Cualquier disputa que surja de o esté relacionada con estos Términos o su uso de nuestros servicios se resolverá en los tribunales estatales o federales ubicados en el Condado de King, Washington. Usted acepta someterse a la jurisdicción personal de estos tribunales."
+      },
+      "changes": {
+        "title": "9. Cambios a Estos Términos",
+        "description": "Nos reservamos el derecho de modificar o reemplazar estos Términos en cualquier momento. Cuando hagamos cambios materiales, actualizaremos la \"Fecha de Vigencia\" en la parte superior de esta página y podemos notificarle por correo electrónico o un aviso prominente en nuestro sitio web. Su uso continuado de nuestro sitio web y servicios después de que se publiquen los cambios constituye su aceptación de los Términos revisados. Le animamos a revisar estos Términos periódicamente."
+      },
+      "contact": {
+        "title": "10. Contáctenos",
+        "description": "Si tiene alguna pregunta o inquietud sobre estos Términos y Condiciones, contáctenos:"
+      }
+    }
+  },
   "common": {
     "submit": "Enviar",
     "cancel": "Cancelar",

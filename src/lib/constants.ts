@@ -78,6 +78,8 @@ export const ROUTES = {
   SERVICE_PLUMBING: '/services/plumbing-services',
   SERVICE_GENERAL: '/services/general-repairs',
   SERVICE_FLOORING: '/services/flooring',
+  PRIVACY_POLICY: '/privacy-policy',
+  TERMS: '/terms',
 } as const;
 
 // Type exports for TypeScript
