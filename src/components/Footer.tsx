@@ -192,6 +192,16 @@ const Footer = () => {
               <span>© {currentYear} {COMPANY_INFO.name}. {t('footer.rights')}</span>
               <span className="hidden sm:inline">|</span>
               <span>{t('footer.licensedBonded')} | {t('footer.license')} {COMPANY_INFO.license}</span>
+              <span className="hidden sm:inline">|</span>
+              <span className="flex items-center gap-2">
+                <Link to={ROUTES.PRIVACY_POLICY} className="hover:text-secondary transition-colors">
+                  {t('footer.privacy')}
+                </Link>
+                <span>|</span>
+                <Link to={ROUTES.TERMS} className="hover:text-secondary transition-colors">
+                  {t('footer.terms')}
+                </Link>
+              </span>
             </div>
 
             {/* Payment Methods */}
